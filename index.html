@@ -125,6 +125,41 @@
     flex-shrink: 0;
   }
 
+  /* ─── CLASS STAT BLOCK ─── */
+  .stat-block {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1px;
+    background: var(--border-gold);
+    border: 1px solid var(--gold-dark);
+    margin: 2rem 0;
+  }
+  .stat-cell {
+    background: var(--bg3);
+    padding: 1rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .stat-cell-label {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .stat-cell-value {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--gold-light);
+  }
+  .stat-cell-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
   /* ─── BACK TO TOP ─── */
   .back-to-top {
     position: fixed;
@@ -606,6 +641,8 @@
       <div class="tab-dropdown-menu">
         <button onclick="switchTab('mechanics')">Механики</button>
         <button onclick="switchTab('combat')">Базис пошаговой боевки</button>
+        <button onclick="switchTab('dice')">Кубики</button>
+        <button onclick="switchTab('feats')">Черты</button>
       </div>
     </div>
     <a href="https://docs.google.com/document/d/11Hfrcb7KPpVQRoXvMsQvWEnmveECZWP7Zv90JpkBJCE/edit?usp=sharing" target="_blank" class="tab-btn" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;">Кодекс ролевика ↗</a>
@@ -809,7 +846,7 @@
       <div id="races-list">
         <div class="section-title">Расы Арасса</div>
         <div class="section-subtitle">✦ дети богов, осколки творения ✦</div>
-        <p class="lead">Пять народов населяют этот мир, и у каждого — своя правда, своё место в истории и свои счёты с остальными.</p>
+        <p class="lead">Шесть народов населяют этот мир, и у каждого — своя правда, своё место в истории и свои счёты с остальными.</p>
 
         <div class="card-grid">
 
@@ -850,6 +887,14 @@
             <span class="card-icon">⚡</span>
             <div class="card-title">Полуорки</div>
             <p class="card-desc">Рождённые на стыке двух культур — человеческой и орочьей. Слишком дикие для городов, слишком умные для орд. Их сила в том, что они не вписываются ни в один мир.</p>
+            <div style="margin-top:1rem;font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.2em;color:var(--gold-dark);">ПОДРОБНЕЕ →</div>
+          </div>
+
+          <div class="card race-card" onclick="openRace('tiefling')" style="cursor:pointer;">
+            <div class="card-corner tl"></div><div class="card-corner br"></div>
+            <span class="card-icon">😈</span>
+            <div class="card-title">Тифлинги</div>
+            <p class="card-desc">Потомки тех, кто заключил договор с тёмными силами. Рога, хвост и пылающие глаза — не проклятие, а наследство. Их боятся, но их магия слишком ценна, чтобы отворачиваться.</p>
             <div style="margin-top:1rem;font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.2em;color:var(--gold-dark);">ПОДРОБНЕЕ →</div>
           </div>
 
@@ -954,6 +999,13 @@
           <p class="lead" style="font-style:italic;color:var(--text-muted);margin-top:2rem;text-align:center;">Подробное описание расы будет добавлено позже.</p>
         </div>
 
+        <!-- Тифлинги -->
+        <div id="detail-tiefling" class="race-detail-block" style="display:none;">
+          <div class="section-title">😈 Тифлинги</div>
+          <div class="section-subtitle">✦ дети тёмного договора ✦</div>
+          <p class="lead" style="font-style:italic;color:var(--text-muted);margin-top:2rem;text-align:center;">Подробное описание расы будет добавлено позже.</p>
+        </div>
+
       </div>
     </div>
 
@@ -1007,21 +1059,102 @@
         <div id="detail-warrior" class="class-detail-block" style="display:none;">
           <div class="section-title">⚔️ Воин</div>
           <div class="section-subtitle">✦ сталь и воля ✦</div>
-          <p class="lead" style="font-style:italic;color:var(--text-muted);margin-top:2rem;text-align:center;">Подробное описание класса будет добавлено позже.</p>
+          <div class="stat-block">
+            <div class="stat-cell">
+              <span class="stat-cell-label">Здоровье</span>
+              <span class="stat-cell-value">10 + Тел.</span>
+              <span class="stat-cell-sub">стартовое</span>
+            </div>
+            <div class="stat-cell">
+              <span class="stat-cell-label">HP за уровень</span>
+              <span class="stat-cell-value">6</span>
+              <span class="stat-cell-sub">фиксировано</span>
+            </div>
+            <div class="stat-cell">
+              <span class="stat-cell-label">Скорость</span>
+              <span class="stat-cell-value">6 тайлов</span>
+              <span class="stat-cell-sub">30 футов</span>
+            </div>
+            <div class="stat-cell">
+              <span class="stat-cell-label">Основная хар-ка</span>
+              <span class="stat-cell-value">Сила</span>
+              <span class="stat-cell-sub">или Ловкость</span>
+            </div>
+            <div class="stat-cell">
+              <span class="stat-cell-label">Владение бронёй</span>
+              <span class="stat-cell-value">Вся броня</span>
+              <span class="stat-cell-sub">лёгкая, средняя, тяжёлая, щит</span>
+            </div>
+          </div>
+          <p class="lead" style="font-style:italic;color:var(--text-muted);text-align:center;">Подробное описание класса будет добавлено позже.</p>
         </div>
 
         <!-- Маг -->
         <div id="detail-mage" class="class-detail-block" style="display:none;">
           <div class="section-title">🔮 Маг</div>
           <div class="section-subtitle">✦ власть над стихиями ✦</div>
-          <p class="lead" style="font-style:italic;color:var(--text-muted);margin-top:2rem;text-align:center;">Подробное описание класса будет добавлено позже.</p>
+          <div class="stat-block">
+            <div class="stat-cell">
+              <span class="stat-cell-label">Здоровье</span>
+              <span class="stat-cell-value">6 + Тел.</span>
+              <span class="stat-cell-sub">стартовое</span>
+            </div>
+            <div class="stat-cell">
+              <span class="stat-cell-label">HP за уровень</span>
+              <span class="stat-cell-value">4</span>
+              <span class="stat-cell-sub">фиксировано</span>
+            </div>
+            <div class="stat-cell">
+              <span class="stat-cell-label">Скорость</span>
+              <span class="stat-cell-value">6 тайлов</span>
+              <span class="stat-cell-sub">30 футов</span>
+            </div>
+            <div class="stat-cell">
+              <span class="stat-cell-label">Основная хар-ка</span>
+              <span class="stat-cell-value">Харизма</span>
+              <span class="stat-cell-sub">определяет магию</span>
+            </div>
+            <div class="stat-cell">
+              <span class="stat-cell-label">Владение бронёй</span>
+              <span class="stat-cell-value">Нет</span>
+              <span class="stat-cell-sub">только мантия</span>
+            </div>
+          </div>
+          <p class="lead" style="font-style:italic;color:var(--text-muted);text-align:center;">Подробное описание класса будет добавлено позже.</p>
         </div>
 
         <!-- Плут -->
         <div id="detail-rogue" class="class-detail-block" style="display:none;">
           <div class="section-title">🗡️ Плут</div>
           <div class="section-subtitle">✦ тень и обман ✦</div>
-          <p class="lead" style="font-style:italic;color:var(--text-muted);margin-top:2rem;text-align:center;">Подробное описание класса будет добавлено позже.</p>
+          <div class="stat-block">
+            <div class="stat-cell">
+              <span class="stat-cell-label">Здоровье</span>
+              <span class="stat-cell-value">8 + Тел.</span>
+              <span class="stat-cell-sub">стартовое</span>
+            </div>
+            <div class="stat-cell">
+              <span class="stat-cell-label">HP за уровень</span>
+              <span class="stat-cell-value">5</span>
+              <span class="stat-cell-sub">фиксировано</span>
+            </div>
+            <div class="stat-cell">
+              <span class="stat-cell-label">Скорость</span>
+              <span class="stat-cell-value">6 тайлов</span>
+              <span class="stat-cell-sub">30 футов</span>
+            </div>
+            <div class="stat-cell">
+              <span class="stat-cell-label">Основная хар-ка</span>
+              <span class="stat-cell-value">Ловкость</span>
+              <span class="stat-cell-sub">скрытность и атака</span>
+            </div>
+            <div class="stat-cell">
+              <span class="stat-cell-label">Владение бронёй</span>
+              <span class="stat-cell-value">Лёгкая</span>
+              <span class="stat-cell-sub">кожа, кольчуга</span>
+            </div>
+          </div>
+          <p class="lead" style="font-style:italic;color:var(--text-muted);text-align:center;">Подробное описание класса будет добавлено позже.</p>
         </div>
 
       </div>
@@ -1081,6 +1214,51 @@
           <div class="mechanic-body">
             <h3>Связи и Репутация</h3>
             <p>НПС помнят, как вы с ними обращались. У каждого значимого персонажа есть шкала отношений. Хорошие отношения открывают уникальные квесты; плохие могут привести к тому, что вас сдадут страже или наймут убийцу.</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ЧЕРТЫ -->
+    <div class="tab-content" id="tab-feats">
+      <div class="section-title">Черты</div>
+      <div class="section-subtitle">✦ особые способности персонажа ✦</div>
+
+      <p class="lead">Черта — это особая способность, которую персонаж получает на определённых уровнях вместо увеличения характеристики. Каждая черта даёт уникальное преимущество.</p>
+
+      <div class="mechanic-list">
+
+        <div class="mechanic-item">
+          <div class="mechanic-icon">👁️</div>
+          <div class="mechanic-body">
+            <h3>Бдительный</h3>
+            <p>Персонаж всегда начеку — его невозможно застать врасплох. Получает бонус +5 к инициативе. Существа не получают преимущества на броски атаки против него, даже если атакуют из укрытия или невидимости.</p>
+          </div>
+        </div>
+
+        <div class="mechanic-item">
+          <div class="mechanic-icon">💨</div>
+          <div class="mechanic-body">
+            <h3>Подвижный</h3>
+            <p>Скорость передвижения персонажа увеличивается на 2 тайла (10 футов). При совершении атаки в ход персонаж может пройти сквозь зону досягаемости противника без атаки возможности. Труднопроходимая местность не снижает скорость при рывке.</p>
+          </div>
+        </div>
+
+        <div class="mechanic-item">
+          <div class="mechanic-icon">❤️</div>
+          <div class="mechanic-body">
+            <h3>Живучий</h3>
+            <p>Персонаж получает +1 к Телосложению и дополнительные HP равные его уровню + модификатор Телосложения. Кроме того, при спасбросках смерти минимальный результат всегда считается равным 10 — персонаж никогда не проваливает их автоматически.</p>
+          </div>
+        </div>
+
+        <div class="mechanic-item">
+          <div class="mechanic-icon">🍀</div>
+          <div class="mechanic-body">
+            <h3>Удачливый</h3>
+            <p>Один раз в 24 часа персонаж может перебросить любой кубик — атаку, урон, спасбросок или проверку характеристики. После переброска игрок выбирает какой из двух результатов оставить.</p>
           </div>
         </div>
 
@@ -1177,6 +1355,114 @@
       </div>
     </div>
 
+    <!-- КУБИКИ -->
+    <div class="tab-content" id="tab-dice">
+      <div class="section-title">Кубики</div>
+      <div class="section-subtitle">✦ основы системы персонажа ✦</div>
+
+      <p class="lead">Каждый персонаж описывается набором характеристик — они определяют что он умеет, насколько живуч и как быстро реагирует на угрозы.</p>
+
+      <div class="divider"><div class="divider-line"></div><div class="divider-gem"></div><div class="divider-line"></div></div>
+
+      <div class="section-title" style="font-size:1.1rem;margin-bottom:0.25rem;">Общие Характеристики</div>
+      <div class="section-subtitle">✦ базовые параметры каждого персонажа ✦</div>
+
+      <div class="mechanic-list">
+
+        <div class="mechanic-item">
+          <div class="mechanic-icon">❤️</div>
+          <div class="mechanic-body">
+            <h3>Здоровье (HP)</h3>
+            <p>Количество урона, которое персонаж может выдержать прежде чем упасть без сознания. Определяется классом персонажа на старте и растёт с каждым уровнем. Когда HP достигают нуля — персонаж без сознания и бросает спасброски смерти.</p>
+          </div>
+        </div>
+
+        <div class="mechanic-item">
+          <div class="mechanic-icon">🛡️</div>
+          <div class="mechanic-body">
+            <h3>Класс Брони (AC)</h3>
+            <p>Число, которое нужно превысить броском атаки чтобы попасть по персонажу. Зависит от надетой брони, ловкости и специальных умений. Чем выше AC — тем труднее нанести урон персонажу.</p>
+          </div>
+        </div>
+
+        <div class="mechanic-item">
+          <div class="mechanic-icon">🏃</div>
+          <div class="mechanic-body">
+            <h3>Тайлы Передвижения</h3>
+            <p>Расстояние, которое персонаж может пройти за один ход. Стандартное значение — 6 тайлов (30 футов). Тяжёлая броня и некоторые состояния снижают скорость. Рывок позволяет удвоить передвижение ценой бонусного действия.</p>
+          </div>
+        </div>
+
+        <div class="mechanic-item">
+          <div class="mechanic-icon">⚡</div>
+          <div class="mechanic-body">
+            <h3>Инициатива</h3>
+            <p>В начале боя каждый участник бросает d20 и добавляет модификатор Ловкости. Результат определяет порядок ходов в раунде — чем выше, тем раньше действует персонаж. При ничьей приоритет у персонажа с более высоким модификатором Ловкости.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="divider"><div class="divider-line"></div><div class="divider-gem"></div><div class="divider-line"></div></div>
+
+      <div class="section-title" style="font-size:1.1rem;margin-bottom:0.25rem;">Шесть Характеристик</div>
+      <div class="section-subtitle">✦ основа любого персонажа ✦</div>
+
+      <p style="margin-bottom:1.5rem;">Каждая характеристика имеет свой <strong style="color:var(--gold-light)">модификатор</strong> — число, которое добавляется к броскам кубика при проверках и атаках.</p>
+
+      <div class="mechanic-list">
+
+        <div class="mechanic-item">
+          <div class="mechanic-icon">⚔️</div>
+          <div class="mechanic-body">
+            <h3>Сила (STR)</h3>
+            <p>Физическая мощь персонажа. Влияет на урон в ближнем бою, броски атаки оружием ближнего боя, проверки силы — поднять тяжёлый предмет, выломать дверь, удержать противника.</p>
+          </div>
+        </div>
+
+        <div class="mechanic-item">
+          <div class="mechanic-icon">🐍</div>
+          <div class="mechanic-body">
+            <h3>Ловкость (DEX)</h3>
+            <p>Скорость, координация и рефлексы. Влияет на атаки дальнего боя, уклонение, скрытность, инициативу и AC персонажей без тяжёлой брони. Ключевая характеристика плутов и лучников.</p>
+          </div>
+        </div>
+
+        <div class="mechanic-item">
+          <div class="mechanic-icon">💪</div>
+          <div class="mechanic-body">
+            <h3>Телосложение (CON)</h3>
+            <p>Выносливость и жизнестойкость. Влияет на максимальное HP — каждый уровень к здоровью добавляется модификатор Телосложения. Также используется для концентрации на заклинаниях и сопротивления ядам.</p>
+          </div>
+        </div>
+
+        <div class="mechanic-item">
+          <div class="mechanic-icon">📚</div>
+          <div class="mechanic-body">
+            <h3>Интеллект (INT)</h3>
+            <p>Острота ума, память и способность к анализу. Влияет на знания о мире, расследование, магию волшебников. Определяет сколько языков знает персонаж и насколько хорошо понимает тайные знания.</p>
+          </div>
+        </div>
+
+        <div class="mechanic-item">
+          <div class="mechanic-icon">👁️</div>
+          <div class="mechanic-body">
+            <h3>Мудрость (WIS)</h3>
+            <p>Интуиция, восприятие и связь с миром. Влияет на внимательность, проницательность, лечение и магию жрецов. Высокая мудрость позволяет замечать ложь, засады и скрытые детали.</p>
+          </div>
+        </div>
+
+        <div class="mechanic-item">
+          <div class="mechanic-icon">✨</div>
+          <div class="mechanic-body">
+            <h3>Харизма (CHA)</h3>
+            <p>Личное обаяние, убедительность и сила воли. Влияет на убеждение, обман, запугивание и магию чародеев. Высокая харизма открывает двери там, где меч бесполезен.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
   </div>
   <!-- /tabs-body -->
 
@@ -1218,6 +1504,7 @@
     { section: 'Расы', tab: 'races', title: 'Дварфы', text: 'мастера строители клятвы нарушить слово подземные города кузнецы легенды' },
     { section: 'Расы', tab: 'races', title: 'Драконорождённые', text: 'потомки драконов кровь пламя гордость дыхание оружие чешуя броня эпоха величия' },
     { section: 'Расы', tab: 'races', title: 'Полуорки', text: 'рождённые стык культур человеческой орочьей дикие города умные орды сила' },
+    { section: 'Расы', tab: 'races', title: 'Тифлинги', text: 'потомки договор тёмные силы рога хвост глаза проклятие наследство магия боятся' },
     { section: 'Классы', tab: 'classes', title: 'Воин', text: 'мастер клинка броня солдат бой искусство выживаемость тяжёлая броня' },
     { section: 'Классы', tab: 'classes', title: 'Маг', text: 'повелитель стихий тайные силы хрупкий смертоносный реальность сосредоточиться' },
     { section: 'Классы', tab: 'classes', title: 'Плут', text: 'информация оружие секрет тени социальные интриги скрытность' },
@@ -1225,7 +1512,16 @@
     { section: 'Механики', tab: 'mechanics', title: 'Перманентная Смерть', text: 'персонаж умер мёртв навсегда наказание условие выбор летопись' },
     { section: 'Механики', tab: 'mechanics', title: 'Развитие и Уровни', text: 'опыт отыгрыш посты арки уровни способности механики' },
     { section: 'Механики', tab: 'mechanics', title: 'Живой Мир', text: 'мир меняется игроки деревня карта фракции торговые пути летопись' },
-    { section: 'Боевая система', tab: 'combat', title: 'Действие', text: 'основное действие раунда атака умение союзник предмет засада захват d20 AC' },
+    { section: 'Кубики', tab: 'dice', title: 'Здоровье (HP)', text: 'урон без сознания класс уровень спасброски смерти' },
+    { section: 'Кубики', tab: 'dice', title: 'Класс Брони (AC)', text: 'бросок атаки броня ловкость умения урон' },
+    { section: 'Кубики', tab: 'dice', title: 'Тайлы Передвижения', text: 'расстояние ход тайлы футы броня скорость рывок' },
+    { section: 'Кубики', tab: 'dice', title: 'Сила (STR)', text: 'физическая мощь урон ближний бой атака поднять выломать удержать' },
+    { section: 'Кубики', tab: 'dice', title: 'Ловкость (DEX)', text: 'скорость координация рефлексы дальний бой уклонение скрытность инициатива' },
+    { section: 'Кубики', tab: 'dice', title: 'Телосложение (CON)', text: 'выносливость жизнестойкость HP уровень концентрация яды' },
+    { section: 'Кубики', tab: 'dice', title: 'Интеллект (INT)', text: 'ум память анализ знания расследование магия языки' },
+    { section: 'Кубики', tab: 'dice', title: 'Мудрость (WIS)', text: 'интуиция восприятие лечение жрецы внимательность ложь засады' },
+    { section: 'Кубики', tab: 'dice', title: 'Харизма (CHA)', text: 'обаяние убедительность воля убеждение обман запугивание маг чародей' },
+    { section: 'Кубики', tab: 'dice', title: 'Инициатива', text: 'd20 ловкость модификатор бой раунд ничья приоритет' },
     { section: 'Боевая система', tab: 'combat', title: 'Бонусное Действие', text: 'быстрое вспомогательное класс второй удар воин заклинание маг зелье плут' },
     { section: 'Боевая система', tab: 'combat', title: 'Передвижение', text: 'скорость ход до после между атаковать отступить разбить частично' },
     { section: 'Боевая система', tab: 'combat', title: 'Реакция', text: 'мгновенный ответ событие ход противник союзник контратака уклонение перехват' },
@@ -1337,7 +1633,7 @@ function switchTab(id) {
   // Load tab from URL hash on page open
   window.addEventListener('DOMContentLoaded', () => {
     const hash = window.location.hash.replace('#', '');
-    const valid = ['server','rules','faq','lore','races','classes','mechanics','combat'];
+    const valid = ['server','rules','faq','lore','races','classes','mechanics','combat','dice','feats'];
     if (hash && valid.includes(hash)) switchTab(hash);
   });
 
