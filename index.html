@@ -125,6 +125,112 @@
     flex-shrink: 0;
   }
 
+  /* ─── BACK TO TOP ─── */
+  .back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 44px;
+    height: 44px;
+    background: var(--bg3);
+    border: 1px solid var(--gold-dark);
+    color: var(--gold);
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s, background 0.2s, border-color 0.2s;
+    z-index: 999;
+  }
+  .back-to-top.visible { opacity: 1; pointer-events: all; }
+  .back-to-top:hover { background: var(--bg4); border-color: var(--gold); }
+
+  /* ─── ANCHOR LINKS ─── */
+  .anchor-link {
+    display: inline-block;
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+    text-decoration: none;
+    margin-left: 10px;
+    vertical-align: middle;
+    opacity: 0;
+    transition: opacity 0.2s, color 0.2s;
+  }
+  .section-title:hover .anchor-link,
+  .section-title:focus-within .anchor-link { opacity: 1; }
+  .anchor-link:hover { color: var(--gold); }
+
+  /* ─── SEARCH ─── */
+  .search-wrap {
+    position: relative;
+    max-width: 480px;
+    margin: 0 auto 1.5rem;
+  }
+  .search-input {
+    width: 100%;
+    background: var(--bg2);
+    border: 1px solid var(--border-gold);
+    padding: 10px 42px 10px 16px;
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.25s;
+  }
+  .search-input::placeholder { color: var(--text-muted); }
+  .search-input:focus { border-color: var(--gold-dark); }
+  .search-icon {
+    position: absolute;
+    right: 14px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    pointer-events: none;
+    font-size: 15px;
+  }
+  .search-results {
+    display: none;
+    position: absolute;
+    top: 100%; left: 0; right: 0;
+    background: var(--bg3);
+    border: 1px solid var(--gold-dark);
+    border-top: none;
+    z-index: 200;
+    max-height: 320px;
+    overflow-y: auto;
+  }
+  .search-result-item {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .search-result-item:last-child { border-bottom: none; }
+  .search-result-item:hover { background: var(--bg4); }
+  .search-result-title {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    color: var(--gold-light);
+    letter-spacing: 0.1em;
+    margin-bottom: 3px;
+  }
+  .search-result-section {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+  .search-result-snippet { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+  .search-highlight { color: var(--gold); font-style: normal; }
+  .search-empty { padding: 1.5rem; text-align: center; font-family: 'Cinzel', serif; font-size: 11px; color: var(--text-muted); letter-spacing: 0.1em; }
+
   /* ─── DROPDOWN ─── */
   .tab-dropdown { position: relative; display: inline-block; }
   .tab-dropdown-menu {
@@ -167,9 +273,10 @@
   .tabs-nav {
     display: flex;
     flex-wrap: wrap;
-    gap: 2px;
+    gap: 0;
     margin-bottom: 0;
     justify-content: center;
+    background: var(--bg2);
   }
   .tab-btn {
     font-family: 'Cinzel', serif;
@@ -180,12 +287,15 @@
     background: var(--bg2);
     border: 1px solid var(--border);
     border-bottom: none;
+    border-right: none;
     padding: 12px 24px;
     cursor: pointer;
     transition: all 0.25s;
     position: relative;
     outline: none;
   }
+  .tab-btn:first-child { border-left: 1px solid var(--border); }
+  .tab-btn:last-child { border-right: 1px solid var(--border); }
   .tab-btn:hover { color: var(--gold); background: var(--bg3); border-color: var(--border-gold); }
   .tab-btn.active {
     color: var(--gold-light);
@@ -209,7 +319,7 @@
     min-height: 400px;
   }
 
-  .tab-content { display: none; animation: fadeIn 0.4s ease; }
+  .tab-content { display: none; animation: fadeIn 0.4s ease; padding-top: 6px; }
   .tab-content.active { display: block; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -421,7 +531,7 @@
 
 <div class="site">
 
-  <header>
+  <header id="top">
     <!-- Ornamental SVG -->
     <svg class="header-ornament" viewBox="0 0 500 30" fill="none" xmlns="http://www.w3.org/2000/svg">
       <line x1="0" y1="15" x2="180" y2="15" stroke="#3d2f18" stroke-width="1"/>
@@ -473,12 +583,19 @@
     </div>
 
   </header>
+  <div class="search-wrap">
+    <input class="search-input" id="site-search" type="text" placeholder="Поиск по сайту..." autocomplete="off" oninput="doSearch(this.value)" onblur="setTimeout(()=>hideSearch(),200)">
+    <span class="search-icon">⌕</span>
+    <div class="search-results" id="search-results"></div>
+  </div>
+
   <nav class="tabs-nav" role="tablist">
     <div class="tab-dropdown">
       <button class="tab-btn active" onclick="switchTab('server')" role="tab" aria-selected="true">О Сервере ▾</button>
       <div class="tab-dropdown-menu">
         <button onclick="switchTab('server')">О Сервере</button>
         <button onclick="switchTab('rules')">Правила</button>
+        <button onclick="switchTab('faq')">FAQ</button>
       </div>
     </div>
     <button class="tab-btn" onclick="switchTab('lore')" role="tab" aria-selected="false">Лор</button>
@@ -557,7 +674,6 @@
             <p>Биография и история персонажа, которую игрок пишет перед вступлением на сервер. Квента — это основа вашего персонажа: его прошлое, мотивация и характер.</p>
           </div>
         </div>
-
         <div class="mechanic-item">
           <div class="mechanic-icon">🎲</div>
           <div class="mechanic-body">
@@ -611,6 +727,72 @@
       </div>
     </div>
 
+    <!-- FAQ -->
+    <div class="tab-content" id="tab-faq">
+      <div class="section-title">FAQ</div>
+      <div class="section-subtitle">✦ часто задаваемые вопросы ✦</div>
+
+      <div class="mechanic-list" style="margin-top:2rem;">
+
+        <div class="mechanic-item">
+          <div class="mechanic-icon">❓</div>
+          <div class="mechanic-body">
+            <h3>Нужен ли опыт в ролевых играх?</h3>
+            <p>Нет. Мы принимаем новичков. Главное — желание отыгрывать и уважение к другим игрокам. Кодекс ролевика поможет разобраться в основах текстовой игры.</p>
+          </div>
+        </div>
+
+        <div class="mechanic-item">
+          <div class="mechanic-icon">❓</div>
+          <div class="mechanic-body">
+            <h3>Как вступить на сервер?</h3>
+            <p>Вступить в Discord, ознакомиться с правилами и написать квенту персонажа. Квента проходит проверку администрации — обычно ответ приходит в течение 1–2 дней.</p>
+          </div>
+        </div>
+
+        <div class="mechanic-item">
+          <div class="mechanic-icon">❓</div>
+          <div class="mechanic-body">
+            <h3>Что такое квента и как её написать?</h3>
+            <p>Квента — это биография вашего персонажа: имя, раса, класс, прошлое, характер и мотивация. Нет строгого шаблона, но квента должна быть достаточно подробной, чтобы администрация понимала кто ваш персонаж и зачем он в этом мире.</p>
+          </div>
+        </div>
+
+        <div class="mechanic-item">
+          <div class="mechanic-icon">❓</div>
+          <div class="mechanic-body">
+            <h3>Что происходит после смерти персонажа?</h3>
+            <p>Смерть перманентна. Погибший персонаж остаётся в летописи мира, но вы создаёте нового. Новый персонаж не может быть связан с прошлым — никаких братьев-близнецов с той же историей.</p>
+          </div>
+        </div>
+
+        <div class="mechanic-item">
+          <div class="mechanic-icon">❓</div>
+          <div class="mechanic-body">
+            <h3>Можно ли играть злодея?</h3>
+            <p>Да. Мы не ограничиваем мировоззрение персонажа — в живом мире нужны все роли. Единственное условие: действия злодея должны иметь логику и мотивацию, а не быть хаотичным гриферством.</p>
+          </div>
+        </div>
+
+        <div class="mechanic-item">
+          <div class="mechanic-icon">❓</div>
+          <div class="mechanic-body">
+            <h3>Нужно ли знать лор перед игрой?</h3>
+            <p>Желательно прочитать основы — достаточно вкладок «Лор» и «Расы». Глубокое погружение придёт в процессе. Администрация также помогает новым игрокам встроиться в текущие события.</p>
+          </div>
+        </div>
+
+        <div class="mechanic-item">
+          <div class="mechanic-icon">❓</div>
+          <div class="mechanic-body">
+            <h3>Как часто нужно быть онлайн?</h3>
+            <p>Жёстких требований нет, но рекомендуем активность хотя бы несколько раз в неделю. Если уходите в отпуск или на паузу — предупредите администрацию, персонаж будет временно выведен из активных сцен.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
     <!-- ЛОР -->
     <div class="tab-content" id="tab-lore">
       <div class="section-title">Летопись Мира</div>
@@ -626,7 +808,7 @@
       <div id="races-list">
         <div class="section-title">Расы Арасса</div>
         <div class="section-subtitle">✦ дети богов, осколки творения ✦</div>
-        <p class="lead">Три народа населяют этот мир, и у каждого — своя правда, своё место в истории и свои счёты с остальными.</p>
+        <p class="lead">Пять народов населяют этот мир, и у каждого — своя правда, своё место в истории и свои счёты с остальными.</p>
 
         <div class="card-grid">
 
@@ -651,6 +833,22 @@
             <span class="card-icon">⚒️</span>
             <div class="card-title">Дварфы</div>
             <p class="card-desc">Мастера, строители и хранители древних клятв. Для дварфа нарушить слово — страшнее смерти. Их подземные города — чудо архитектуры, их кузнецы — легенды мира.</p>
+            <div style="margin-top:1rem;font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.2em;color:var(--gold-dark);">ПОДРОБНЕЕ →</div>
+          </div>
+
+          <div class="card race-card" onclick="openRace('dragonborn')" style="cursor:pointer;">
+            <div class="card-corner tl"></div><div class="card-corner br"></div>
+            <span class="card-icon">🐉</span>
+            <div class="card-title">Драконорождённые</div>
+            <p class="card-desc">Потомки древних драконов, несущие в крови пламя и гордость. Их дыхание — оружие, их чешуя — броня. Каждый драконорождённый — осколок ушедшей эпохи величия.</p>
+            <div style="margin-top:1rem;font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.2em;color:var(--gold-dark);">ПОДРОБНЕЕ →</div>
+          </div>
+
+          <div class="card race-card" onclick="openRace('halforc')" style="cursor:pointer;">
+            <div class="card-corner tl"></div><div class="card-corner br"></div>
+            <span class="card-icon">⚡</span>
+            <div class="card-title">Полуорки</div>
+            <p class="card-desc">Рождённые на стыке двух культур — человеческой и орочьей. Слишком дикие для городов, слишком умные для орд. Их сила в том, что они не вписываются ни в один мир.</p>
             <div style="margin-top:1rem;font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.2em;color:var(--gold-dark);">ПОДРОБНЕЕ →</div>
           </div>
 
@@ -738,6 +936,20 @@
         <div id="detail-dwarves" class="race-detail-block" style="display:none;">
           <div class="section-title">⚒️ Дварфы</div>
           <div class="section-subtitle">✦ хранители клятв и камня ✦</div>
+          <p class="lead" style="font-style:italic;color:var(--text-muted);margin-top:2rem;text-align:center;">Подробное описание расы будет добавлено позже.</p>
+        </div>
+
+        <!-- Драконорождённые -->
+        <div id="detail-dragonborn" class="race-detail-block" style="display:none;">
+          <div class="section-title">🐉 Драконорождённые</div>
+          <div class="section-subtitle">✦ кровь и пламя древних ✦</div>
+          <p class="lead" style="font-style:italic;color:var(--text-muted);margin-top:2rem;text-align:center;">Подробное описание расы будет добавлено позже.</p>
+        </div>
+
+        <!-- Полуорки -->
+        <div id="detail-halforc" class="race-detail-block" style="display:none;">
+          <div class="section-title">⚡ Полуорки</div>
+          <div class="section-subtitle">✦ между двух миров ✦</div>
           <p class="lead" style="font-style:italic;color:var(--text-muted);margin-top:2rem;text-align:center;">Подробное описание расы будет добавлено позже.</p>
         </div>
 
@@ -975,7 +1187,87 @@
 
 </div>
 
+<button class="back-to-top" id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Наверх">↑</button>
+
 <script>
+  const searchIndex = [
+    { section: 'О сервере', tab: 'server', title: 'О сервере', text: 'хардкорный ролевой проект Conan Exiles Enhanced каждое решение имеет цену история оставляет след живой мир политика игроками войны фракции нарратив Мастера декорации драма формат броски квента смерть перманентная риск победа' },
+    { section: 'Правила', tab: 'rules', title: 'IC — In Character', text: 'в роли персонаж слова действия мысли IC информация видел слышал пережил' },
+    { section: 'Правила', tab: 'rules', title: 'OOC — Out Of Character', text: 'вне роли общение игроки люди организационные вопросы правила личные сообщения' },
+    { section: 'Правила', tab: 'rules', title: 'Metagaming — Метагейминг', text: 'использование OOC информации IC ситуациях шпион квента персонаж знать не может' },
+    { section: 'Правила', tab: 'rules', title: 'Квента', text: 'биография история персонажа прошлое мотивация характер основа вступление' },
+    { section: 'Правила', tab: 'rules', title: 'DC — Difficulty Class', text: 'сложность действия число бросок кубик задача' },
+    { section: 'Правила', tab: 'rules', title: 'Уважение к участникам', text: 'агрессия оскорбления травля конфликты персонажи игроки администрация' },
+    { section: 'Правила', tab: 'rules', title: 'Разграничение игрока и персонажа', text: 'игровые конфликты личка реальная жизнь ненавидеть персонажа уважать игрока' },
+    { section: 'Правила', tab: 'rules', title: 'Никакого метагейминга', text: 'персонаж знает только игра информация вне роли нарушение атмосфера' },
+    { section: 'Правила', tab: 'rules', title: 'Грамотность и уважение к тексту', text: 'текстовый проект слова инструмент грамотно развёрнуто посты диалог сцены' },
+    { section: 'Правила', tab: 'rules', title: 'Решения администрации', text: 'слово мастера закон несогласен личное сообщение публичные каналы споры предупреждение' },
+    { section: 'FAQ', tab: 'faq', title: 'Нужен ли опыт в ролевых играх?', text: 'новичок опыт желание отыгрывать уважение кодекс ролевика основы' },
+    { section: 'FAQ', tab: 'faq', title: 'Как вступить на сервер?', text: 'вступить discord правила квента персонажа проверка администрация ответ дней' },
+    { section: 'FAQ', tab: 'faq', title: 'Что такое квента и как её написать?', text: 'квента биография имя раса класс прошлое характер мотивация шаблон подробная' },
+    { section: 'FAQ', tab: 'faq', title: 'Что происходит после смерти персонажа?', text: 'смерть перманентна погибший летопись новый персонаж близнецы история' },
+    { section: 'FAQ', tab: 'faq', title: 'Можно ли играть злодея?', text: 'злодей мировоззрение роли логика мотивация гриферство' },
+    { section: 'FAQ', tab: 'faq', title: 'Нужно ли знать лор перед игрой?', text: 'лор расы основы погружение события администрация новые игроки' },
+    { section: 'FAQ', tab: 'faq', title: 'Как часто нужно быть онлайн?', text: 'онлайн активность несколько раз неделю отпуск пауза администрация сцены' },
+    { section: 'Расы', tab: 'races', title: 'Люди', text: 'многочисленная раса короткий век проклятие дар торопятся жить строить завоёвывать' },
+    { section: 'Расы', tab: 'races', title: 'Эльфы', text: 'тысячи лет помнят мир высокомерие усталость меняется три ветви' },
+    { section: 'Расы', tab: 'races', title: 'Высшие Эльфы', text: 'хранители традиций магия гордые холодные безупречные помнят мир до людей' },
+    { section: 'Расы', tab: 'races', title: 'Полуэльфы', text: 'дети двух миров гибкость умение читать людей чистокровные расы' },
+    { section: 'Расы', tab: 'races', title: 'Дроу', text: 'изгнанники подземный мир тьма сила магия теней культура выживание' },
+    { section: 'Расы', tab: 'races', title: 'Дварфы', text: 'мастера строители клятвы нарушить слово подземные города кузнецы легенды' },
+    { section: 'Расы', tab: 'races', title: 'Драконорождённые', text: 'потомки драконов кровь пламя гордость дыхание оружие чешуя броня эпоха величия' },
+    { section: 'Расы', tab: 'races', title: 'Полуорки', text: 'две культуры человеческая орочья дикие умные не вписываются сила' },
+    { section: 'Классы', tab: 'classes', title: 'Воин', text: 'мастер клинка броня солдат бой искусство выживаемость тяжёлая броня' },
+    { section: 'Классы', tab: 'classes', title: 'Маг', text: 'повелитель стихий тайные силы хрупкий смертоносный реальность сосредоточиться' },
+    { section: 'Классы', tab: 'classes', title: 'Плут', text: 'информация оружие секрет тени социальные интриги скрытность' },
+    { section: 'Механики', tab: 'mechanics', title: 'Система Бросков', text: 'd20 модификатор навыка сложность действия DC боевые броски социальные исследовательские мастер' },
+    { section: 'Механики', tab: 'mechanics', title: 'Перманентная Смерть', text: 'персонаж умер мёртв навсегда наказание условие выбор летопись' },
+    { section: 'Механики', tab: 'mechanics', title: 'Развитие и Уровни', text: 'опыт отыгрыш посты арки уровни способности механики' },
+    { section: 'Механики', tab: 'mechanics', title: 'Живой Мир', text: 'мир меняется игроки деревня карта фракции торговые пути летопись' },
+    { section: 'Боевая система', tab: 'combat', title: 'Действие', text: 'основное действие раунда атака умение союзник предмет засада захват d20 AC' },
+    { section: 'Боевая система', tab: 'combat', title: 'Бонусное Действие', text: 'быстрое вспомогательное класс второй удар воин заклинание маг зелье плут' },
+    { section: 'Боевая система', tab: 'combat', title: 'Передвижение', text: 'скорость ход до после между атаковать отступить разбить частично' },
+    { section: 'Боевая система', tab: 'combat', title: 'Реакция', text: 'мгновенный ответ событие ход противник союзник контратака уклонение перехват' },
+    { section: 'Боевая система', tab: 'combat', title: 'Инициатива', text: 'd20 ловкость очередь ходов мастер список раунд равные модификатор' },
+    { section: 'Боевая система', tab: 'combat', title: 'Порядок Ходов', text: 'убывание инициатива наибольшему раунд повторяется пропустить сгорает' },
+    { section: 'Боевая система', tab: 'combat', title: 'Атака и Урон', text: 'd20 модификатор атаки AC цель удар урон кубик оружие критическое попадание удваивается' },
+    { section: 'Боевая система', tab: 'combat', title: 'Смерть и Состояния', text: 'HP ноль без сознания спасбросок смерти d20 успех провал стабилизация союзник перманентна' },
+  ];
+
+  function doSearch(query) {
+    const box = document.getElementById('search-results');
+    if (!query || query.trim().length < 2) { box.style.display = 'none'; return; }
+    const q = query.toLowerCase().trim();
+    const hits = searchIndex.filter(item =>
+      item.title.toLowerCase().includes(q) || item.text.toLowerCase().includes(q)
+    ).slice(0, 8);
+    if (!hits.length) {
+      box.innerHTML = '<div class="search-empty">Ничего не найдено</div>';
+      box.style.display = 'block'; return;
+    }
+    box.innerHTML = hits.map(h => {
+      const snippet = h.text.length > 80 ? h.text.substring(0, 80) + '…' : h.text;
+      const titleHl = h.title.replace(new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi'), m => '<em class="search-highlight">'+m+'</em>');
+      return `<div class="search-result-item" onclick="goToResult('${h.tab}')">
+        <div class="search-result-section">${h.section}</div>
+        <div class="search-result-title">${titleHl}</div>
+        <div class="search-result-snippet">${snippet}</div>
+      </div>`;
+    }).join('');
+    box.style.display = 'block';
+  }
+
+  function goToResult(tab) {
+    hideSearch();
+    document.getElementById('site-search').value = '';
+    switchTab(tab);
+    window.scrollTo({ top: document.querySelector('.tabs-nav').offsetTop - 20, behavior: 'smooth' });
+  }
+
+  function hideSearch() {
+    document.getElementById('search-results').style.display = 'none';
+  }
+
   function openSubrace(id) {
     document.getElementById('elves-list').style.display = 'none';
     document.querySelectorAll('.subrace-detail-block').forEach(el => el.style.display = 'none');
@@ -1023,7 +1315,7 @@
     if (list) list.style.display = 'block';
   }
 
-function switchTab(id) {
+  function switchTab(id) {
     closeRace();
     closeClass();
     document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
@@ -1031,7 +1323,22 @@ function switchTab(id) {
     document.getElementById('tab-' + id).classList.add('active');
     const btn = [...document.querySelectorAll('.tab-btn')].find(b => b.getAttribute('onclick')?.includes("'" + id + "'"));
     if (btn) { btn.classList.add('active'); btn.setAttribute('aria-selected','true'); }
+    try { history.replaceState(null, '', '#' + id); } catch(e) {}
   }
+
+  // Back to top
+  window.addEventListener('scroll', () => {
+    const btn = document.getElementById('back-to-top');
+    if (window.scrollY > 300) btn.classList.add('visible');
+    else btn.classList.remove('visible');
+  });
+
+  // Load tab from URL hash on page open
+  window.addEventListener('DOMContentLoaded', () => {
+    const hash = window.location.hash.replace('#', '');
+    const valid = ['server','rules','faq','lore','races','classes','mechanics','combat'];
+    if (hash && valid.includes(hash)) switchTab(hash);
+  });
 
   // Particles
   const container = document.getElementById('particles');
