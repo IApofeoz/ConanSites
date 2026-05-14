@@ -125,6 +125,44 @@
     flex-shrink: 0;
   }
 
+  /* ─── DROPDOWN ─── */
+  .tab-dropdown { position: relative; display: inline-block; }
+  .tab-dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 100;
+    min-width: 160px;
+    background: var(--bg3);
+    border: 1px solid var(--gold-dark);
+    border-top: none;
+    flex-direction: column;
+  }
+  .tab-dropdown:hover .tab-dropdown-menu { display: flex; }
+  .tab-dropdown-menu button, .tab-dropdown-menu a {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    padding: 12px 20px;
+    cursor: pointer;
+    text-align: left;
+    text-decoration: none;
+    transition: color 0.2s, background 0.2s;
+    display: block;
+    width: 100%;
+  }
+  .tab-dropdown-menu button:last-child { border-bottom: none; }
+  .tab-dropdown-menu button:hover, .tab-dropdown-menu a:hover {
+    color: var(--gold);
+    background: var(--bg4);
+  }
+
   /* ─── TABS ─── */
   .tabs-nav {
     display: flex;
@@ -400,15 +438,59 @@
     <h1>Эпоха Забытых Богов</h1>
     <p class="tagline">Мир, где легенды обретают плоть</p>
 
-  </header>
+    <div style="display:inline-flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:0.5rem;">
 
-  <!-- TABS NAVIGATION -->
+      <a href="#" target="_blank" style="
+        display: inline-flex;align-items:center;gap:10px;
+        padding:12px 28px;
+        background:rgba(88,101,242,0.12);border:1px solid rgba(88,101,242,0.4);
+        color:#8a9ef5;font-family:'Cinzel',serif;font-size:11px;
+        letter-spacing:0.2em;text-transform:uppercase;text-decoration:none;
+        transition:background 0.25s,border-color 0.25s,color 0.25s;"
+      onmouseover="this.style.background='rgba(88,101,242,0.22)';this.style.borderColor='rgba(88,101,242,0.7)';this.style.color='#b0bcff';"
+      onmouseout="this.style.background='rgba(88,101,242,0.12)';this.style.borderColor='rgba(88,101,242,0.4)';this.style.color='#8a9ef5';">
+        <svg width="18" height="14" viewBox="0 0 71 55" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M60.1 4.9A58.6 58.6 0 0 0 45.8.7a40 40 0 0 0-1.8 3.7 54.2 54.2 0 0 0-16.3 0A38 38 0 0 0 25.9.7 58.5 58.5 0 0 0 11.5 5C1.7 19.6-1 33.8.3 47.8a59 59 0 0 0 18 9.1 42.8 42.8 0 0 0 3.7-6 38.4 38.4 0 0 1-5.8-2.8l1.4-1.1a42 42 0 0 0 36 0l1.4 1.1a38.2 38.2 0 0 1-5.8 2.8 42.6 42.6 0 0 0 3.7 6 58.8 58.8 0 0 0 18-9c1.5-16-2.6-30-10.8-42.9ZM23.7 39.2c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.5 0 6.3 3.2 6.3 7.2s-2.8 7.2-6.3 7.2Zm23.6 0c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.5 0 6.3 3.2 6.3 7.2s-2.8 7.2-6.3 7.2Z" fill="currentColor"/>
+        </svg>
+        Вступить в Discord
+      </a>
+
+      <a href="#" target="_blank" style="
+        display:inline-flex;align-items:center;gap:10px;
+        padding:12px 28px;
+        background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.3);
+        color:var(--gold-dark);font-family:'Cinzel',serif;font-size:11px;
+        letter-spacing:0.2em;text-transform:uppercase;text-decoration:none;
+        transition:background 0.25s,border-color 0.25s,color 0.25s;"
+      onmouseover="this.style.background='rgba(201,168,76,0.16)';this.style.borderColor='rgba(201,168,76,0.6)';this.style.color='var(--gold)';"
+      onmouseout="this.style.background='rgba(201,168,76,0.08)';this.style.borderColor='rgba(201,168,76,0.3)';this.style.color='var(--gold-dark)';">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        WarGM — Рейтинг
+      </a>
+
+    </div>
+
+  </header>
   <nav class="tabs-nav" role="tablist">
-    <button class="tab-btn active" onclick="switchTab('server')" role="tab" aria-selected="true">О Сервере</button>
+    <div class="tab-dropdown">
+      <button class="tab-btn active" onclick="switchTab('server')" role="tab" aria-selected="true">О Сервере ▾</button>
+      <div class="tab-dropdown-menu">
+        <button onclick="switchTab('server')">О Сервере</button>
+        <button onclick="switchTab('rules')">Правила</button>
+      </div>
+    </div>
     <button class="tab-btn" onclick="switchTab('lore')" role="tab" aria-selected="false">Лор</button>
     <button class="tab-btn" onclick="switchTab('races')" role="tab" aria-selected="false">Расы</button>
     <button class="tab-btn" onclick="switchTab('classes')" role="tab" aria-selected="false">Классы</button>
-    <button class="tab-btn" onclick="switchTab('mechanics')" role="tab" aria-selected="false">Механики</button>
+    <div class="tab-dropdown">
+      <button class="tab-btn" onclick="switchTab('mechanics')" role="tab" aria-selected="false">Механики ▾</button>
+      <div class="tab-dropdown-menu">
+        <button onclick="switchTab('mechanics')">Механики</button>
+        <button onclick="switchTab('combat')">Базис пошаговой боевки</button>
+      </div>
+    </div>
     <a href="https://docs.google.com/document/d/11Hfrcb7KPpVQRoXvMsQvWEnmveECZWP7Zv90JpkBJCE/edit?usp=sharing" target="_blank" class="tab-btn" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;">Кодекс ролевика ↗</a>
   </nav>
 
@@ -432,6 +514,101 @@
 
       <p><strong style="font-family:'Cinzel',serif;color:var(--gold-light);">Формат:</strong> Ролевой сервер на Conan Exiles Enhanced. Все действия описываются текстом, броски совершаются прямо в игре. Рейтинг 18+, требуется квента.</p>
       <p><strong style="font-family:'Cinzel',serif;color:var(--gold-light);">Режим смерти:</strong> Перманентная. Мы верим, что риск делает победу настоящей.</p>
+    </div>
+
+    <!-- ПРАВИЛА -->
+    <div class="tab-content" id="tab-rules">
+      <div class="section-title">Правила</div>
+      <div class="section-subtitle">✦ кодекс странника ✦</div>
+
+      <p class="lead">Прежде чем войти в этот мир — убедитесь, что понимаете его язык и его законы.</p>
+
+      <div class="divider"><div class="divider-line"></div><div class="divider-gem"></div><div class="divider-line"></div></div>
+
+      <div class="section-title" style="font-size:1.1rem;margin-bottom:0.25rem;">Словарь</div>
+      <div class="section-subtitle">✦ язык ролевого сообщества ✦</div>
+
+      <div class="mechanic-list">
+        <div class="mechanic-item">
+          <div class="mechanic-icon">💬</div>
+          <div class="mechanic-body">
+            <h3>IC — In Character</h3>
+            <p>«В роли». Всё, что происходит от лица вашего персонажа: его слова, действия, мысли. IC-информация — это то, что персонаж видел, слышал и пережил сам.</p>
+          </div>
+        </div>
+        <div class="mechanic-item">
+          <div class="mechanic-icon">🙍</div>
+          <div class="mechanic-body">
+            <h3>OOC — Out Of Character</h3>
+            <p>«Вне роли». Общение между игроками как людьми, а не персонажами. Организационные вопросы, уточнения по правилам, личные сообщения — всё это OOC.</p>
+          </div>
+        </div>
+        <div class="mechanic-item">
+          <div class="mechanic-icon">🚫</div>
+          <div class="mechanic-body">
+            <h3>Metagaming — Метагейминг</h3>
+            <p>Использование OOC-информации в IC-ситуациях. Например: вы знаете, что персонаж другого игрока — шпион, потому что читали его квенту, но ваш персонаж этого знать не может. Использовать это знание в игре — метагейминг.</p>
+          </div>
+        </div>
+        <div class="mechanic-item">
+          <div class="mechanic-icon">📖</div>
+          <div class="mechanic-body">
+            <h3>Квента</h3>
+            <p>Биография и история персонажа, которую игрок пишет перед вступлением на сервер. Квента — это основа вашего персонажа: его прошлое, мотивация и характер.</p>
+          </div>
+        </div>
+
+        <div class="mechanic-item">
+          <div class="mechanic-icon">🎲</div>
+          <div class="mechanic-body">
+            <h3>DC — Difficulty Class</h3>
+            <p>Сложность действия. Число, которое нужно превысить броском кубика, чтобы действие удалось. Чем выше DC — тем сложнее задача.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"><div class="divider-line"></div><div class="divider-gem"></div><div class="divider-line"></div></div>
+
+      <div class="section-title" style="font-size:1.1rem;margin-bottom:0.25rem;">Правила Общения</div>
+      <div class="section-subtitle">✦ законы этого мира ✦</div>
+
+      <div class="mechanic-list">
+        <div class="mechanic-item">
+          <div class="mechanic-icon">⚖️</div>
+          <div class="mechanic-body">
+            <h3>Уважение к участникам</h3>
+            <p>Агрессия, оскорбления и травля — вне закона вне зависимости от контекста. Конфликты между персонажами остаются внутри игры; конфликты между игроками решаются через администрацию.</p>
+          </div>
+        </div>
+        <div class="mechanic-item">
+          <div class="mechanic-icon">🎭</div>
+          <div class="mechanic-body">
+            <h3>Разграничение игрока и персонажа</h3>
+            <p>То, что происходит с вашим персонажем — не происходит с вами. Не переносите игровые конфликты в личку и реальную жизнь. Вы можете ненавидеть персонажа и уважать игрока.</p>
+          </div>
+        </div>
+        <div class="mechanic-item">
+          <div class="mechanic-icon">🤐</div>
+          <div class="mechanic-body">
+            <h3>Никакого метагейминга</h3>
+            <p>Ваш персонаж знает только то, что узнал в игре. Использование информации, полученной вне роли — нарушение, которое разрушает атмосферу для всех участников.</p>
+          </div>
+        </div>
+        <div class="mechanic-item">
+          <div class="mechanic-icon">✍️</div>
+          <div class="mechanic-body">
+            <h3>Грамотность и уважение к тексту</h3>
+            <p>Мы текстовый проект — слова это наш основной инструмент. Старайтесь писать грамотно и развёрнуто. Односложные посты допустимы в быстром диалоге, но не в ключевых сценах.</p>
+          </div>
+        </div>
+        <div class="mechanic-item">
+          <div class="mechanic-icon">🛡️</div>
+          <div class="mechanic-body">
+            <h3>Решения администрации</h3>
+            <p>Слово мастера — закон. Если вы не согласны с решением — обсудите это в личном сообщении, а не в публичных каналах. Публичные споры с администрацией ведут к предупреждению.</p>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- ЛОР -->
@@ -697,6 +874,96 @@
       </div>
     </div>
 
+    <!-- БАЗИС ПОШАГОВОЙ БОЕВКИ -->
+    <div class="tab-content" id="tab-combat">
+      <div class="section-title">Базис Пошаговой Боевки</div>
+      <div class="section-subtitle">✦ законы боя ✦</div>
+
+      <p class="lead">Каждый раунд длится примерно 6 секунд игрового времени. За это время персонаж может совершить следующие действия.</p>
+
+      <div class="divider"><div class="divider-line"></div><div class="divider-gem"></div><div class="divider-line"></div></div>
+
+      <div class="section-title" style="font-size:1.1rem;margin-bottom:0.25rem;">Структура Хода</div>
+      <div class="section-subtitle">✦ что можно сделать за один раунд ✦</div>
+
+      <div class="mechanic-list">
+
+        <div class="mechanic-item">
+          <div class="mechanic-icon">⚔️</div>
+          <div class="mechanic-body">
+            <h3>Действие</h3>
+            <p>Основное действие раунда — одно на ход. Сюда входит атака, применение умения, помощь союзнику, использование предмета, засада, захват или любое другое значимое действие. Если персонаж атакует — бросается d20 + модификатор против AC противника.</p>
+          </div>
+        </div>
+
+        <div class="mechanic-item">
+          <div class="mechanic-icon">✨</div>
+          <div class="mechanic-body">
+            <h3>Бонусное Действие</h3>
+            <p>Быстрое вспомогательное действие — одно на ход. Доступно не всем классам и не в каждой ситуации. Примеры: второй удар у воина, короткое заклинание у мага, использование зелья, скрытное перемещение у плута.</p>
+          </div>
+        </div>
+
+        <div class="mechanic-item">
+          <div class="mechanic-icon">🏃</div>
+          <div class="mechanic-body">
+            <h3>Передвижение</h3>
+            <p>Персонаж может переместиться на расстояние своей скорости в любой момент хода — до, после или между другими действиями. Передвижение можно разбить: подойти, атаковать, отступить. Скорость можно потратить частично.</p>
+          </div>
+        </div>
+
+        <div class="mechanic-item">
+          <div class="mechanic-icon">🛡️</div>
+          <div class="mechanic-body">
+            <h3>Реакция</h3>
+            <p>Мгновенный ответ на событие — один раз между своими ходами. Используется не в свой ход, а в ответ на действие противника или союзника. Примеры: контратака, уклонение, перехват удара, заклинание-контрзаклинание.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="divider"><div class="divider-line"></div><div class="divider-gem"></div><div class="divider-line"></div></div>
+
+      <div class="section-title" style="font-size:1.1rem;margin-bottom:0.25rem;">Боевые Правила</div>
+      <div class="section-subtitle">✦ инициатива и порядок ходов ✦</div>
+
+      <div class="mechanic-list">
+
+        <div class="mechanic-item">
+          <div class="mechanic-icon">🎯</div>
+          <div class="mechanic-body">
+            <h3>Инициатива</h3>
+            <p>В начале боя каждый участник бросает d20 + модификатор Ловкости. Результат определяет место в очереди ходов. Мастер ведёт список и объявляет порядок в начале каждого раунда. При равных результатах — приоритет у игрока с более высоким модификатором Ловкости.</p>
+          </div>
+        </div>
+
+        <div class="mechanic-item">
+          <div class="mechanic-icon">📋</div>
+          <div class="mechanic-body">
+            <h3>Порядок Ходов</h3>
+            <p>Участники ходят по убыванию инициативы — от наибольшего к наименьшему. Когда все сделали ход, начинается новый раунд и порядок повторяется. Пропустить ход можно добровольно, но он сгорает — перенести на следующий раунд нельзя.</p>
+          </div>
+        </div>
+
+        <div class="mechanic-item">
+          <div class="mechanic-icon">💥</div>
+          <div class="mechanic-body">
+            <h3>Атака и Урон</h3>
+            <p>Атака: бросок d20 + модификатор атаки. Если результат равен или превышает AC цели — удар попал. Урон бросается отдельно кубиком оружия (d6, d8, d10 и т.д.) + модификатор. Критическое попадание (20 на d20) — урон удваивается.</p>
+          </div>
+        </div>
+
+        <div class="mechanic-item">
+          <div class="mechanic-icon">🩸</div>
+          <div class="mechanic-body">
+            <h3>Смерть и Состояния</h3>
+            <p>Когда HP персонажа достигают нуля — он без сознания. Ему бросается спасбросок смерти (d20): 10 и выше — успех, ниже — провал. Три провала — смерть. Три успеха — стабилизация. Союзник может стабилизировать персонажа действием без броска. Помните: смерть на этом сервере перманентна.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
   </div>
   <!-- /tabs-body -->
 
@@ -762,7 +1029,7 @@ function switchTab(id) {
     document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(el => { el.classList.remove('active'); el.setAttribute('aria-selected','false'); });
     document.getElementById('tab-' + id).classList.add('active');
-    const btn = [...document.querySelectorAll('.tab-btn')].find(b => b.getAttribute('onclick').includes("'" + id + "'"));
+    const btn = [...document.querySelectorAll('.tab-btn')].find(b => b.getAttribute('onclick')?.includes("'" + id + "'"));
     if (btn) { btn.classList.add('active'); btn.setAttribute('aria-selected','true'); }
   }
 
