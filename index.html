@@ -409,6 +409,7 @@
     <button class="tab-btn" onclick="switchTab('races')" role="tab" aria-selected="false">Расы</button>
     <button class="tab-btn" onclick="switchTab('classes')" role="tab" aria-selected="false">Классы</button>
     <button class="tab-btn" onclick="switchTab('mechanics')" role="tab" aria-selected="false">Механики</button>
+    <a href="https://docs.google.com/document/d/11Hfrcb7KPpVQRoXvMsQvWEnmveECZWP7Zv90JpkBJCE/edit?usp=sharing" target="_blank" class="tab-btn" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;">Кодекс ролевика ↗</a>
   </nav>
 
   <!-- TABS BODY -->
@@ -448,7 +449,7 @@
       <div id="races-list">
         <div class="section-title">Расы Арасса</div>
         <div class="section-subtitle">✦ дети богов, осколки творения ✦</div>
-        <p class="lead">Два народа населяют этот мир, и у каждого — своя правда, своё место в истории и свои счёты с остальными.</p>
+        <p class="lead">Три народа населяют этот мир, и у каждого — своя правда, своё место в истории и свои счёты с остальными.</p>
 
         <div class="card-grid">
 
@@ -464,7 +465,15 @@
             <div class="card-corner tl"></div><div class="card-corner br"></div>
             <span class="card-icon">🌿</span>
             <div class="card-title">Эльфы</div>
-            <p class="card-desc">Живут тысячи лет и помнят мир таким, каким он был. Высокомерие эльфов — это не снобизм, а усталость от того, что всё вокруг меняется, кроме них самих.</p>
+            <p class="card-desc">Живут тысячи лет и помнят мир таким, каким он был. Три ветви одного народа — каждая избрала свой путь, и пути эти давно разошлись.</p>
+            <div style="margin-top:1rem;font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.2em;color:var(--gold-dark);">ПОДРОБНЕЕ →</div>
+          </div>
+
+          <div class="card race-card" onclick="openRace('dwarves')" style="cursor:pointer;">
+            <div class="card-corner tl"></div><div class="card-corner br"></div>
+            <span class="card-icon">⚒️</span>
+            <div class="card-title">Дварфы</div>
+            <p class="card-desc">Мастера, строители и хранители древних клятв. Для дварфа нарушить слово — страшнее смерти. Их подземные города — чудо архитектуры, их кузнецы — легенды мира.</p>
             <div style="margin-top:1rem;font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.2em;color:var(--gold-dark);">ПОДРОБНЕЕ →</div>
           </div>
 
@@ -474,7 +483,7 @@
       <!-- ДЕТАЛЬНЫЕ СТРАНИЦЫ РАС -->
       <div id="race-detail" style="display:none;">
 
-        <!-- Кнопка назад -->
+        <!-- Кнопка назад к расам -->
         <button onclick="closeRace()" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:8px;font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold-dark);padding:0;margin-bottom:2rem;transition:color 0.2s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--gold-dark)'">
           ← Назад к расам
         </button>
@@ -486,10 +495,72 @@
           <p class="lead" style="font-style:italic;color:var(--text-muted);margin-top:2rem;text-align:center;">Подробное описание расы будет добавлено позже.</p>
         </div>
 
-        <!-- Эльфы -->
+        <!-- Эльфы — подрасы -->
         <div id="detail-elves" class="race-detail-block" style="display:none;">
-          <div class="section-title">🌿 Эльфы</div>
-          <div class="section-subtitle">✦ дети вечности ✦</div>
+          <div id="elves-list">
+            <div class="section-title">🌿 Эльфы</div>
+            <div class="section-subtitle">✦ три ветви одного народа ✦</div>
+            <p style="margin-bottom:2rem;">Некогда единый народ, эльфы разделились на три ветви — каждая избрала свой путь. Между ними нет войны, но нет и единства. Только общая память о том, кем они были когда-то.</p>
+
+            <div class="card-grid">
+
+              <div class="card race-card" onclick="openSubrace('highelf')" style="cursor:pointer;">
+                <div class="card-corner tl"></div><div class="card-corner br"></div>
+                <span class="card-icon">✨</span>
+                <div class="card-title">Высшие Эльфы</div>
+                <p class="card-desc">Хранители древних традиций и магических искусств. Гордые, холодные, безупречные — они помнят мир таким, каким он был до людей.</p>
+                <div style="margin-top:1rem;font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.2em;color:var(--gold-dark);">ПОДРОБНЕЕ →</div>
+              </div>
+
+              <div class="card race-card" onclick="openSubrace('halfelf')" style="cursor:pointer;">
+                <div class="card-corner tl"></div><div class="card-corner br"></div>
+                <span class="card-icon">🌙</span>
+                <div class="card-title">Полуэльфы</div>
+                <p class="card-desc">Дети двух миров, принятые ни одним. Полуэльфы выживают за счёт гибкости и умения читать людей — качества, которых лишены чистокровные расы.</p>
+                <div style="margin-top:1rem;font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.2em;color:var(--gold-dark);">ПОДРОБНЕЕ →</div>
+              </div>
+
+              <div class="card race-card" onclick="openSubrace('drow')" style="cursor:pointer;">
+                <div class="card-corner tl"></div><div class="card-corner br"></div>
+                <span class="card-icon">🕸️</span>
+                <div class="card-title">Дроу</div>
+                <p class="card-desc">Изгнанники, ушедшие в подземный мир. Дроу обратили тьму в силу — их магия рождена из теней, а культура выкована в борьбе за выживание.</p>
+                <div style="margin-top:1rem;font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.2em;color:var(--gold-dark);">ПОДРОБНЕЕ →</div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Детали подрас — отдельный слой -->
+          <div id="subrace-detail" style="display:none;">
+            <button onclick="closeSubrace()" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:8px;font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold-dark);padding:0;margin-bottom:2rem;transition:color 0.2s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--gold-dark)'">
+              ← Назад к эльфам
+            </button>
+
+            <div id="detail-highelf" class="subrace-detail-block" style="display:none;">
+              <div class="section-title">✨ Высшие Эльфы</div>
+              <div class="section-subtitle">✦ хранители первородной магии ✦</div>
+              <p class="lead" style="font-style:italic;color:var(--text-muted);margin-top:2rem;text-align:center;">Подробное описание будет добавлено позже.</p>
+            </div>
+
+            <div id="detail-halfelf" class="subrace-detail-block" style="display:none;">
+              <div class="section-title">🌙 Полуэльфы</div>
+              <div class="section-subtitle">✦ между двух миров ✦</div>
+              <p class="lead" style="font-style:italic;color:var(--text-muted);margin-top:2rem;text-align:center;">Подробное описание будет добавлено позже.</p>
+            </div>
+
+            <div id="detail-drow" class="subrace-detail-block" style="display:none;">
+              <div class="section-title">🕸️ Дроу</div>
+              <div class="section-subtitle">✦ дети вечной тьмы ✦</div>
+              <p class="lead" style="font-style:italic;color:var(--text-muted);margin-top:2rem;text-align:center;">Подробное описание будет добавлено позже.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Дварфы -->
+        <div id="detail-dwarves" class="race-detail-block" style="display:none;">
+          <div class="section-title">⚒️ Дварфы</div>
+          <div class="section-subtitle">✦ хранители клятв и камня ✦</div>
           <p class="lead" style="font-style:italic;color:var(--text-muted);margin-top:2rem;text-align:center;">Подробное описание расы будет добавлено позже.</p>
         </div>
 
@@ -638,6 +709,20 @@
 </div>
 
 <script>
+  function openSubrace(id) {
+    document.getElementById('elves-list').style.display = 'none';
+    document.querySelectorAll('.subrace-detail-block').forEach(el => el.style.display = 'none');
+    document.getElementById('subrace-detail').style.display = 'block';
+    const target = document.getElementById('detail-' + id);
+    if (target) { target.style.display = 'block'; target.style.animation = 'fadeIn 0.35s ease'; }
+  }
+
+  function closeSubrace() {
+    document.getElementById('subrace-detail').style.display = 'none';
+    document.querySelectorAll('.subrace-detail-block').forEach(el => el.style.display = 'none');
+    document.getElementById('elves-list').style.display = 'block';
+  }
+
   function openRace(id) {
     document.getElementById('races-list').style.display = 'none';
     document.getElementById('race-detail').style.display = 'block';
@@ -663,6 +748,8 @@
   }
 
   function closeRace() {
+    closeSubrace();
+    document.getElementById('elves-list').style.display = 'block';
     const detail = document.getElementById('race-detail');
     const list = document.getElementById('races-list');
     if (detail) detail.style.display = 'none';
