@@ -498,32 +498,69 @@
 
     <!-- КЛАССЫ -->
     <div class="tab-content" id="tab-classes">
-      <div class="section-title">Классы</div>
-      <div class="section-subtitle">✦ путь, который ты выбираешь ✦</div>
 
-      <p class="lead">Класс — это не профессия. Это мировоззрение, способ решать проблемы и набор инструментов, которыми ты пользуешься, когда мир становится враждебным.</p>
+      <!-- СПИСОК КЛАССОВ -->
+      <div id="classes-list">
+        <div class="section-title">Классы</div>
+        <div class="section-subtitle">✦ путь, который ты выбираешь ✦</div>
 
-      <div class="card-grid">
+        <p class="lead">Класс — это не профессия. Это мировоззрение, способ решать проблемы и набор инструментов, которыми ты пользуешься, когда мир становится враждебным.</p>
 
-        <div class="card">
-          <div class="card-corner tl"></div><div class="card-corner br"></div>
-          <span class="card-icon">⚔️</span>
-          <div class="card-title">Воин</div>
-          <p class="card-desc">Мастер клинка и брони. Воин — это не просто солдат, это человек, сделавший из боя искусство. Высокая выживаемость, доступ к тяжёлой броне.</p>
+        <div class="card-grid">
+
+          <div class="card race-card" onclick="openClass('warrior')" style="cursor:pointer;">
+            <div class="card-corner tl"></div><div class="card-corner br"></div>
+            <span class="card-icon">⚔️</span>
+            <div class="card-title">Воин</div>
+            <p class="card-desc">Мастер клинка и брони. Воин — это не просто солдат, это человек, сделавший из боя искусство. Высокая выживаемость, доступ к тяжёлой броне.</p>
+            <div style="margin-top:1rem;font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.2em;color:var(--gold-dark);">ПОДРОБНЕЕ →</div>
+          </div>
+
+          <div class="card race-card" onclick="openClass('mage')" style="cursor:pointer;">
+            <div class="card-corner tl"></div><div class="card-corner br"></div>
+            <span class="card-icon">🔮</span>
+            <div class="card-title">Маг</div>
+            <p class="card-desc">Повелитель стихий и тайных сил. Хрупкий, но смертоносный. Маг переписывает реальность — если успевает сосредоточиться прежде, чем его убьют.</p>
+            <div style="margin-top:1rem;font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.2em;color:var(--gold-dark);">ПОДРОБНЕЕ →</div>
+          </div>
+
+          <div class="card race-card" onclick="openClass('rogue')" style="cursor:pointer;">
+            <div class="card-corner tl"></div><div class="card-corner br"></div>
+            <span class="card-icon">🗡️</span>
+            <div class="card-title">Плут</div>
+            <p class="card-desc">Информация — лучшее оружие. Плут знает, кто кому должен, где хранится секрет и как пройти туда, куда вход закрыт. Мастер теней и социальных интриг.</p>
+            <div style="margin-top:1rem;font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.2em;color:var(--gold-dark);">ПОДРОБНЕЕ →</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ДЕТАЛЬНЫЕ СТРАНИЦЫ КЛАССОВ -->
+      <div id="class-detail" style="display:none;">
+
+        <button onclick="closeClass()" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:8px;font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold-dark);padding:0;margin-bottom:2rem;transition:color 0.2s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--gold-dark)'">
+          ← Назад к классам
+        </button>
+
+        <!-- Воин -->
+        <div id="detail-warrior" class="class-detail-block" style="display:none;">
+          <div class="section-title">⚔️ Воин</div>
+          <div class="section-subtitle">✦ сталь и воля ✦</div>
+          <p class="lead" style="font-style:italic;color:var(--text-muted);margin-top:2rem;text-align:center;">Подробное описание класса будет добавлено позже.</p>
         </div>
 
-        <div class="card">
-          <div class="card-corner tl"></div><div class="card-corner br"></div>
-          <span class="card-icon">🔮</span>
-          <div class="card-title">Маг</div>
-          <p class="card-desc">Повелитель стихий и тайных сил. Хрупкий, но смертоносный. Маг переписывает реальность — если успевает сосредоточиться прежде, чем его убьют.</p>
+        <!-- Маг -->
+        <div id="detail-mage" class="class-detail-block" style="display:none;">
+          <div class="section-title">🔮 Маг</div>
+          <div class="section-subtitle">✦ власть над стихиями ✦</div>
+          <p class="lead" style="font-style:italic;color:var(--text-muted);margin-top:2rem;text-align:center;">Подробное описание класса будет добавлено позже.</p>
         </div>
 
-        <div class="card">
-          <div class="card-corner tl"></div><div class="card-corner br"></div>
-          <span class="card-icon">🗡️</span>
-          <div class="card-title">Плут</div>
-          <p class="card-desc">Информация — лучшее оружие. Плут знает, кто кому должен, где хранится секрет и как пройти туда, куда вход закрыт. Мастер теней и социальных интриг.</p>
+        <!-- Плут -->
+        <div id="detail-rogue" class="class-detail-block" style="display:none;">
+          <div class="section-title">🗡️ Плут</div>
+          <div class="section-subtitle">✦ тень и обман ✦</div>
+          <p class="lead" style="font-style:italic;color:var(--text-muted);margin-top:2rem;text-align:center;">Подробное описание класса будет добавлено позже.</p>
         </div>
 
       </div>
@@ -610,13 +647,31 @@
     target.style.animation = 'fadeIn 0.35s ease';
   }
 
-  function closeRace() {
-    document.getElementById('race-detail').style.display = 'none';
-    document.getElementById('races-list').style.display = 'block';
+  function openClass(id) {
+    document.getElementById('classes-list').style.display = 'none';
+    document.getElementById('class-detail').style.display = 'block';
+    document.querySelectorAll('.class-detail-block').forEach(el => el.style.display = 'none');
+    const target = document.getElementById('detail-' + id);
+    if (target) { target.style.display = 'block'; target.style.animation = 'fadeIn 0.35s ease'; }
   }
 
-  function switchTab(id) {
+  function closeClass() {
+    const detail = document.getElementById('class-detail');
+    const list = document.getElementById('classes-list');
+    if (detail) detail.style.display = 'none';
+    if (list) list.style.display = 'block';
+  }
+
+  function closeRace() {
+    const detail = document.getElementById('race-detail');
+    const list = document.getElementById('races-list');
+    if (detail) detail.style.display = 'none';
+    if (list) list.style.display = 'block';
+  }
+
+function switchTab(id) {
     closeRace();
+    closeClass();
     document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(el => { el.classList.remove('active'); el.setAttribute('aria-selected','false'); });
     document.getElementById('tab-' + id).classList.add('active');
