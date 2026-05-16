@@ -3,36 +3,46 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Эпоха Забытых Богов</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<title>Эвериум</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cinzel:wght@400;500;600;700&family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --gold: #c9a84c;
-    --gold-light: #e8c97a;
-    --gold-dark: #8c6d2f;
-    --bg: #0a0806;
-    --bg2: #110e09;
-    --bg3: #1a1510;
-    --bg4: #231d14;
-    --text: #d4c5a9;
-    --text-muted: #7d6e57;
-    --text-bright: #f0e6d0;
-    --red: #8b2c2c;
-    --red-light: #c44040;
-    --border: #2e2518;
-    --border-gold: #3d2f18;
+    --gold:        #dcb858;
+    --gold-light:  #f3d68a;
+    --gold-pale:   #faecc4;
+    --gold-dark:   #a48340;
+    --gold-deep:   #75582a;
+    --ember:       #d75a36;
+    --bg:          #0f0c08;
+    --bg-1:        #14110c;
+    --bg-2:        #1a1610;
+    --bg-3:        #211b13;
+    --bg-4:        #2a2218;
+    --bg-5:        #38301f;
+    --text:        #e2d4b4;
+    --text-soft:   #bda884;
+    --text-muted:  #93805e;
+    --text-faint:  #6a5c43;
+    --text-bright: #faefd6;
+    --border:      #3a3014;
+    --border-soft: #271f0d;
+    --border-gold: #50401f;
+    --rule:        rgba(220,184,88,0.22);
   }
 
   html, body {
     background: var(--bg);
     color: var(--text);
-    font-family: 'Crimson Text', Georgia, serif;
+    font-family: 'Cormorant Garamond', 'Crimson Pro', Georgia, serif;
     font-size: 18px;
-    line-height: 1.75;
+    line-height: 1.7;
     min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
+  body { overflow-x: hidden; }
 
   /* ─── BACKGROUND TEXTURE ─── */
   body::before {
@@ -40,723 +50,1568 @@
     position: fixed;
     inset: 0;
     background-image:
-      radial-gradient(ellipse 80% 50% at 50% 0%, #1e1508 0%, transparent 70%),
-      radial-gradient(ellipse 60% 40% at 20% 80%, #1a0e06 0%, transparent 60%),
-      radial-gradient(ellipse 50% 30% at 80% 60%, #0d0a14 0%, transparent 50%);
+      radial-gradient(ellipse 70% 55% at 50% 50%, #2e2210 0%, transparent 65%),
+      radial-gradient(ellipse 40% 35% at 50% 50%, #3a2a14 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 50% 100%, #1a1208 0%, transparent 75%);
     pointer-events: none;
     z-index: 0;
   }
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.78  0 0 0 0 0.66  0 0 0 0 0.3  0 0 0 0.04 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    pointer-events: none;
+    z-index: 0;
+    mix-blend-mode: overlay;
+    opacity: 0.55;
+  }
 
-  /* ─── PARTICLES ─── */
+  /* ─── EMBERS ─── */
   .particles { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
   .particle {
     position: absolute;
-    width: 2px; height: 2px;
+    width: 1.5px; height: 1.5px;
     background: var(--gold);
     border-radius: 50%;
     opacity: 0;
-    animation: drift var(--dur, 8s) var(--delay, 0s) infinite ease-in-out;
+    box-shadow: 0 0 4px rgba(201,168,76,0.6);
+    animation: drift var(--dur, 12s) var(--delay, 0s) infinite ease-in-out;
   }
   @keyframes drift {
     0% { opacity: 0; transform: translateY(100vh) translateX(0); }
-    10% { opacity: 0.6; }
-    90% { opacity: 0.3; }
+    8% { opacity: 0.55; }
+    92% { opacity: 0.25; }
     100% { opacity: 0; transform: translateY(-10vh) translateX(var(--dx, 30px)); }
   }
 
   /* ─── LAYOUT ─── */
-  .site { position: relative; z-index: 1; max-width: 960px; margin: 0 auto; padding: 0 2rem 4rem; }
+  .site { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 0 2rem 4rem; }
 
-  /* ─── HEADER ─── */
+  /* ═══════════════════════════════════════ */
+  /*    STATUS BAR                          */
+  /* ═══════════════════════════════════════ */
+  .status-bar {
+    position: relative;
+    z-index: 2;
+    border-bottom: 1px solid var(--border);
+    background: rgba(7,6,10,0.6);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+  .status-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 10px 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .status-cluster { display: flex; align-items: center; gap: 1.5rem; }
+  .status-mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .status-dot {
+    width: 7px; height: 7px;
+    background: #6fbe5a;
+    border-radius: 50%;
+    box-shadow: 0 0 6px rgba(111,190,90,0.7);
+    animation: pulse 2.2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.85); }
+  }
+  .status-val { color: var(--gold-light); }
+  .status-sep { width: 1px; height: 12px; background: var(--border-gold); }
+  @media (max-width: 720px) {
+    .status-inner { padding: 8px 1rem; font-size: 9px; gap: 0.75rem; }
+    .status-cluster { gap: 0.75rem; }
+    .status-cluster.right { display: none; }
+  }
+
+  /* ═══════════════════════════════════════ */
+  /*    HEADER / HERO                        */
+  /* ═══════════════════════════════════════ */
   header {
     text-align: center;
-    padding: 4rem 0 2rem;
+    padding: 4.5rem 0 2.5rem;
     position: relative;
   }
-  .header-ornament {
-    display: block;
-    width: 100%;
-    max-width: 500px;
-    margin: 0 auto 1rem;
-    opacity: 0.5;
+  .hero-frame {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem;
+    position: relative;
   }
+  .hero-frame::before, .hero-frame::after {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border: 1px solid var(--gold-deep);
+    pointer-events: none;
+  }
+  .hero-frame::before { top: 0; left: 0; border-right: none; border-bottom: none; }
+  .hero-frame::after  { bottom: 0; right: 0; border-left: none; border-top: none; }
+  .hero-corner-tr, .hero-corner-bl {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border: 1px solid var(--gold-deep);
+    pointer-events: none;
+  }
+  .hero-corner-tr { top: 0; right: 0; border-left: none; border-bottom: none; }
+  .hero-corner-bl { bottom: 0; left: 0; border-right: none; border-top: none; }
+
+  .crest {
+    width: 110px;
+    height: 110px;
+    margin: 0 auto 1.5rem;
+    color: var(--gold);
+    filter: drop-shadow(0 0 18px rgba(201,168,76,0.22));
+  }
+
   .server-badge {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    color: var(--gold);
+    padding: 6px 4px;
+    margin-bottom: 1.25rem;
+  }
+  .server-badge::before, .server-badge::after {
+    content: '';
+    width: 32px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-deep));
+  }
+  .server-badge::after { background: linear-gradient(90deg, var(--gold-deep), transparent); }
+
+  h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2.6rem, 6vw, 4.2rem);
+    font-weight: 600;
+    color: var(--gold-pale);
+    text-shadow: 0 0 60px rgba(201,168,76,0.25), 0 2px 4px rgba(0,0,0,0.8);
+    line-height: 1.05;
+    letter-spacing: 0.14em;
+    margin-bottom: 0.75rem;
+  }
+  h1 .h1-amp {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 0.32em;
+    letter-spacing: 0.05em;
+    color: var(--text-soft);
+    margin-top: 0.6rem;
+    text-shadow: none;
+  }
+
+  .tagline {
     font-family: 'Cinzel', serif;
     font-size: 11px;
     letter-spacing: 0.4em;
-    text-transform: uppercase;
-    color: var(--gold);
-    border: 1px solid var(--gold-dark);
-    padding: 4px 20px;
-    margin-bottom: 1.5rem;
-    background: rgba(201,168,76,0.06);
-  }
-  h1 {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: clamp(2rem, 5vw, 3.2rem);
-    font-weight: 900;
-    color: var(--gold-light);
-    text-shadow: 0 0 60px rgba(201,168,76,0.3), 0 2px 4px rgba(0,0,0,0.8);
-    line-height: 1.2;
-    letter-spacing: 0.02em;
-    margin-bottom: 0.5rem;
-  }
-  .tagline {
-    font-family: 'Cinzel', serif;
-    font-size: 13px;
-    letter-spacing: 0.25em;
     color: var(--text-muted);
     text-transform: uppercase;
-    margin-bottom: 3rem;
-  }
-  .divider {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin: 2rem 0;
-  }
-  .divider-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-dark), transparent); }
-  .divider-gem {
-    width: 8px; height: 8px;
-    background: var(--gold);
-    transform: rotate(45deg);
-    box-shadow: 0 0 10px rgba(201,168,76,0.4);
-    flex-shrink: 0;
+    margin: 0 auto 2rem;
+    max-width: 480px;
   }
 
-  /* ─── CLASS STAT BLOCK ─── */
-  .stat-block {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 1px;
-    background: var(--border-gold);
-    border: 1px solid var(--gold-dark);
-    margin: 2rem 0;
-  }
-  .stat-cell {
-    background: var(--bg3);
-    padding: 1rem 1.2rem;
+  /* Mini stats below title */
+  .hero-stats {
     display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-  .stat-cell-label {
-    font-family: 'Cinzel', serif;
-    font-size: 9px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-  }
-  .stat-cell-value {
-    font-family: 'Cinzel', serif;
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--gold-light);
-  }
-  .stat-cell-sub {
-    font-size: 11px;
-    color: var(--text-muted);
-    font-style: italic;
-  }
-
-  /* ─── BACK TO TOP ─── */
-  .back-to-top {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    width: 44px;
-    height: 44px;
-    background: var(--bg3);
-    border: 1px solid var(--gold-dark);
-    color: var(--gold);
-    font-size: 18px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
     justify-content: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s, background 0.2s, border-color 0.2s;
-    z-index: 999;
+    align-items: stretch;
+    gap: 0;
+    margin: 1.5rem auto 0.5rem;
+    max-width: 560px;
+    border-top: 1px solid var(--border-gold);
+    border-bottom: 1px solid var(--border-gold);
+    padding: 0.9rem 0;
   }
-  .back-to-top.visible { opacity: 1; pointer-events: all; }
-  .back-to-top:hover { background: var(--bg4); border-color: var(--gold); }
-
-  /* ─── ANCHOR LINKS ─── */
-  .anchor-link {
-    display: inline-block;
+  .hero-stat {
+    flex: 1;
+    text-align: center;
+    padding: 0 0.5rem;
+    border-right: 1px solid var(--border-gold);
+  }
+  .hero-stat:last-child { border-right: none; }
+  .hero-stat-num {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--gold-light);
+    letter-spacing: 0.05em;
+    font-variant-numeric: lining-nums;
+  }
+  .hero-stat-num-mono { font-family: 'JetBrains Mono', monospace; font-size: 1.05rem; }
+  .hero-stat-label {
     font-family: 'Cinzel', serif;
     font-size: 9px;
-    letter-spacing: 0.2em;
-    color: var(--text-muted);
-    text-decoration: none;
-    margin-left: 10px;
-    vertical-align: middle;
-    opacity: 0;
-    transition: opacity 0.2s, color 0.2s;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-top: 4px;
+    display: block;
   }
-  .section-title:hover .anchor-link,
-  .section-title:focus-within .anchor-link { opacity: 1; }
-  .anchor-link:hover { color: var(--gold); }
 
-  /* ─── SEARCH ─── */
+  .hero-ctas {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 1.75rem;
+  }
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 28px;
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid var(--border-gold);
+    background: var(--bg-2);
+    color: var(--text-soft);
+    transition: all 0.25s;
+    position: relative;
+  }
+  .cta:hover {
+    border-color: var(--gold);
+    background: var(--bg-3);
+    color: var(--gold-light);
+    transform: translateY(-1px);
+  }
+  .cta.cta-primary {
+    border-color: var(--gold-dark);
+    background: linear-gradient(180deg, rgba(201,168,76,0.08), rgba(201,168,76,0.02));
+    color: var(--gold-light);
+  }
+  .cta.cta-primary:hover {
+    background: linear-gradient(180deg, rgba(201,168,76,0.16), rgba(201,168,76,0.05));
+    border-color: var(--gold);
+  }
+  .cta svg { color: inherit; flex-shrink: 0; }
+
+  /* ═══════════════════════════════════════ */
+  /*    SEARCH                                */
+  /* ═══════════════════════════════════════ */
   .search-wrap {
     position: relative;
-    max-width: 480px;
-    margin: 0 auto 1.5rem;
+    max-width: 520px;
+    margin: 0 auto 2rem;
   }
   .search-input {
     width: 100%;
-    background: var(--bg2);
+    background: var(--bg-1);
     border: 1px solid var(--border-gold);
-    padding: 10px 42px 10px 16px;
+    padding: 12px 48px 12px 18px;
     font-family: 'Cinzel', serif;
     font-size: 12px;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.12em;
     color: var(--text);
     outline: none;
-    transition: border-color 0.25s;
+    transition: all 0.25s;
   }
-  .search-input::placeholder { color: var(--text-muted); }
-  .search-input:focus { border-color: var(--gold-dark); }
+  .search-input::placeholder { color: var(--text-faint); letter-spacing: 0.2em; }
+  .search-input:focus {
+    border-color: var(--gold-dark);
+    background: var(--bg-2);
+    box-shadow: 0 0 0 1px rgba(201,168,76,0.15), inset 0 0 30px rgba(201,168,76,0.04);
+  }
   .search-icon {
     position: absolute;
-    right: 14px; top: 50%;
+    right: 16px; top: 50%;
     transform: translateY(-50%);
     color: var(--text-muted);
     pointer-events: none;
-    font-size: 15px;
   }
   .search-results {
     display: none;
     position: absolute;
-    top: 100%; left: 0; right: 0;
-    background: var(--bg3);
-    border: 1px solid var(--gold-dark);
-    border-top: none;
+    top: calc(100% + 2px); left: 0; right: 0;
+    background: var(--bg-2);
+    border: 1px solid var(--gold-deep);
     z-index: 200;
-    max-height: 320px;
+    max-height: 360px;
     overflow-y: auto;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.7);
   }
   .search-result-item {
-    padding: 12px 16px;
+    padding: 14px 18px;
     border-bottom: 1px solid var(--border);
     cursor: pointer;
-    transition: background 0.2s;
+    transition: background 0.18s;
   }
   .search-result-item:last-child { border-bottom: none; }
-  .search-result-item:hover { background: var(--bg4); }
+  .search-result-item:hover { background: var(--bg-3); }
   .search-result-title {
     font-family: 'Cinzel', serif;
-    font-size: 11px;
+    font-size: 12px;
     color: var(--gold-light);
-    letter-spacing: 0.1em;
-    margin-bottom: 3px;
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+    font-weight: 500;
   }
   .search-result-section {
     font-family: 'Cinzel', serif;
     font-size: 9px;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: var(--text-muted);
+    color: var(--text-faint);
     margin-bottom: 4px;
   }
-  .search-result-snippet { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
-  .search-highlight { color: var(--gold); font-style: normal; }
-  .search-empty { padding: 1.5rem; text-align: center; font-family: 'Cinzel', serif; font-size: 11px; color: var(--text-muted); letter-spacing: 0.1em; }
+  .search-result-snippet { font-size: 13px; color: var(--text-muted); line-height: 1.5; font-family: 'Cormorant Garamond', serif; }
+  .search-highlight { color: var(--gold); font-style: normal; font-weight: 600; }
+  .search-empty { padding: 1.5rem; text-align: center; font-family: 'Cinzel', serif; font-size: 11px; color: var(--text-muted); letter-spacing: 0.18em; }
 
-  /* ─── DROPDOWN ─── */
-  .tab-dropdown { position: relative; display: inline-block; }
+  /* ═══════════════════════════════════════ */
+  /*    TABS — chapter index                 */
+  /* ═══════════════════════════════════════ */
+  .tabs-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    justify-content: center;
+    background: linear-gradient(180deg, var(--bg-1), var(--bg-2));
+    border: 1px solid var(--border-gold);
+    border-bottom: none;
+    position: relative;
+  }
+  .tab-btn {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    background: transparent;
+    border: none;
+    padding: 16px 22px 14px;
+    cursor: pointer;
+    transition: color 0.2s, background 0.2s;
+    position: relative;
+    outline: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+  .tab-btn + .tab-btn::before,
+  .tab-dropdown + .tab-btn::before,
+  .tab-btn + .tab-dropdown > .tab-btn::before,
+  .tab-dropdown + .tab-dropdown > .tab-btn::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 22%; bottom: 22%;
+    width: 1px;
+    background: var(--border-gold);
+  }
+  .tab-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--gold-deep);
+    letter-spacing: 0;
+    font-weight: 400;
+  }
+  .tab-btn:hover { color: var(--gold-light); background: rgba(201,168,76,0.04); }
+  .tab-btn:hover .tab-num { color: var(--gold); }
+  .tab-btn.active {
+    color: var(--gold-light);
+    background: var(--bg-3);
+  }
+  .tab-btn.active .tab-num { color: var(--gold); }
+  .tab-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; left: 12%; right: 12%;
+    height: 2px;
+    background: var(--gold);
+    box-shadow: 0 0 12px rgba(201,168,76,0.5);
+  }
+  .tab-caret { opacity: 0.5; }
+
+  /* DROPDOWN */
+  .tab-dropdown { position: relative; display: inline-flex; }
   .tab-dropdown-menu {
     display: none;
     position: absolute;
     top: 100%;
     left: 0;
     z-index: 100;
-    min-width: 160px;
-    background: var(--bg3);
-    border: 1px solid var(--gold-dark);
+    min-width: 200px;
+    background: var(--bg-3);
+    border: 1px solid var(--gold-deep);
     border-top: none;
     flex-direction: column;
+    box-shadow: 0 12px 24px rgba(0,0,0,0.6);
   }
   .tab-dropdown:hover .tab-dropdown-menu { display: flex; }
-  .tab-dropdown-menu button, .tab-dropdown-menu a {
+  .tab-dropdown-menu button {
     font-family: 'Cinzel', serif;
-    font-size: 11px;
-    letter-spacing: 0.15em;
+    font-size: 10px;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--text-muted);
+    color: var(--text-soft);
     background: none;
     border: none;
     border-bottom: 1px solid var(--border);
-    padding: 12px 20px;
+    padding: 13px 20px;
     cursor: pointer;
     text-align: left;
-    text-decoration: none;
-    transition: color 0.2s, background 0.2s;
-    display: block;
+    transition: all 0.18s;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
     width: 100%;
   }
   .tab-dropdown-menu button:last-child { border-bottom: none; }
-  .tab-dropdown-menu button:hover, .tab-dropdown-menu a:hover {
-    color: var(--gold);
-    background: var(--bg4);
-  }
-
-  /* ─── TABS ─── */
-  .tabs-nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0;
-    margin-bottom: 0;
-    justify-content: center;
-    background: var(--bg2);
-  }
-  .tab-btn {
-    font-family: 'Cinzel', serif;
-    font-size: 12px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-bottom: none;
-    border-right: none;
-    padding: 12px 24px;
-    cursor: pointer;
-    transition: all 0.25s;
-    position: relative;
-    outline: none;
-  }
-  .tab-btn:first-child { border-left: 1px solid var(--border); }
-  .tab-btn:last-child { border-right: 1px solid var(--border); }
-  .tab-btn:hover { color: var(--gold); background: var(--bg3); border-color: var(--border-gold); }
-  .tab-btn.active {
+  .tab-dropdown-menu button:hover {
     color: var(--gold-light);
-    background: var(--bg3);
-    border-color: var(--gold-dark);
-    border-bottom: 1px solid var(--bg3);
+    background: var(--bg-4);
   }
-  .tab-btn.active::after {
+  .tab-dropdown-menu .tab-num { font-size: 9px; color: var(--gold-deep); min-width: 22px; }
+
+  /* TAB BODY */
+  .tabs-body {
+    border: 1px solid var(--border-gold);
+    background:
+      linear-gradient(180deg, rgba(201,168,76,0.02), transparent 25%, transparent 75%, rgba(201,168,76,0.015)),
+      var(--bg-1);
+    padding: 3.5rem 3rem 3rem;
+    min-height: 500px;
+    position: relative;
+  }
+  .tabs-body::before, .tabs-body::after {
     content: '';
     position: absolute;
-    bottom: -1px; left: 0; right: 0;
-    height: 2px;
-    background: var(--gold);
+    width: 24px; height: 24px;
+    border: 1px solid var(--gold-deep);
+    pointer-events: none;
   }
+  .tabs-body::before { top: 12px; left: 12px; border-right: none; border-bottom: none; }
+  .tabs-body::after  { bottom: 12px; right: 12px; border-left: none; border-top: none; }
 
-  .tabs-body {
-    border: 1px solid var(--gold-dark);
-    background: var(--bg2);
-    background-image: radial-gradient(ellipse 100% 60% at 50% 0%, rgba(201,168,76,0.03) 0%, transparent 70%);
-    padding: 3rem;
-    min-height: 400px;
-  }
-
-  .tab-content { display: none; animation: fadeIn 0.4s ease; padding-top: 6px; }
+  .tab-content { display: none; animation: fadeIn 0.4s ease; }
   .tab-content.active { display: block; }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
 
-  /* ─── CONTENT STYLES ─── */
+  /* ═══════════════════════════════════════ */
+  /*    CONTENT TYPOGRAPHY                   */
+  /* ═══════════════════════════════════════ */
+  .chapter-mark {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 1.5rem;
+  }
+  .chapter-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--gold-deep);
+    letter-spacing: 0.05em;
+    padding: 4px 10px;
+    border: 1px solid var(--border-gold);
+    flex-shrink: 0;
+  }
+  .chapter-rule { flex: 1; height: 1px; background: linear-gradient(90deg, var(--border-gold), transparent); }
+
   .section-title {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 1.5rem;
-    color: var(--gold-light);
-    margin-bottom: 0.25rem;
-    text-shadow: 0 0 30px rgba(201,168,76,0.2);
+    font-family: 'Cinzel', serif;
+    font-size: 2.1rem;
+    font-weight: 500;
+    color: var(--gold-pale);
+    margin-bottom: 0.4rem;
+    letter-spacing: 0.04em;
+    line-height: 1.1;
   }
   .section-subtitle {
-    font-family: 'Cinzel', serif;
-    font-size: 11px;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 2rem;
-  }
-
-  p { margin-bottom: 1.2rem; color: var(--text); }
-  p:last-child { margin-bottom: 0; }
-
-  .lead { font-size: 1.15rem; font-style: italic; color: var(--text-bright); }
-
-  /* ─── INFO BLOCKS ─── */
-  .info-block {
-    border-left: 2px solid var(--gold-dark);
-    padding: 1rem 1.5rem;
-    background: rgba(201,168,76,0.04);
-    margin: 2rem 0;
+    font-family: 'Cormorant Garamond', serif;
     font-style: italic;
-    color: var(--text-bright);
-    font-size: 1.05rem;
-  }
-
-  /* ─── STAT ROWS ─── */
-  .stat-row {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin: 2rem 0;
-  }
-  .stat-card {
-    flex: 1 1 130px;
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    padding: 1rem 1.2rem;
-    text-align: center;
-  }
-  .stat-number {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 1.8rem;
-    color: var(--gold);
-    display: block;
-  }
-  .stat-label {
-    font-family: 'Cinzel', serif;
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 0.04em;
     color: var(--text-muted);
-    margin-top: 2px;
+    margin-bottom: 2.5rem;
   }
+  .section-subtitle::before { content: '— '; color: var(--gold-deep); }
 
-  /* ─── RACE / CLASS CARDS ─── */
-  .card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 1.5rem;
-    margin-top: 2rem;
-  }
-  .card {
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    padding: 1.5rem;
-    position: relative;
-    transition: border-color 0.25s, background 0.25s;
-  }
-  .card:hover { border-color: var(--gold-dark); background: var(--bg4); }
-  .card-corner {
-    position: absolute;
-    width: 12px; height: 12px;
-    border-color: var(--gold-dark);
-    border-style: solid;
-  }
-  .card-corner.tl { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
-  .card-corner.br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
-  .card-icon {
-    font-size: 2rem;
-    margin-bottom: 0.75rem;
-    display: block;
-    filter: drop-shadow(0 0 6px rgba(201,168,76,0.3));
-  }
-  .card-title {
-    font-family: 'Cinzel', serif;
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--gold-light);
-    margin-bottom: 0.5rem;
-    letter-spacing: 0.05em;
-  }
-  .card-desc { font-size: 0.9rem; color: var(--text); line-height: 1.6; margin: 0; }
-  .card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 1rem; }
-  .tag {
-    font-family: 'Cinzel', serif;
-    font-size: 9px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    background: rgba(201,168,76,0.08);
-    border: 1px solid var(--border-gold);
-    color: var(--gold-dark);
-    padding: 3px 10px;
-  }
-  .tag.red { background: rgba(139,44,44,0.15); border-color: #4a1818; color: var(--red-light); }
-  .tag.blue { background: rgba(44,80,139,0.15); border-color: #182040; color: #6090d0; }
-  .tag.green { background: rgba(44,100,44,0.15); border-color: #183018; color: #70b070; }
-
-  /* ─── MECHANIC ROWS ─── */
-  .mechanic-list { margin-top: 2rem; }
-  .mechanic-item {
-    display: flex;
-    gap: 1.5rem;
-    padding: 1.25rem 0;
-    border-bottom: 1px solid var(--border);
-    align-items: flex-start;
-  }
-  .mechanic-item:last-child { border-bottom: none; }
-  .mechanic-icon {
-    font-size: 1.5rem;
-    flex-shrink: 0;
-    margin-top: 2px;
-    filter: drop-shadow(0 0 4px rgba(201,168,76,0.2));
-  }
-  .mechanic-body h3 {
+  /* Sub-section (used inside Правила, Кубики, etc) */
+  .sub-section-title {
     font-family: 'Cinzel', serif;
     font-size: 0.95rem;
-    font-weight: 700;
+    font-weight: 500;
     color: var(--gold-light);
-    margin-bottom: 0.3rem;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
   }
-  .mechanic-body p { font-size: 0.9rem; margin: 0; line-height: 1.6; }
-
-  /* ─── TIMELINE (ЛОР) ─── */
-  .timeline { margin-top: 2rem; position: relative; }
-  .timeline::before {
+  .sub-section-title::before {
     content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 1px;
-    background: linear-gradient(180deg, transparent, var(--gold-dark) 10%, var(--gold-dark) 90%, transparent);
-  }
-  .tl-item { padding: 0 0 2.5rem 2.5rem; position: relative; }
-  .tl-item:last-child { padding-bottom: 0; }
-  .tl-dot {
-    position: absolute;
-    left: -5px; top: 6px;
-    width: 11px; height: 11px;
+    width: 6px; height: 6px;
     background: var(--gold);
     transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+  .sub-section-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--text-faint);
+    margin-bottom: 1.5rem;
+    padding-left: 18px;
+  }
+
+  p { margin-bottom: 1.1rem; color: var(--text); }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--gold-light); font-weight: 600; }
+
+  .lead {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    line-height: 1.55;
+    font-style: italic;
+    color: var(--text-bright);
+    margin-bottom: 1.8rem;
+    text-wrap: pretty;
+  }
+
+  /* Pull-quote replaces the old info-block */
+  .pull-quote {
+    margin: 2.5rem 0;
+    padding: 1.5rem 0;
+    text-align: center;
+    position: relative;
+  }
+  .pull-quote::before, .pull-quote::after {
+    content: '';
+    position: absolute;
+    left: 30%; right: 30%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-deep), transparent);
+  }
+  .pull-quote::before { top: 0; }
+  .pull-quote::after  { bottom: 0; }
+  .pull-quote-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.35rem;
+    line-height: 1.45;
+    color: var(--gold-pale);
+    max-width: 640px;
+    margin: 0 auto;
+    text-wrap: pretty;
+  }
+  .pull-quote-text::before { content: '“'; color: var(--gold); font-size: 1.6em; line-height: 0; vertical-align: -0.35em; margin-right: 0.1em; }
+  .pull-quote-text::after  { content: '”'; color: var(--gold); font-size: 1.6em; line-height: 0; vertical-align: -0.35em; margin-left: 0.05em; }
+
+  /* Divider */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 2.5rem 0;
+  }
+  .divider-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-deep), transparent); }
+  .divider-gem {
+    width: 9px; height: 9px;
+    border: 1px solid var(--gold);
+    background: var(--bg);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+    position: relative;
+  }
+  .divider-gem::before {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    background: var(--gold);
     box-shadow: 0 0 8px rgba(201,168,76,0.4);
   }
-  .tl-era {
+
+  /* ═══════════════════════════════════════ */
+  /*    DEFINITION / TWO-COL META FIELD      */
+  /* ═══════════════════════════════════════ */
+  .meta-field {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 1.5rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border);
+    align-items: baseline;
+  }
+  .meta-field:last-child { border-bottom: none; }
+  .meta-field-label {
     font-family: 'Cinzel', serif;
     font-size: 10px;
     letter-spacing: 0.25em;
     text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 0.4rem;
+    color: var(--gold-dark);
   }
-  .tl-title {
+  .meta-field-value { color: var(--text); font-size: 17px; }
+  .meta-field-value strong { color: var(--gold-light); }
+
+  /* ═══════════════════════════════════════ */
+  /*    CARD GRID (races, classes)           */
+  /* ═══════════════════════════════════════ */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  .card {
+    background: var(--bg-2);
+    border: 1px solid var(--border-gold);
+    padding: 1.75rem 1.5rem 1.5rem;
+    position: relative;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 100% 0%, rgba(201,168,76,0.06), transparent 50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+  .card:hover {
+    border-color: var(--gold-dark);
+    background: var(--bg-3);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5), 0 0 0 1px rgba(201,168,76,0.08);
+  }
+  .card:hover::before { opacity: 1; }
+
+  .card-corner { position: absolute; width: 14px; height: 14px; border-color: var(--gold-dark); border-style: solid; pointer-events: none; }
+  .card-corner.tl { top: -1px; left: -1px; border-width: 1px 0 0 1px; }
+  .card-corner.tr { top: -1px; right: -1px; border-width: 1px 1px 0 0; }
+  .card-corner.bl { bottom: -1px; left: -1px; border-width: 0 0 1px 1px; }
+  .card-corner.br { bottom: -1px; right: -1px; border-width: 0 1px 1px 0; }
+
+  .card-sigil {
+    width: 48px; height: 48px;
+    margin-bottom: 1rem;
+    color: var(--gold);
+    filter: drop-shadow(0 0 8px rgba(201,168,76,0.18));
+    transition: transform 0.4s ease, color 0.3s;
+  }
+  .card:hover .card-sigil {
+    transform: scale(1.08) rotate(-2deg);
+    color: var(--gold-light);
+  }
+  .card-sigil-bg {
+    position: absolute;
+    top: -10px; right: -10px;
+    width: 120px; height: 120px;
+    color: var(--gold);
+    opacity: 0.04;
+    pointer-events: none;
+    transform: rotate(8deg);
+  }
+  .card:hover .card-sigil-bg { opacity: 0.06; }
+
+  .card-title {
     font-family: 'Cinzel', serif;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
+    font-weight: 600;
     color: var(--gold-light);
     margin-bottom: 0.5rem;
-    font-weight: 600;
+    letter-spacing: 0.04em;
   }
-  .tl-body { font-size: 0.95rem; color: var(--text); line-height: 1.7; }
+  .card-desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--text-soft);
+    line-height: 1.55;
+    margin: 0 0 1.25rem;
+  }
+  .card-cta {
+    margin-top: auto;
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--border);
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    color: var(--gold-dark);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: color 0.2s;
+  }
+  .card:hover .card-cta { color: var(--gold); }
+  .card-cta-arrow { transition: transform 0.3s; }
+  .card:hover .card-cta-arrow { transform: translateX(4px); }
 
-  /* ─── FOOTER ─── */
+  /* ═══════════════════════════════════════ */
+  /*    MECHANIC / GLOSSARY LIST             */
+  /* ═══════════════════════════════════════ */
+  .mechanic-list { margin-top: 1.5rem; }
+  .mechanic-item {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 1.5rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--border);
+    align-items: start;
+  }
+  .mechanic-item:last-child { border-bottom: none; }
+  .mechanic-icon-wrap {
+    width: 48px; height: 48px;
+    border: 1px solid var(--border-gold);
+    background: var(--bg-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    position: relative;
+    flex-shrink: 0;
+  }
+  .mechanic-icon-wrap::before, .mechanic-icon-wrap::after {
+    content: '';
+    position: absolute;
+    width: 4px; height: 4px;
+    border: 1px solid var(--gold-deep);
+  }
+  .mechanic-icon-wrap::before { top: -2px; left: -2px; border-right: none; border-bottom: none; }
+  .mechanic-icon-wrap::after  { bottom: -2px; right: -2px; border-left: none; border-top: none; }
+  .mechanic-icon-wrap svg { width: 26px; height: 26px; }
+  .mechanic-body { padding-top: 4px; }
+  .mechanic-body h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--gold-light);
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.06em;
+  }
+  .mechanic-body h3 .h3-en {
+    color: var(--text-faint);
+    font-weight: 400;
+    font-size: 0.85em;
+    letter-spacing: 0.1em;
+  }
+  .mechanic-body p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin: 0;
+    color: var(--text);
+  }
+
+  /* ═══════════════════════════════════════ */
+  /*    STAT BLOCK (class sheet)             */
+  /* ═══════════════════════════════════════ */
+  .stat-sheet {
+    margin: 2rem 0;
+    border: 1px solid var(--gold-deep);
+    background:
+      linear-gradient(180deg, rgba(201,168,76,0.04), transparent 30%),
+      var(--bg-2);
+    position: relative;
+  }
+  .stat-sheet::before, .stat-sheet::after {
+    content: '';
+    position: absolute;
+    width: 18px; height: 18px;
+    border: 1px solid var(--gold-dark);
+    pointer-events: none;
+  }
+  .stat-sheet::before { top: 6px; left: 6px; border-right: none; border-bottom: none; }
+  .stat-sheet::after  { bottom: 6px; right: 6px; border-left: none; border-top: none; }
+  .stat-sheet-header {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border-gold);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+  }
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0;
+  }
+  .stat-cell {
+    padding: 1.2rem 1.5rem;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    position: relative;
+  }
+  .stat-cell:nth-child(3n) { border-right: none; }
+  .stat-cell-label {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+  .stat-cell-value {
+    font-family: 'Cinzel', serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--gold-light);
+    line-height: 1.1;
+    margin: 4px 0 2px;
+  }
+  .stat-cell-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  /* ═══════════════════════════════════════ */
+  /*    DETAIL BACK BUTTON                    */
+  /* ═══════════════════════════════════════ */
+  .back-btn {
+    background: none;
+    border: 1px solid var(--border-gold);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    padding: 8px 16px;
+    margin-bottom: 2rem;
+    transition: all 0.2s;
+  }
+  .back-btn:hover {
+    color: var(--gold);
+    border-color: var(--gold-dark);
+    background: var(--bg-2);
+  }
+
+  /* ═══════════════════════════════════════ */
+  /*    BACK-TO-TOP                          */
+  /* ═══════════════════════════════════════ */
+  .back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 46px;
+    height: 46px;
+    background: var(--bg-2);
+    border: 1px solid var(--border-gold);
+    color: var(--gold);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s, background 0.2s, border-color 0.2s, transform 0.2s;
+    z-index: 999;
+  }
+  .back-to-top::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border: 1px solid transparent;
+    border-top-color: var(--gold-dark);
+    border-left-color: var(--gold-dark);
+    pointer-events: none;
+    width: 8px; height: 8px;
+    top: -2px; left: -2px;
+  }
+  .back-to-top.visible { opacity: 1; pointer-events: all; }
+  .back-to-top:hover { background: var(--bg-3); border-color: var(--gold); transform: translateY(-2px); }
+
+  /* ═══════════════════════════════════════ */
+  /*    FOOTER                               */
+  /* ═══════════════════════════════════════ */
   footer {
     text-align: center;
     padding: 3rem 0 1.5rem;
     position: relative;
     z-index: 1;
   }
+  .footer-crest {
+    width: 36px; height: 36px;
+    color: var(--gold-deep);
+    margin: 0 auto 1rem;
+    display: block;
+  }
   .footer-text {
     font-family: 'Cinzel', serif;
     font-size: 10px;
-    letter-spacing: 0.3em;
+    letter-spacing: 0.35em;
     text-transform: uppercase;
     color: var(--text-muted);
+    margin-bottom: 0.5rem;
+  }
+  .footer-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 12px;
+    color: var(--text-faint);
   }
 
-  @media (max-width: 600px) {
-    .tabs-body { padding: 1.5rem; }
-    .tab-btn { font-size: 10px; padding: 10px 14px; letter-spacing: 0.08em; }
-    h1 { font-size: 1.6rem; }
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 720px) {
+    .site { padding: 0 1rem 3rem; }
+    header { padding: 2.5rem 0 1.5rem; }
+    .hero-frame { padding: 1.5rem 0.5rem; }
+    .crest { width: 80px; height: 80px; }
+    h1 { letter-spacing: 0.08em; }
+    .tabs-body { padding: 2rem 1rem 1.5rem; }
+    .tab-btn { font-size: 10px; padding: 12px 14px; letter-spacing: 0.12em; }
+    .tab-num { display: none; }
+    .meta-field { grid-template-columns: 1fr; gap: 0.3rem; }
+    .mechanic-item { grid-template-columns: 40px 1fr; gap: 1rem; }
+    .mechanic-icon-wrap { width: 38px; height: 38px; }
+    .mechanic-icon-wrap svg { width: 20px; height: 20px; }
     .card-grid { grid-template-columns: 1fr; }
-    .stat-row { gap: 0.5rem; }
+    .hero-stat-num { font-size: 1.05rem; }
+    .stat-cell:nth-child(3n) { border-right: 1px solid var(--border); }
+    .pull-quote::before, .pull-quote::after { left: 15%; right: 15%; }
   }
 </style>
 </head>
 <body>
 
-<!-- Particles -->
+<!-- ═══════════════════════════════════════ -->
+<!-- SVG SPRITE: heraldic icons               -->
+<!-- ═══════════════════════════════════════ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- Main crest: cross-swords + serpent + sun -->
+    <symbol id="i-crest" viewBox="0 0 100 100">
+      <g fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+        <!-- Outer wreath -->
+        <circle cx="50" cy="50" r="44" stroke-width="0.8" opacity="0.4"/>
+        <circle cx="50" cy="50" r="40" stroke-width="0.5" opacity="0.3"/>
+        <!-- Sun rays -->
+        <g opacity="0.7">
+          <path d="M50 8 L50 14"/>
+          <path d="M50 86 L50 92"/>
+          <path d="M8 50 L14 50"/>
+          <path d="M86 50 L92 50"/>
+          <path d="M20 20 L24 24"/>
+          <path d="M76 76 L80 80"/>
+          <path d="M20 80 L24 76"/>
+          <path d="M80 20 L76 24"/>
+        </g>
+        <!-- Inner shield -->
+        <path d="M50 22 L66 28 L66 52 Q66 64 50 74 Q34 64 34 52 L34 28 Z" fill="rgba(201,168,76,0.06)"/>
+        <!-- Crossed swords -->
+        <path d="M38 32 L62 60 M62 32 L38 60" stroke-width="1.4"/>
+        <!-- Hilts -->
+        <path d="M36 30 L40 34 M64 30 L60 34"/>
+        <path d="M36 62 L40 58 M64 62 L60 58"/>
+        <!-- Central gem -->
+        <path d="M50 42 L54 46 L50 50 L46 46 Z" fill="currentColor"/>
+        <!-- Crown atop -->
+        <path d="M44 22 L46 18 L50 21 L54 18 L56 22" stroke-width="1"/>
+      </g>
+    </symbol>
+
+    <!-- Footer simple mark -->
+    <symbol id="i-mark" viewBox="0 0 40 40">
+      <g fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round">
+        <path d="M20 4 L28 10 L28 22 Q28 28 20 34 Q12 28 12 22 L12 10 Z"/>
+        <path d="M20 14 L22 16 L20 18 L18 16 Z" fill="currentColor"/>
+      </g>
+    </symbol>
+
+    <!-- ━━━ RACE SIGILS ━━━ -->
+    <!-- Humans: crown -->
+    <symbol id="s-humans" viewBox="0 0 48 48">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M8 30 L10 16 L18 24 L24 12 L30 24 L38 16 L40 30 Z"/>
+        <path d="M8 34 L40 34"/>
+        <circle cx="24" cy="12" r="1.5" fill="currentColor"/>
+        <circle cx="10" cy="16" r="1.2" fill="currentColor"/>
+        <circle cx="38" cy="16" r="1.2" fill="currentColor"/>
+        <path d="M16 38 L32 38" opacity="0.5"/>
+      </g>
+    </symbol>
+
+    <!-- Elves: leaf -->
+    <symbol id="s-elves" viewBox="0 0 48 48">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M24 6 C12 14 8 26 12 38 C12 38 22 38 30 32 C38 26 40 16 40 8 C32 10 28 8 24 6 Z"/>
+        <path d="M14 36 L26 22 L36 12"/>
+        <path d="M20 28 L26 26 M24 24 L30 22 M28 20 L34 18"/>
+      </g>
+    </symbol>
+
+    <!-- Dwarves: anvil + hammer -->
+    <symbol id="s-dwarves" viewBox="0 0 48 48">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 22 L18 22 L20 18 L34 18 L36 22 L42 22 L40 26 L8 26 Z"/>
+        <path d="M16 26 L16 38 L32 38 L32 26"/>
+        <path d="M14 38 L34 38"/>
+        <path d="M22 12 L30 12 M26 12 L26 18" opacity="0.7"/>
+      </g>
+    </symbol>
+
+    <!-- Dragonborn: dragon claw / scale -->
+    <symbol id="s-dragonborn" viewBox="0 0 48 48">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10 38 C14 30 18 26 24 24 C18 20 14 14 14 8"/>
+        <path d="M16 38 C22 32 28 30 36 30 C30 24 26 18 28 10"/>
+        <path d="M22 38 C28 34 36 34 42 36 C40 28 38 22 42 16"/>
+        <path d="M14 8 L10 10 M28 10 L24 8 M42 16 L40 12" opacity="0.7"/>
+      </g>
+    </symbol>
+
+    <!-- Half-Orc: broken chain / tusk -->
+    <symbol id="s-halforc" viewBox="0 0 48 48">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 8 C10 14 10 20 14 26 C18 32 18 36 14 40"/>
+        <path d="M34 8 C38 14 38 20 34 26 C30 32 30 36 34 40"/>
+        <path d="M18 24 L30 24"/>
+        <path d="M20 20 L28 28 M28 20 L20 28" opacity="0.5"/>
+        <circle cx="14" cy="8" r="1.5" fill="currentColor"/>
+        <circle cx="34" cy="8" r="1.5" fill="currentColor"/>
+      </g>
+    </symbol>
+
+    <!-- Tiefling: horns + flame -->
+    <symbol id="s-tiefling" viewBox="0 0 48 48">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10 22 C6 14 8 8 12 6 C12 14 16 18 24 22"/>
+        <path d="M38 22 C42 14 40 8 36 6 C36 14 32 18 24 22"/>
+        <path d="M24 22 C18 26 16 32 20 38 C22 34 24 32 24 28 C24 32 26 36 28 38 C32 32 30 26 24 22 Z"/>
+        <circle cx="24" cy="34" r="1.2" fill="currentColor"/>
+      </g>
+    </symbol>
+
+    <!-- Sub-races -->
+    <symbol id="s-highelf" viewBox="0 0 48 48">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M24 6 L24 42"/>
+        <path d="M24 14 L34 4 M24 14 L14 4"/>
+        <path d="M24 22 L36 16 M24 22 L12 16"/>
+        <path d="M24 30 L34 28 M24 30 L14 28"/>
+        <circle cx="24" cy="6" r="2" fill="currentColor"/>
+      </g>
+    </symbol>
+    <symbol id="s-halfelf" viewBox="0 0 48 48">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 28 A12 12 0 1 1 36 28"/>
+        <path d="M36 28 A12 12 0 1 0 12 28"/>
+        <circle cx="24" cy="28" r="2.5" fill="currentColor"/>
+        <path d="M24 8 L24 14 M24 42 L24 36" opacity="0.6"/>
+      </g>
+    </symbol>
+    <symbol id="s-drow" viewBox="0 0 48 48">
+      <g fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="24" cy="24" r="4" fill="currentColor"/>
+        <path d="M24 6 L24 14 M24 34 L24 42 M6 24 L14 24 M34 24 L42 24"/>
+        <path d="M10 10 L16 16 M38 10 L32 16 M10 38 L16 32 M38 38 L32 32"/>
+        <path d="M24 14 C28 18 28 30 24 34 M24 14 C20 18 20 30 24 34" opacity="0.5"/>
+      </g>
+    </symbol>
+
+    <!-- ━━━ CLASS SIGILS ━━━ -->
+    <symbol id="s-warrior" viewBox="0 0 48 48">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10 8 L34 38 M38 8 L14 38"/>
+        <path d="M8 10 L12 6 L16 10 M32 10 L36 6 L40 10"/>
+        <path d="M10 38 L14 42 M34 42 L38 38" opacity="0.7"/>
+        <path d="M22 22 L26 26 M26 22 L22 26" opacity="0.5"/>
+      </g>
+    </symbol>
+    <symbol id="s-mage" viewBox="0 0 48 48">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="24" cy="24" r="10"/>
+        <circle cx="24" cy="24" r="3" fill="currentColor"/>
+        <path d="M24 6 L24 14 M24 34 L24 42 M6 24 L14 24 M34 24 L42 24"/>
+        <path d="M11 11 L17 17 M37 11 L31 17 M11 37 L17 31 M37 37 L31 31" opacity="0.6"/>
+      </g>
+    </symbol>
+    <symbol id="s-rogue" viewBox="0 0 48 48">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10 38 L30 18 L34 14 L38 18 L34 22 L14 42 Z"/>
+        <path d="M30 18 L34 22"/>
+        <path d="M10 38 L6 42" opacity="0.6"/>
+        <circle cx="36" cy="16" r="1.5" fill="currentColor"/>
+      </g>
+    </symbol>
+
+    <!-- ━━━ UTILITY ICONS (for mechanics, glossary, faq) ━━━ -->
+    <symbol id="i-speech" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 5 L20 5 L20 16 L13 16 L9 20 L9 16 L4 16 Z"/>
+        <path d="M8 9 L16 9 M8 12 L14 12" opacity="0.7"/>
+      </g>
+    </symbol>
+    <symbol id="i-mask" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 8 Q4 6 6 6 L18 6 Q20 6 20 8 L20 12 Q20 18 12 18 Q4 18 4 12 Z"/>
+        <circle cx="9" cy="11" r="1.2" fill="currentColor"/>
+        <circle cx="15" cy="11" r="1.2" fill="currentColor"/>
+      </g>
+    </symbol>
+    <symbol id="i-forbid" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+        <circle cx="12" cy="12" r="8"/>
+        <path d="M6.5 6.5 L17.5 17.5"/>
+      </g>
+    </symbol>
+    <symbol id="i-scroll" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 4 L17 4 Q19 4 19 6 L19 18 Q19 20 17 20 L7 20 Q5 20 5 18 L5 17 L15 17"/>
+        <path d="M8 8 L15 8 M8 11 L15 11 M8 14 L12 14" opacity="0.7"/>
+      </g>
+    </symbol>
+    <symbol id="i-dice" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3 L20 8 L20 16 L12 21 L4 16 L4 8 Z"/>
+        <path d="M12 3 L12 21 M4 8 L20 16 M20 8 L4 16" opacity="0.5"/>
+        <text x="12" y="14" font-family="Cinzel,serif" font-size="6" text-anchor="middle" fill="currentColor" stroke="none">20</text>
+      </g>
+    </symbol>
+    <symbol id="i-scales" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 4 L12 20 M5 20 L19 20"/>
+        <path d="M6 10 L4 16 L8 16 Z M18 10 L16 16 L20 16 Z"/>
+        <path d="M6 10 L12 8 L18 10"/>
+      </g>
+    </symbol>
+    <symbol id="i-theater" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 6 L11 6 L11 12 Q11 16 7.5 16 Q4 16 4 12 Z"/>
+        <path d="M13 8 L20 8 L20 14 Q20 18 16.5 18 Q13 18 13 14 Z"/>
+        <circle cx="6.5" cy="10" r="0.8" fill="currentColor"/>
+        <circle cx="8.5" cy="10" r="0.8" fill="currentColor"/>
+        <circle cx="15.5" cy="12" r="0.8" fill="currentColor"/>
+        <circle cx="17.5" cy="12" r="0.8" fill="currentColor"/>
+      </g>
+    </symbol>
+    <symbol id="i-quill" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 20 L9 16 M9 16 C9 12 12 6 18 4 C18 10 14 15 11 16 Z"/>
+        <path d="M11 13 L15 9" opacity="0.6"/>
+      </g>
+    </symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3 L19 6 L19 12 Q19 17 12 21 Q5 17 5 12 L5 6 Z"/>
+        <path d="M12 8 L12 15 M9 11 L15 11" opacity="0.7"/>
+      </g>
+    </symbol>
+    <symbol id="i-question" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="8"/>
+        <path d="M9 9 Q9 7 12 7 Q15 7 15 10 Q15 12 12 13 L12 14.5"/>
+        <circle cx="12" cy="17" r="0.6" fill="currentColor"/>
+      </g>
+    </symbol>
+    <symbol id="i-skull" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 11 Q5 4 12 4 Q19 4 19 11 L19 14 L16 16 L16 19 L8 19 L8 16 L5 14 Z"/>
+        <circle cx="9" cy="11" r="1.4" fill="currentColor"/>
+        <circle cx="15" cy="11" r="1.4" fill="currentColor"/>
+        <path d="M11 16 L11 18 M13 16 L13 18"/>
+      </g>
+    </symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+        <circle cx="12" cy="12" r="8"/>
+        <path d="M4 12 L20 12 M12 4 Q7 12 12 20 M12 4 Q17 12 12 20"/>
+      </g>
+    </symbol>
+    <symbol id="i-swords" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 4 L13 12 M19 4 L11 12 M5 4 L7 4 L7 6 M19 4 L17 4 L17 6"/>
+        <path d="M11 14 L13 16 L8 21 L6 19 Z"/>
+        <path d="M13 14 L11 16 L16 21 L18 19 Z"/>
+      </g>
+    </symbol>
+    <symbol id="i-handshake" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 11 L7 7 L11 9 L13 9 L17 13 L17 16 L13 16 L11 14 L9 16 L7 14"/>
+        <path d="M17 13 L21 13 L21 9 L17 9 M3 11 L3 15 L7 15"/>
+      </g>
+    </symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 20 C7 16 4 13 4 9 C4 6 6 4 9 4 C10.5 4 12 5 12 6 C12 5 13.5 4 15 4 C18 4 20 6 20 9 C20 13 17 16 12 20 Z"/>
+      </g>
+    </symbol>
+    <symbol id="i-wind" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 8 L14 8 Q17 8 17 6 Q17 4 15 4 Q13 4 13 5"/>
+        <path d="M3 12 L19 12 Q21 12 21 14 Q21 16 19 16 Q17 16 17 15"/>
+        <path d="M3 16 L11 16 Q13 16 13 18 Q13 20 11 20 Q9 20 9 19"/>
+      </g>
+    </symbol>
+    <symbol id="i-clover" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 12 C12 8 8 6 6 8 C4 10 6 14 12 12 Z"/>
+        <path d="M12 12 C16 12 18 8 16 6 C14 4 10 6 12 12 Z"/>
+        <path d="M12 12 C16 12 18 16 16 18 C14 20 10 18 12 12 Z"/>
+        <path d="M12 12 C8 12 6 16 8 18 C10 20 14 18 12 12 Z"/>
+        <path d="M12 12 L14 20" opacity="0.6"/>
+      </g>
+    </symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2 12 Q7 5 12 5 Q17 5 22 12 Q17 19 12 19 Q7 19 2 12 Z"/>
+        <circle cx="12" cy="12" r="3"/>
+        <circle cx="12" cy="12" r="1" fill="currentColor"/>
+      </g>
+    </symbol>
+    <symbol id="i-running" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="14" cy="5" r="2"/>
+        <path d="M14 8 L11 13 L8 13 M14 8 L18 11 L18 14"/>
+        <path d="M11 13 L9 19 M11 13 L13 17 L10 21"/>
+        <path d="M4 11 L7 11" opacity="0.6"/>
+      </g>
+    </symbol>
+    <symbol id="i-flash" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M13 3 L6 13 L11 13 L9 21 L18 10 L13 10 Z"/>
+      </g>
+    </symbol>
+    <symbol id="i-stars" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 4 L13.5 9 L18.5 10 L14.5 13 L16 18 L12 15 L8 18 L9.5 13 L5.5 10 L10.5 9 Z"/>
+      </g>
+    </symbol>
+    <symbol id="i-bullseye" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+        <circle cx="12" cy="12" r="8"/>
+        <circle cx="12" cy="12" r="5"/>
+        <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+      </g>
+    </symbol>
+    <symbol id="i-list" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+        <path d="M4 6 L7 6 M4 12 L7 12 M4 18 L7 18"/>
+        <path d="M10 6 L20 6 M10 12 L20 12 M10 18 L18 18"/>
+      </g>
+    </symbol>
+    <symbol id="i-impact" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3 L14 9 L20 8 L16 13 L19 19 L13 17 L10 22 L9 16 L3 15 L8 11 L6 5 Z"/>
+      </g>
+    </symbol>
+    <symbol id="i-drop" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3 C8 9 5 13 5 16 Q5 20 12 20 Q19 20 19 16 C19 13 16 9 12 3 Z"/>
+      </g>
+    </symbol>
+    <symbol id="i-book" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 5 Q4 4 5 4 L11 4 L11 19 L5 19 Q4 19 4 18 Z"/>
+        <path d="M20 5 Q20 4 19 4 L13 4 L13 19 L19 19 Q20 19 20 18 Z"/>
+        <path d="M11 4 L11 19 M13 4 L13 19"/>
+      </g>
+    </symbol>
+    <symbol id="i-snake" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 5 C5 9 9 9 9 13 C9 17 5 17 5 21 M9 5 Q11 5 12 7"/>
+        <circle cx="6" cy="7" r="0.6" fill="currentColor"/>
+      </g>
+    </symbol>
+    <symbol id="i-muscle" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 14 Q4 10 7 9 L14 9 Q18 9 19 12 Q19 15 17 16 L8 16 Q5 16 4 14 Z"/>
+        <path d="M14 9 L14 6 Q14 4 12 4 Q10 4 10 6" opacity="0.7"/>
+      </g>
+    </symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3 L13 10 L20 12 L13 14 L12 21 L11 14 L4 12 L11 10 Z"/>
+      </g>
+    </symbol>
+
+    <!-- Discord, ext-link, search, arrow, caret -->
+    <symbol id="i-discord" viewBox="0 0 71 55">
+      <path fill="currentColor" d="M60.1 4.9A58.6 58.6 0 0 0 45.8.7a40 40 0 0 0-1.8 3.7 54.2 54.2 0 0 0-16.3 0A38 38 0 0 0 25.9.7 58.5 58.5 0 0 0 11.5 5C1.7 19.6-1 33.8.3 47.8a59 59 0 0 0 18 9.1 42.8 42.8 0 0 0 3.7-6 38.4 38.4 0 0 1-5.8-2.8l1.4-1.1a42 42 0 0 0 36 0l1.4 1.1a38.2 38.2 0 0 1-5.8 2.8 42.6 42.6 0 0 0 3.7 6 58.8 58.8 0 0 0 18-9c1.5-16-2.6-30-10.8-42.9ZM23.7 39.2c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.5 0 6.3 3.2 6.3 7.2s-2.8 7.2-6.3 7.2Zm23.6 0c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.5 0 6.3 3.2 6.3 7.2s-2.8 7.2-6.3 7.2Z"/>
+    </symbol>
+    <symbol id="i-tome" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 4 L20 4 L20 20 L4 20 Z"/>
+        <path d="M4 8 L20 8 M12 4 L12 20" opacity="0.6"/>
+        <path d="M7 14 L9 14 M15 14 L17 14" opacity="0.5"/>
+      </g>
+    </symbol>
+    <symbol id="i-search" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+        <circle cx="11" cy="11" r="6"/>
+        <path d="M15.5 15.5 L20 20"/>
+      </g>
+    </symbol>
+    <symbol id="i-arrow-right" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 12 L20 12 M14 6 L20 12 L14 18"/>
+      </g>
+    </symbol>
+    <symbol id="i-arrow-left" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 12 L4 12 M10 6 L4 12 L10 18"/>
+      </g>
+    </symbol>
+    <symbol id="i-arrow-up" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 20 L12 4 M6 10 L12 4 L18 10"/>
+      </g>
+    </symbol>
+    <symbol id="i-caret-down" viewBox="0 0 16 16">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 6 L8 10 L12 6"/>
+      </g>
+    </symbol>
+    <symbol id="i-ext" viewBox="0 0 16 16">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 3 L13 3 L13 7"/>
+        <path d="M13 3 L7 9"/>
+        <path d="M11 9 L11 12 L4 12 L4 5 L7 5"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- Embers -->
 <div class="particles" id="particles"></div>
 
 <div class="site">
 
   <header id="top">
-    <!-- Ornamental SVG -->
-    <svg class="header-ornament" viewBox="0 0 500 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <line x1="0" y1="15" x2="180" y2="15" stroke="#3d2f18" stroke-width="1"/>
-      <line x1="320" y1="15" x2="500" y2="15" stroke="#3d2f18" stroke-width="1"/>
-      <polygon points="250,5 258,15 250,25 242,15" fill="#c9a84c" opacity="0.8"/>
-      <line x1="200" y1="15" x2="235" y2="15" stroke="#c9a84c" stroke-width="0.5" opacity="0.5"/>
-      <line x1="265" y1="15" x2="300" y2="15" stroke="#c9a84c" stroke-width="0.5" opacity="0.5"/>
-      <circle cx="200" cy="15" r="3" fill="#3d2f18"/>
-      <circle cx="300" cy="15" r="3" fill="#3d2f18"/>
-    </svg>
+    <div class="hero-frame">
+      <span class="hero-corner-tr"></span>
+      <span class="hero-corner-bl"></span>
 
-    <div class="server-badge">⚔ Ролевой сервер ⚔</div>
+      <div class="server-badge">Ролевой сервер</div>
 
-    <h1>Эпоха Забытых Богов</h1>
-    <p class="tagline">Мир, где легенды обретают плоть</p>
+      <h1>Эвериум</h1>
 
-    <div style="display:inline-flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:0.5rem;">
+      <p class="tagline">Мир, где легенды обретают плоть</p>
 
-      <a href="#" target="_blank" style="
-        display: inline-flex;align-items:center;gap:10px;
-        padding:12px 28px;
-        background:rgba(88,101,242,0.12);border:1px solid rgba(88,101,242,0.4);
-        color:#8a9ef5;font-family:'Cinzel',serif;font-size:11px;
-        letter-spacing:0.2em;text-transform:uppercase;text-decoration:none;
-        transition:background 0.25s,border-color 0.25s,color 0.25s;"
-      onmouseover="this.style.background='rgba(88,101,242,0.22)';this.style.borderColor='rgba(88,101,242,0.7)';this.style.color='#b0bcff';"
-      onmouseout="this.style.background='rgba(88,101,242,0.12)';this.style.borderColor='rgba(88,101,242,0.4)';this.style.color='#8a9ef5';">
-        <svg width="18" height="14" viewBox="0 0 71 55" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M60.1 4.9A58.6 58.6 0 0 0 45.8.7a40 40 0 0 0-1.8 3.7 54.2 54.2 0 0 0-16.3 0A38 38 0 0 0 25.9.7 58.5 58.5 0 0 0 11.5 5C1.7 19.6-1 33.8.3 47.8a59 59 0 0 0 18 9.1 42.8 42.8 0 0 0 3.7-6 38.4 38.4 0 0 1-5.8-2.8l1.4-1.1a42 42 0 0 0 36 0l1.4 1.1a38.2 38.2 0 0 1-5.8 2.8 42.6 42.6 0 0 0 3.7 6 58.8 58.8 0 0 0 18-9c1.5-16-2.6-30-10.8-42.9ZM23.7 39.2c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.5 0 6.3 3.2 6.3 7.2s-2.8 7.2-6.3 7.2Zm23.6 0c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.5 0 6.3 3.2 6.3 7.2s-2.8 7.2-6.3 7.2Z" fill="currentColor"/>
-        </svg>
-        Вступить в Discord
-      </a>
 
-      <a href="#" target="_blank" style="
-        display:inline-flex;align-items:center;gap:10px;
-        padding:12px 28px;
-        background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.3);
-        color:var(--gold-dark);font-family:'Cinzel',serif;font-size:11px;
-        letter-spacing:0.2em;text-transform:uppercase;text-decoration:none;
-        transition:background 0.25s,border-color 0.25s,color 0.25s;"
-      onmouseover="this.style.background='rgba(201,168,76,0.16)';this.style.borderColor='rgba(201,168,76,0.6)';this.style.color='var(--gold)';"
-      onmouseout="this.style.background='rgba(201,168,76,0.08)';this.style.borderColor='rgba(201,168,76,0.3)';this.style.color='var(--gold-dark)';">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        WarGM — Рейтинг
-      </a>
 
+      <div class="hero-ctas">
+        <a href="#" target="_blank" class="cta cta-primary">
+          <svg width="16" height="13" aria-hidden="true"><use href="#i-discord"/></svg>
+          Вступить в Discord
+        </a>
+        <a href="#" target="_blank" class="cta cta-primary">
+          <svg width="16" height="16" aria-hidden="true"><use href="#i-tome"/></svg>
+          WarGM Сервер
+        </a>
+      </div>
     </div>
-
   </header>
+
   <div class="search-wrap">
-    <input class="search-input" id="site-search" type="text" placeholder="Поиск по сайту..." autocomplete="off" oninput="doSearch(this.value)" onblur="setTimeout(()=>hideSearch(),200)">
-    <span class="search-icon">⌕</span>
+    <input class="search-input" id="site-search" type="text" placeholder="Поиск по летописи…" autocomplete="off" oninput="doSearch(this.value)" onblur="setTimeout(()=>hideSearch(),200)">
+    <svg class="search-icon" width="18" height="18" aria-hidden="true"><use href="#i-search"/></svg>
     <div class="search-results" id="search-results"></div>
   </div>
 
+  <!-- ═══════════════════════════════════════ -->
+  <!-- TAB NAV                                  -->
+  <!-- ═══════════════════════════════════════ -->
   <nav class="tabs-nav" role="tablist">
     <div class="tab-dropdown">
-      <button class="tab-btn active" onclick="switchTab('server')" role="tab" aria-selected="true">О Сервере ▾</button>
+      <button class="tab-btn active" onclick="switchTab('server')" role="tab" aria-selected="true">
+        <span class="tab-num">I</span>О Сервере
+        <svg class="tab-caret" width="10" height="10" aria-hidden="true"><use href="#i-caret-down"/></svg>
+      </button>
       <div class="tab-dropdown-menu">
-        <button onclick="switchTab('server')">О Сервере</button>
-        <button onclick="switchTab('rules')">Правила</button>
-        <button onclick="switchTab('faq')">FAQ</button>
+        <button onclick="switchTab('server')"><span class="tab-num">I·1</span>О Сервере</button>
+        <button onclick="switchTab('rules')"><span class="tab-num">I·2</span>Правила</button>
+        <button onclick="switchTab('faq')"><span class="tab-num">I·3</span>FAQ</button>
       </div>
     </div>
-    <button class="tab-btn" onclick="switchTab('lore')" role="tab" aria-selected="false">Лор</button>
-    <button class="tab-btn" onclick="switchTab('races')" role="tab" aria-selected="false">Расы</button>
-    <button class="tab-btn" onclick="switchTab('classes')" role="tab" aria-selected="false">Классы</button>
+    <button class="tab-btn" onclick="switchTab('lore')" role="tab"><span class="tab-num">II</span>Лор</button>
+    <button class="tab-btn" onclick="switchTab('races')" role="tab"><span class="tab-num">III</span>Расы</button>
+    <button class="tab-btn" onclick="switchTab('classes')" role="tab"><span class="tab-num">IV</span>Классы</button>
     <div class="tab-dropdown">
-      <button class="tab-btn" onclick="switchTab('mechanics')" role="tab" aria-selected="false">Механики ▾</button>
+      <button class="tab-btn" onclick="switchTab('mechanics')" role="tab">
+        <span class="tab-num">V</span>Механики
+        <svg class="tab-caret" width="10" height="10" aria-hidden="true"><use href="#i-caret-down"/></svg>
+      </button>
       <div class="tab-dropdown-menu">
-        <button onclick="switchTab('mechanics')">Механики</button>
-        <button onclick="switchTab('combat')">Базис пошаговой боевки</button>
-        <button onclick="switchTab('dice')">Кубики</button>
-        <button onclick="switchTab('feats')">Черты</button>
+        <button onclick="switchTab('mechanics')"><span class="tab-num">V·1</span>Механики</button>
+        <button onclick="switchTab('combat')"><span class="tab-num">V·2</span>Базис боёвки</button>
+        <button onclick="switchTab('dice')"><span class="tab-num">V·3</span>Кубики</button>
+        <button onclick="switchTab('feats')"><span class="tab-num">V·4</span>Черты</button>
       </div>
     </div>
-    <a href="https://docs.google.com/document/d/11Hfrcb7KPpVQRoXvMsQvWEnmveECZWP7Zv90JpkBJCE/edit?usp=sharing" target="_blank" class="tab-btn" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;">Кодекс ролевика ↗</a>
+    <a href="https://docs.google.com/document/d/11Hfrcb7KPpVQRoXvMsQvWEnmveECZWP7Zv90JpkBJCE/edit?usp=sharing" target="_blank" class="tab-btn">
+      <span class="tab-num">VI</span>Кодекс
+      <svg width="11" height="11" aria-hidden="true"><use href="#i-ext"/></svg>
+    </a>
   </nav>
 
-  <!-- TABS BODY -->
+  <!-- ═══════════════════════════════════════ -->
+  <!-- TABS BODY                                -->
+  <!-- ═══════════════════════════════════════ -->
   <div class="tabs-body">
 
-    <!-- О СЕРВЕРЕ -->
+    <!-- ━━━ О СЕРВЕРЕ ━━━ -->
     <div class="tab-content active" id="tab-server">
+      <div class="chapter-mark">
+        <span class="chapter-num">CHAPTER · I</span>
+        <span class="chapter-rule"></span>
+      </div>
       <div class="section-title">О Сервере</div>
-      <div class="section-subtitle">✦ добро пожаловать, странник ✦</div>
+      <div class="section-subtitle">добро пожаловать, странник</div>
 
-      <p class="lead">«Эпоха Забытых Богов» — это хардкорный ролевой проект на платформе Conan Exiles Enhanced, где каждое решение имеет цену, а каждая история оставляет след в мире.</p>
+      <p class="lead">«Эвериум» — это хардкорный ролевой проект на платформе Conan Exiles Enhanced, где каждое решение имеет цену, а каждая история оставляет след в мире.</p>
 
       <p>Мы не просто сервер — мы живой мир. Здесь политика определяется игроками, войны разгораются из-за слов, сказанных в таверне, а фракции рождаются и гибнут по воле своих членов. Нет скриптованных квестов — только нарратив, который создаёте вы.</p>
 
-      <div class="info-block">«В этом мире нет героев по умолчанию. Есть только те, кто выжил достаточно долго, чтобы о них сложили песни.»</div>
+      <div class="pull-quote">
+        <p class="pull-quote-text">В этом мире нет героев по умолчанию. Есть только те, кто выжил достаточно долго, чтобы о них сложили песни.</p>
+      </div>
 
       <p>Администрация работает в роли Мастеров — мы создаём декорации, вы разыгрываете драму.</p>
 
-      <div class="divider"><div class="divider-line"></div><div class="divider-gem"></div><div class="divider-line"></div></div>
-
-      <p><strong style="font-family:'Cinzel',serif;color:var(--gold-light);">Формат:</strong> Ролевой сервер на Conan Exiles Enhanced. Все действия описываются текстом, броски совершаются прямо в игре. Рейтинг 18+, требуется квента.</p>
-      <p><strong style="font-family:'Cinzel',serif;color:var(--gold-light);">Режим смерти:</strong> Перманентная. Мы верим, что риск делает победу настоящей.</p>
+      <div style="margin-top:2rem;">
+        <div class="meta-field">
+          <span class="meta-field-label">Формат</span>
+          <span class="meta-field-value">Ролевой сервер на Conan Exiles Enhanced. Все действия описываются текстом, броски совершаются прямо в игре. Рейтинг <strong>18+</strong>, требуется квента.</span>
+        </div>
+        <div class="meta-field">
+          <span class="meta-field-label">Режим смерти</span>
+          <span class="meta-field-value"><strong>Перманентная.</strong> Мы верим, что риск делает победу настоящей.</span>
+        </div>
+        <div class="meta-field">
+          <span class="meta-field-label">Боевая система</span>
+          <span class="meta-field-value">Пошаговая, d20-основа. Описание влияет на исход.</span>
+        </div>
+        <div class="meta-field">
+          <span class="meta-field-label">Возрастной рейтинг</span>
+          <span class="meta-field-value">18+ — насилие, моральная неоднозначность, тяжёлые темы.</span>
+        </div>
+      </div>
     </div>
 
-    <!-- ПРАВИЛА -->
+    <!-- ━━━ ПРАВИЛА ━━━ -->
     <div class="tab-content" id="tab-rules">
+      <div class="chapter-mark">
+        <span class="chapter-num">CHAPTER · I·2</span>
+        <span class="chapter-rule"></span>
+      </div>
       <div class="section-title">Правила</div>
-      <div class="section-subtitle">✦ кодекс странника ✦</div>
+      <div class="section-subtitle">кодекс странника</div>
 
       <p class="lead">Прежде чем войти в этот мир — убедитесь, что понимаете его язык и его законы.</p>
 
-      <div class="divider"><div class="divider-line"></div><div class="divider-gem"></div><div class="divider-line"></div></div>
+      <div class="divider"><span class="divider-line"></span><span class="divider-gem"></span><span class="divider-line"></span></div>
 
-      <div class="section-title" style="font-size:1.1rem;margin-bottom:0.25rem;">Словарь</div>
-      <div class="section-subtitle">✦ язык ролевого сообщества ✦</div>
+      <div class="sub-section-title">Словарь</div>
+      <div class="sub-section-subtitle">язык ролевого сообщества</div>
 
       <div class="mechanic-list">
         <div class="mechanic-item">
-          <div class="mechanic-icon">💬</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-speech"/></svg></div>
           <div class="mechanic-body">
-            <h3>IC — In Character</h3>
+            <h3>IC <span class="h3-en">— In Character</span></h3>
             <p>«В роли». Всё, что происходит от лица вашего персонажа: его слова, действия, мысли. IC-информация — это то, что персонаж видел, слышал и пережил сам.</p>
           </div>
         </div>
         <div class="mechanic-item">
-          <div class="mechanic-icon">🙍</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-mask"/></svg></div>
           <div class="mechanic-body">
-            <h3>OOC — Out Of Character</h3>
+            <h3>OOC <span class="h3-en">— Out Of Character</span></h3>
             <p>«Вне роли». Общение между игроками как людьми, а не персонажами. Организационные вопросы, уточнения по правилам, личные сообщения — всё это OOC.</p>
           </div>
         </div>
         <div class="mechanic-item">
-          <div class="mechanic-icon">🚫</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-forbid"/></svg></div>
           <div class="mechanic-body">
-            <h3>Metagaming — Метагейминг</h3>
+            <h3>Metagaming <span class="h3-en">— Метагейминг</span></h3>
             <p>Использование OOC-информации в IC-ситуациях. Например: вы знаете, что персонаж другого игрока — шпион, потому что читали его квенту, но ваш персонаж этого знать не может. Использовать это знание в игре — метагейминг.</p>
           </div>
         </div>
         <div class="mechanic-item">
-          <div class="mechanic-icon">📖</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-scroll"/></svg></div>
           <div class="mechanic-body">
             <h3>Квента</h3>
             <p>Биография и история персонажа, которую игрок пишет перед вступлением на сервер. Квента — это основа вашего персонажа: его прошлое, мотивация и характер.</p>
           </div>
         </div>
-
         <div class="mechanic-item">
-          <div class="mechanic-icon">🎲</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-dice"/></svg></div>
           <div class="mechanic-body">
-            <h3>DC — Difficulty Class</h3>
+            <h3>DC <span class="h3-en">— Difficulty Class</span></h3>
             <p>Сложность действия. Число, которое нужно превысить броском кубика, чтобы действие удалось. Чем выше DC — тем сложнее задача.</p>
           </div>
         </div>
       </div>
 
-      <div class="divider"><div class="divider-line"></div><div class="divider-gem"></div><div class="divider-line"></div></div>
+      <div class="divider"><span class="divider-line"></span><span class="divider-gem"></span><span class="divider-line"></span></div>
 
-      <div class="section-title" style="font-size:1.1rem;margin-bottom:0.25rem;">Правила Общения</div>
-      <div class="section-subtitle">✦ законы этого мира ✦</div>
+      <div class="sub-section-title">Правила Общения</div>
+      <div class="sub-section-subtitle">законы этого мира</div>
 
       <div class="mechanic-list">
         <div class="mechanic-item">
-          <div class="mechanic-icon">⚖️</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-scales"/></svg></div>
           <div class="mechanic-body">
             <h3>Уважение к участникам</h3>
             <p>Агрессия, оскорбления и травля — вне закона вне зависимости от контекста. Конфликты между персонажами остаются внутри игры; конфликты между игроками решаются через администрацию.</p>
           </div>
         </div>
         <div class="mechanic-item">
-          <div class="mechanic-icon">🎭</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-theater"/></svg></div>
           <div class="mechanic-body">
             <h3>Разграничение игрока и персонажа</h3>
             <p>То, что происходит с вашим персонажем — не происходит с вами. Не переносите игровые конфликты в личку и реальную жизнь. Вы можете ненавидеть персонажа и уважать игрока.</p>
           </div>
         </div>
         <div class="mechanic-item">
-          <div class="mechanic-icon">🤐</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-forbid"/></svg></div>
           <div class="mechanic-body">
             <h3>Никакого метагейминга</h3>
             <p>Ваш персонаж знает только то, что узнал в игре. Использование информации, полученной вне роли — нарушение, которое разрушает атмосферу для всех участников.</p>
           </div>
         </div>
         <div class="mechanic-item">
-          <div class="mechanic-icon">✍️</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-quill"/></svg></div>
           <div class="mechanic-body">
             <h3>Грамотность и уважение к тексту</h3>
             <p>Мы текстовый проект — слова это наш основной инструмент. Старайтесь писать грамотно и развёрнуто. Односложные посты допустимы в быстром диалоге, но не в ключевых сценах.</p>
           </div>
         </div>
         <div class="mechanic-item">
-          <div class="mechanic-icon">🛡️</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-shield"/></svg></div>
           <div class="mechanic-body">
             <h3>Решения администрации</h3>
             <p>Слово мастера — закон. Если вы не согласны с решением — обсудите это в личном сообщении, а не в публичных каналах. Публичные споры с администрацией ведут к предупреждению.</p>
@@ -765,718 +1620,842 @@
       </div>
     </div>
 
-    <!-- FAQ -->
+    <!-- ━━━ FAQ ━━━ -->
     <div class="tab-content" id="tab-faq">
+      <div class="chapter-mark">
+        <span class="chapter-num">CHAPTER · I·3</span>
+        <span class="chapter-rule"></span>
+      </div>
       <div class="section-title">FAQ</div>
-      <div class="section-subtitle">✦ часто задаваемые вопросы ✦</div>
+      <div class="section-subtitle">часто задаваемые вопросы</div>
 
-      <div class="mechanic-list" style="margin-top:2rem;">
-
+      <div class="mechanic-list" style="margin-top:1.5rem;">
         <div class="mechanic-item">
-          <div class="mechanic-icon">❓</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-question"/></svg></div>
           <div class="mechanic-body">
             <h3>Нужен ли опыт в ролевых играх?</h3>
             <p>Нет. Мы принимаем новичков. Главное — желание отыгрывать и уважение к другим игрокам. Кодекс ролевика поможет разобраться в основах текстовой игры.</p>
           </div>
         </div>
-
         <div class="mechanic-item">
-          <div class="mechanic-icon">❓</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-question"/></svg></div>
           <div class="mechanic-body">
             <h3>Как вступить на сервер?</h3>
             <p>Вступить в Discord, ознакомиться с правилами и написать квенту персонажа. Квента проходит проверку администрации — обычно ответ приходит в течение 1–2 дней.</p>
           </div>
         </div>
-
         <div class="mechanic-item">
-          <div class="mechanic-icon">❓</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-question"/></svg></div>
           <div class="mechanic-body">
             <h3>Что такое квента и как её написать?</h3>
             <p>Квента — это биография вашего персонажа: имя, раса, класс, прошлое, характер и мотивация. Нет строгого шаблона, но квента должна быть достаточно подробной, чтобы администрация понимала кто ваш персонаж и зачем он в этом мире.</p>
           </div>
         </div>
-
         <div class="mechanic-item">
-          <div class="mechanic-icon">❓</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-question"/></svg></div>
           <div class="mechanic-body">
             <h3>Что происходит после смерти персонажа?</h3>
             <p>Смерть перманентна. Погибший персонаж остаётся в летописи мира, но вы создаёте нового. Новый персонаж не может быть связан с прошлым — никаких братьев-близнецов с той же историей.</p>
           </div>
         </div>
-
         <div class="mechanic-item">
-          <div class="mechanic-icon">❓</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-question"/></svg></div>
           <div class="mechanic-body">
             <h3>Можно ли играть злодея?</h3>
             <p>Да. Мы не ограничиваем мировоззрение персонажа — в живом мире нужны все роли. Единственное условие: действия злодея должны иметь логику и мотивацию, а не быть хаотичным гриферством.</p>
           </div>
         </div>
-
         <div class="mechanic-item">
-          <div class="mechanic-icon">❓</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-question"/></svg></div>
           <div class="mechanic-body">
             <h3>Нужно ли знать лор перед игрой?</h3>
             <p>Желательно прочитать основы — достаточно вкладок «Лор» и «Расы». Глубокое погружение придёт в процессе. Администрация также помогает новым игрокам встроиться в текущие события.</p>
           </div>
         </div>
-
         <div class="mechanic-item">
-          <div class="mechanic-icon">❓</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-question"/></svg></div>
           <div class="mechanic-body">
             <h3>Как часто нужно быть онлайн?</h3>
             <p>Жёстких требований нет, но рекомендуем активность хотя бы несколько раз в неделю. Если уходите в отпуск или на паузу — предупредите администрацию, персонаж будет временно выведен из активных сцен.</p>
           </div>
         </div>
-
       </div>
     </div>
 
-    <!-- ЛОР -->
+    <!-- ━━━ ЛОР ━━━ -->
     <div class="tab-content" id="tab-lore">
+      <div class="chapter-mark">
+        <span class="chapter-num">CHAPTER · II</span>
+        <span class="chapter-rule"></span>
+      </div>
       <div class="section-title">Летопись Мира</div>
-      <div class="section-subtitle">✦ от сотворения до наших дней ✦</div>
+      <div class="section-subtitle">от сотворения до наших дней</div>
 
-      <p class="lead" style="font-style:italic;color:var(--text-muted);text-align:center;margin-top:3rem;">Летопись ещё пишется… Лор будет добавлен позже.</p>
+      <div style="text-align:center; padding: 3rem 1rem;">
+        <svg style="width:48px;height:48px;color:var(--gold-deep);margin-bottom:1.5rem;" aria-hidden="true"><use href="#i-quill"/></svg>
+        <p class="lead" style="color:var(--text-muted);max-width:480px;margin:0 auto;">Летопись ещё пишется… Лор будет добавлен позже.</p>
+      </div>
     </div>
 
-    <!-- РАСЫ -->
+    <!-- ━━━ РАСЫ ━━━ -->
     <div class="tab-content" id="tab-races">
 
-      <!-- СПИСОК РАС -->
       <div id="races-list">
-        <div class="section-title">Расы Арасса</div>
-        <div class="section-subtitle">✦ дети богов, осколки творения ✦</div>
+        <div class="chapter-mark">
+          <span class="chapter-num">CHAPTER · III</span>
+          <span class="chapter-rule"></span>
+        </div>
+        <div class="section-title">Расы</div>
+        <div class="section-subtitle">дети богов, осколки творения</div>
+
         <p class="lead">Шесть народов населяют этот мир, и у каждого — своя правда, своё место в истории и свои счёты с остальными.</p>
 
         <div class="card-grid">
-
-          <div class="card race-card" onclick="openRace('humans')" style="cursor:pointer;">
-            <div class="card-corner tl"></div><div class="card-corner br"></div>
-            <span class="card-icon">👤</span>
+          <div class="card" onclick="openRace('humans')" data-race="humans">
+            <span class="card-corner tl"></span><span class="card-corner tr"></span><span class="card-corner bl"></span><span class="card-corner br"></span>
+            <svg class="card-sigil-bg" aria-hidden="true"><use href="#s-humans"/></svg>
+            <svg class="card-sigil" aria-hidden="true"><use href="#s-humans"/></svg>
             <div class="card-title">Люди</div>
             <p class="card-desc">Самая многочисленная раса. Короткий век — их проклятие и дар: люди торопятся жить, строить, завоёвывать. Нет ни одного класса, который был бы им закрыт.</p>
-            <div style="margin-top:1rem;font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.2em;color:var(--gold-dark);">ПОДРОБНЕЕ →</div>
+            <div class="card-cta">Подробнее <svg width="14" height="14" class="card-cta-arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg></div>
           </div>
 
-          <div class="card race-card" onclick="openRace('elves')" style="cursor:pointer;">
-            <div class="card-corner tl"></div><div class="card-corner br"></div>
-            <span class="card-icon">🌿</span>
+          <div class="card" onclick="openRace('elves')">
+            <span class="card-corner tl"></span><span class="card-corner tr"></span><span class="card-corner bl"></span><span class="card-corner br"></span>
+            <svg class="card-sigil-bg" aria-hidden="true"><use href="#s-elves"/></svg>
+            <svg class="card-sigil" aria-hidden="true"><use href="#s-elves"/></svg>
             <div class="card-title">Эльфы</div>
             <p class="card-desc">Живут тысячи лет и помнят мир таким, каким он был. Три ветви одного народа — каждая избрала свой путь, и пути эти давно разошлись.</p>
-            <div style="margin-top:1rem;font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.2em;color:var(--gold-dark);">ПОДРОБНЕЕ →</div>
+            <div class="card-cta">Подробнее <svg width="14" height="14" class="card-cta-arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg></div>
           </div>
 
-          <div class="card race-card" onclick="openRace('dwarves')" style="cursor:pointer;">
-            <div class="card-corner tl"></div><div class="card-corner br"></div>
-            <span class="card-icon">⚒️</span>
+          <div class="card" onclick="openRace('dwarves')">
+            <span class="card-corner tl"></span><span class="card-corner tr"></span><span class="card-corner bl"></span><span class="card-corner br"></span>
+            <svg class="card-sigil-bg" aria-hidden="true"><use href="#s-dwarves"/></svg>
+            <svg class="card-sigil" aria-hidden="true"><use href="#s-dwarves"/></svg>
             <div class="card-title">Дварфы</div>
             <p class="card-desc">Мастера, строители и хранители древних клятв. Для дварфа нарушить слово — страшнее смерти. Их подземные города — чудо архитектуры, их кузнецы — легенды мира.</p>
-            <div style="margin-top:1rem;font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.2em;color:var(--gold-dark);">ПОДРОБНЕЕ →</div>
+            <div class="card-cta">Подробнее <svg width="14" height="14" class="card-cta-arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg></div>
           </div>
 
-          <div class="card race-card" onclick="openRace('dragonborn')" style="cursor:pointer;">
-            <div class="card-corner tl"></div><div class="card-corner br"></div>
-            <span class="card-icon">🐉</span>
+          <div class="card" onclick="openRace('dragonborn')">
+            <span class="card-corner tl"></span><span class="card-corner tr"></span><span class="card-corner bl"></span><span class="card-corner br"></span>
+            <svg class="card-sigil-bg" aria-hidden="true"><use href="#s-dragonborn"/></svg>
+            <svg class="card-sigil" aria-hidden="true"><use href="#s-dragonborn"/></svg>
             <div class="card-title">Драконорождённые</div>
             <p class="card-desc">Потомки древних драконов, несущие в крови пламя и гордость. Их дыхание — оружие, их чешуя — броня. Каждый драконорождённый — осколок ушедшей эпохи величия.</p>
-            <div style="margin-top:1rem;font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.2em;color:var(--gold-dark);">ПОДРОБНЕЕ →</div>
+            <div class="card-cta">Подробнее <svg width="14" height="14" class="card-cta-arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg></div>
           </div>
 
-          <div class="card race-card" onclick="openRace('halforc')" style="cursor:pointer;">
-            <div class="card-corner tl"></div><div class="card-corner br"></div>
-            <span class="card-icon">⚡</span>
+          <div class="card" onclick="openRace('halforc')">
+            <span class="card-corner tl"></span><span class="card-corner tr"></span><span class="card-corner bl"></span><span class="card-corner br"></span>
+            <svg class="card-sigil-bg" aria-hidden="true"><use href="#s-halforc"/></svg>
+            <svg class="card-sigil" aria-hidden="true"><use href="#s-halforc"/></svg>
             <div class="card-title">Полуорки</div>
             <p class="card-desc">Рождённые на стыке двух культур — человеческой и орочьей. Слишком дикие для городов, слишком умные для орд. Их сила в том, что они не вписываются ни в один мир.</p>
-            <div style="margin-top:1rem;font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.2em;color:var(--gold-dark);">ПОДРОБНЕЕ →</div>
+            <div class="card-cta">Подробнее <svg width="14" height="14" class="card-cta-arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg></div>
           </div>
 
-          <div class="card race-card" onclick="openRace('tiefling')" style="cursor:pointer;">
-            <div class="card-corner tl"></div><div class="card-corner br"></div>
-            <span class="card-icon">😈</span>
+          <div class="card" onclick="openRace('tiefling')">
+            <span class="card-corner tl"></span><span class="card-corner tr"></span><span class="card-corner bl"></span><span class="card-corner br"></span>
+            <svg class="card-sigil-bg" aria-hidden="true"><use href="#s-tiefling"/></svg>
+            <svg class="card-sigil" aria-hidden="true"><use href="#s-tiefling"/></svg>
             <div class="card-title">Тифлинги</div>
             <p class="card-desc">Потомки тех, кто заключил договор с тёмными силами. Рога, хвост и пылающие глаза — не проклятие, а наследство. Их боятся, но их магия слишком ценна, чтобы отворачиваться.</p>
-            <div style="margin-top:1rem;font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.2em;color:var(--gold-dark);">ПОДРОБНЕЕ →</div>
+            <div class="card-cta">Подробнее <svg width="14" height="14" class="card-cta-arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg></div>
           </div>
-
         </div>
       </div>
 
-      <!-- ДЕТАЛЬНЫЕ СТРАНИЦЫ РАС -->
       <div id="race-detail" style="display:none;">
-
-        <!-- Кнопка назад к расам -->
-        <button onclick="closeRace()" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:8px;font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold-dark);padding:0;margin-bottom:2rem;transition:color 0.2s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--gold-dark)'">
-          ← Назад к расам
+        <button class="back-btn" onclick="closeRace()">
+          <svg width="14" height="14" aria-hidden="true"><use href="#i-arrow-left"/></svg>
+          Назад к расам
         </button>
 
-        <!-- Люди -->
         <div id="detail-humans" class="race-detail-block" style="display:none;">
-          <div class="section-title">👤 Люди</div>
-          <div class="section-subtitle">✦ дети непостоянства ✦</div>
-          <p class="lead" style="font-style:italic;color:var(--text-muted);margin-top:2rem;text-align:center;">Подробное описание расы будет добавлено позже.</p>
+          <div class="section-title"><svg style="width:32px;height:32px;color:var(--gold);vertical-align:-6px;margin-right:8px;"><use href="#s-humans"/></svg>Люди</div>
+          <div class="section-subtitle">дети непостоянства</div>
+          <p class="lead" style="color:var(--text-muted);margin-top:2rem;text-align:center;">Подробное описание расы будет добавлено позже.</p>
         </div>
 
-        <!-- Эльфы — подрасы -->
         <div id="detail-elves" class="race-detail-block" style="display:none;">
           <div id="elves-list">
-            <div class="section-title">🌿 Эльфы</div>
-            <div class="section-subtitle">✦ три ветви одного народа ✦</div>
+            <div class="section-title"><svg style="width:32px;height:32px;color:var(--gold);vertical-align:-6px;margin-right:8px;"><use href="#s-elves"/></svg>Эльфы</div>
+            <div class="section-subtitle">три ветви одного народа</div>
             <p style="margin-bottom:2rem;">Некогда единый народ, эльфы разделились на три ветви — каждая избрала свой путь. Между ними нет войны, но нет и единства. Только общая память о том, кем они были когда-то.</p>
 
             <div class="card-grid">
-
-              <div class="card race-card" onclick="openSubrace('highelf')" style="cursor:pointer;">
-                <div class="card-corner tl"></div><div class="card-corner br"></div>
-                <span class="card-icon">✨</span>
+              <div class="card" onclick="openSubrace('highelf')">
+                <span class="card-corner tl"></span><span class="card-corner tr"></span><span class="card-corner bl"></span><span class="card-corner br"></span>
+                <svg class="card-sigil-bg" aria-hidden="true"><use href="#s-highelf"/></svg>
+                <svg class="card-sigil" aria-hidden="true"><use href="#s-highelf"/></svg>
                 <div class="card-title">Высшие Эльфы</div>
                 <p class="card-desc">Хранители древних традиций и магических искусств. Гордые, холодные, безупречные — они помнят мир таким, каким он был до людей.</p>
-                <div style="margin-top:1rem;font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.2em;color:var(--gold-dark);">ПОДРОБНЕЕ →</div>
+                <div class="card-cta">Подробнее <svg width="14" height="14" class="card-cta-arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg></div>
               </div>
 
-              <div class="card race-card" onclick="openSubrace('halfelf')" style="cursor:pointer;">
-                <div class="card-corner tl"></div><div class="card-corner br"></div>
-                <span class="card-icon">🌙</span>
+              <div class="card" onclick="openSubrace('halfelf')">
+                <span class="card-corner tl"></span><span class="card-corner tr"></span><span class="card-corner bl"></span><span class="card-corner br"></span>
+                <svg class="card-sigil-bg" aria-hidden="true"><use href="#s-halfelf"/></svg>
+                <svg class="card-sigil" aria-hidden="true"><use href="#s-halfelf"/></svg>
                 <div class="card-title">Полуэльфы</div>
                 <p class="card-desc">Дети двух миров, принятые ни одним. Полуэльфы выживают за счёт гибкости и умения читать людей — качества, которых лишены чистокровные расы.</p>
-                <div style="margin-top:1rem;font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.2em;color:var(--gold-dark);">ПОДРОБНЕЕ →</div>
+                <div class="card-cta">Подробнее <svg width="14" height="14" class="card-cta-arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg></div>
               </div>
 
-              <div class="card race-card" onclick="openSubrace('drow')" style="cursor:pointer;">
-                <div class="card-corner tl"></div><div class="card-corner br"></div>
-                <span class="card-icon">🕸️</span>
+              <div class="card" onclick="openSubrace('drow')">
+                <span class="card-corner tl"></span><span class="card-corner tr"></span><span class="card-corner bl"></span><span class="card-corner br"></span>
+                <svg class="card-sigil-bg" aria-hidden="true"><use href="#s-drow"/></svg>
+                <svg class="card-sigil" aria-hidden="true"><use href="#s-drow"/></svg>
                 <div class="card-title">Дроу</div>
                 <p class="card-desc">Изгнанники, ушедшие в подземный мир. Дроу обратили тьму в силу — их магия рождена из теней, а культура выкована в борьбе за выживание.</p>
-                <div style="margin-top:1rem;font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.2em;color:var(--gold-dark);">ПОДРОБНЕЕ →</div>
+                <div class="card-cta">Подробнее <svg width="14" height="14" class="card-cta-arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg></div>
               </div>
-
             </div>
           </div>
 
-          <!-- Детали подрас — отдельный слой -->
           <div id="subrace-detail" style="display:none;">
-            <button onclick="closeSubrace()" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:8px;font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold-dark);padding:0;margin-bottom:2rem;transition:color 0.2s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--gold-dark)'">
-              ← Назад к эльфам
+            <button class="back-btn" onclick="closeSubrace()">
+              <svg width="14" height="14" aria-hidden="true"><use href="#i-arrow-left"/></svg>
+              Назад к эльфам
             </button>
-
             <div id="detail-highelf" class="subrace-detail-block" style="display:none;">
-              <div class="section-title">✨ Высшие Эльфы</div>
-              <div class="section-subtitle">✦ хранители первородной магии ✦</div>
-              <p class="lead" style="font-style:italic;color:var(--text-muted);margin-top:2rem;text-align:center;">Подробное описание будет добавлено позже.</p>
+              <div class="section-title"><svg style="width:32px;height:32px;color:var(--gold);vertical-align:-6px;margin-right:8px;"><use href="#s-highelf"/></svg>Высшие Эльфы</div>
+              <div class="section-subtitle">хранители первородной магии</div>
+              <p class="lead" style="color:var(--text-muted);margin-top:2rem;text-align:center;">Подробное описание будет добавлено позже.</p>
             </div>
-
             <div id="detail-halfelf" class="subrace-detail-block" style="display:none;">
-              <div class="section-title">🌙 Полуэльфы</div>
-              <div class="section-subtitle">✦ между двух миров ✦</div>
-              <p class="lead" style="font-style:italic;color:var(--text-muted);margin-top:2rem;text-align:center;">Подробное описание будет добавлено позже.</p>
+              <div class="section-title"><svg style="width:32px;height:32px;color:var(--gold);vertical-align:-6px;margin-right:8px;"><use href="#s-halfelf"/></svg>Полуэльфы</div>
+              <div class="section-subtitle">между двух миров</div>
+              <p class="lead" style="color:var(--text-muted);margin-top:2rem;text-align:center;">Подробное описание будет добавлено позже.</p>
             </div>
-
             <div id="detail-drow" class="subrace-detail-block" style="display:none;">
-              <div class="section-title">🕸️ Дроу</div>
-              <div class="section-subtitle">✦ дети вечной тьмы ✦</div>
-              <p class="lead" style="font-style:italic;color:var(--text-muted);margin-top:2rem;text-align:center;">Подробное описание будет добавлено позже.</p>
+              <div class="section-title"><svg style="width:32px;height:32px;color:var(--gold);vertical-align:-6px;margin-right:8px;"><use href="#s-drow"/></svg>Дроу</div>
+              <div class="section-subtitle">дети вечной тьмы</div>
+              <p class="lead" style="color:var(--text-muted);margin-top:2rem;text-align:center;">Подробное описание будет добавлено позже.</p>
             </div>
           </div>
         </div>
 
-        <!-- Дварфы -->
         <div id="detail-dwarves" class="race-detail-block" style="display:none;">
-          <div class="section-title">⚒️ Дварфы</div>
-          <div class="section-subtitle">✦ хранители клятв и камня ✦</div>
-          <p class="lead" style="font-style:italic;color:var(--text-muted);margin-top:2rem;text-align:center;">Подробное описание расы будет добавлено позже.</p>
+          <div class="section-title"><svg style="width:32px;height:32px;color:var(--gold);vertical-align:-6px;margin-right:8px;"><use href="#s-dwarves"/></svg>Дварфы</div>
+          <div class="section-subtitle">хранители клятв и камня</div>
+          <p class="lead" style="color:var(--text-muted);margin-top:2rem;text-align:center;">Подробное описание расы будет добавлено позже.</p>
         </div>
 
-        <!-- Драконорождённые -->
         <div id="detail-dragonborn" class="race-detail-block" style="display:none;">
-          <div class="section-title">🐉 Драконорождённые</div>
-          <div class="section-subtitle">✦ кровь и пламя древних ✦</div>
-          <p class="lead" style="font-style:italic;color:var(--text-muted);margin-top:2rem;text-align:center;">Подробное описание расы будет добавлено позже.</p>
+          <div class="section-title"><svg style="width:32px;height:32px;color:var(--gold);vertical-align:-6px;margin-right:8px;"><use href="#s-dragonborn"/></svg>Драконорождённые</div>
+          <div class="section-subtitle">кровь и пламя древних</div>
+          <p class="lead" style="color:var(--text-muted);margin-top:2rem;text-align:center;">Подробное описание расы будет добавлено позже.</p>
         </div>
 
-        <!-- Полуорки -->
         <div id="detail-halforc" class="race-detail-block" style="display:none;">
-          <div class="section-title">⚡ Полуорки</div>
-          <div class="section-subtitle">✦ между двух миров ✦</div>
-          <p class="lead" style="font-style:italic;color:var(--text-muted);margin-top:2rem;text-align:center;">Подробное описание расы будет добавлено позже.</p>
+          <div class="section-title"><svg style="width:32px;height:32px;color:var(--gold);vertical-align:-6px;margin-right:8px;"><use href="#s-halforc"/></svg>Полуорки</div>
+          <div class="section-subtitle">между двух миров</div>
+          <p class="lead" style="color:var(--text-muted);margin-top:2rem;text-align:center;">Подробное описание расы будет добавлено позже.</p>
         </div>
 
-        <!-- Тифлинги -->
         <div id="detail-tiefling" class="race-detail-block" style="display:none;">
-          <div class="section-title">😈 Тифлинги</div>
-          <div class="section-subtitle">✦ дети тёмного договора ✦</div>
-          <p class="lead" style="font-style:italic;color:var(--text-muted);margin-top:2rem;text-align:center;">Подробное описание расы будет добавлено позже.</p>
+          <div class="section-title"><svg style="width:32px;height:32px;color:var(--gold);vertical-align:-6px;margin-right:8px;"><use href="#s-tiefling"/></svg>Тифлинги</div>
+          <div class="section-subtitle">дети тёмного договора</div>
+          <p class="lead" style="color:var(--text-muted);margin-top:2rem;text-align:center;">Подробное описание расы будет добавлено позже.</p>
         </div>
-
       </div>
     </div>
 
-    <!-- КЛАССЫ -->
+    <!-- ━━━ КЛАССЫ ━━━ -->
     <div class="tab-content" id="tab-classes">
 
-      <!-- СПИСОК КЛАССОВ -->
       <div id="classes-list">
+        <div class="chapter-mark">
+          <span class="chapter-num">CHAPTER · IV</span>
+          <span class="chapter-rule"></span>
+        </div>
         <div class="section-title">Классы</div>
-        <div class="section-subtitle">✦ путь, который ты выбираешь ✦</div>
+        <div class="section-subtitle">путь, который ты выбираешь</div>
 
         <p class="lead">Класс — это не профессия. Это мировоззрение, способ решать проблемы и набор инструментов, которыми ты пользуешься, когда мир становится враждебным.</p>
 
         <div class="card-grid">
-
-          <div class="card race-card" onclick="openClass('warrior')" style="cursor:pointer;">
-            <div class="card-corner tl"></div><div class="card-corner br"></div>
-            <span class="card-icon">⚔️</span>
+          <div class="card" onclick="openClass('warrior')">
+            <span class="card-corner tl"></span><span class="card-corner tr"></span><span class="card-corner bl"></span><span class="card-corner br"></span>
+            <svg class="card-sigil-bg" aria-hidden="true"><use href="#s-warrior"/></svg>
+            <svg class="card-sigil" aria-hidden="true"><use href="#s-warrior"/></svg>
             <div class="card-title">Воин</div>
             <p class="card-desc">Мастер клинка и брони. Воин — это не просто солдат, это человек, сделавший из боя искусство. Высокая выживаемость, доступ к тяжёлой броне.</p>
-            <div style="margin-top:1rem;font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.2em;color:var(--gold-dark);">ПОДРОБНЕЕ →</div>
+            <div class="card-cta">Подробнее <svg width="14" height="14" class="card-cta-arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg></div>
           </div>
 
-          <div class="card race-card" onclick="openClass('mage')" style="cursor:pointer;">
-            <div class="card-corner tl"></div><div class="card-corner br"></div>
-            <span class="card-icon">🔮</span>
+          <div class="card" onclick="openClass('mage')">
+            <span class="card-corner tl"></span><span class="card-corner tr"></span><span class="card-corner bl"></span><span class="card-corner br"></span>
+            <svg class="card-sigil-bg" aria-hidden="true"><use href="#s-mage"/></svg>
+            <svg class="card-sigil" aria-hidden="true"><use href="#s-mage"/></svg>
             <div class="card-title">Маг</div>
             <p class="card-desc">Повелитель стихий и тайных сил. Хрупкий, но смертоносный. Маг переписывает реальность — если успевает сосредоточиться прежде, чем его убьют.</p>
-            <div style="margin-top:1rem;font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.2em;color:var(--gold-dark);">ПОДРОБНЕЕ →</div>
+            <div class="card-cta">Подробнее <svg width="14" height="14" class="card-cta-arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg></div>
           </div>
 
-          <div class="card race-card" onclick="openClass('rogue')" style="cursor:pointer;">
-            <div class="card-corner tl"></div><div class="card-corner br"></div>
-            <span class="card-icon">🗡️</span>
+          <div class="card" onclick="openClass('rogue')">
+            <span class="card-corner tl"></span><span class="card-corner tr"></span><span class="card-corner bl"></span><span class="card-corner br"></span>
+            <svg class="card-sigil-bg" aria-hidden="true"><use href="#s-rogue"/></svg>
+            <svg class="card-sigil" aria-hidden="true"><use href="#s-rogue"/></svg>
             <div class="card-title">Плут</div>
             <p class="card-desc">Информация — лучшее оружие. Плут знает, кто кому должен, где хранится секрет и как пройти туда, куда вход закрыт. Мастер теней и социальных интриг.</p>
-            <div style="margin-top:1rem;font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.2em;color:var(--gold-dark);">ПОДРОБНЕЕ →</div>
+            <div class="card-cta">Подробнее <svg width="14" height="14" class="card-cta-arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg></div>
           </div>
-
         </div>
       </div>
 
-      <!-- ДЕТАЛЬНЫЕ СТРАНИЦЫ КЛАССОВ -->
       <div id="class-detail" style="display:none;">
-
-        <button onclick="closeClass()" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:8px;font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold-dark);padding:0;margin-bottom:2rem;transition:color 0.2s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--gold-dark)'">
-          ← Назад к классам
+        <button class="back-btn" onclick="closeClass()">
+          <svg width="14" height="14" aria-hidden="true"><use href="#i-arrow-left"/></svg>
+          Назад к классам
         </button>
 
-        <!-- Воин -->
         <div id="detail-warrior" class="class-detail-block" style="display:none;">
-          <div class="section-title">⚔️ Воин</div>
-          <div class="section-subtitle">✦ сталь и воля ✦</div>
-          <div class="stat-block">
-            <div class="stat-cell">
-              <span class="stat-cell-label">Здоровье</span>
-              <span class="stat-cell-value">10 + Тел.</span>
-              <span class="stat-cell-sub">стартовое</span>
-            </div>
-            <div class="stat-cell">
-              <span class="stat-cell-label">HP за уровень</span>
-              <span class="stat-cell-value">6</span>
-              <span class="stat-cell-sub">фиксировано</span>
-            </div>
-            <div class="stat-cell">
-              <span class="stat-cell-label">Скорость</span>
-              <span class="stat-cell-value">6 тайлов</span>
-              <span class="stat-cell-sub">30 футов</span>
-            </div>
-            <div class="stat-cell">
-              <span class="stat-cell-label">Основная хар-ка</span>
-              <span class="stat-cell-value">Сила</span>
-              <span class="stat-cell-sub">или Ловкость</span>
-            </div>
-            <div class="stat-cell">
-              <span class="stat-cell-label">Владение бронёй</span>
-              <span class="stat-cell-value">Вся броня</span>
-              <span class="stat-cell-sub">лёгкая, средняя, тяжёлая, щит</span>
+          <div class="section-title"><svg style="width:32px;height:32px;color:var(--gold);vertical-align:-6px;margin-right:8px;"><use href="#s-warrior"/></svg>Воин</div>
+          <div class="section-subtitle">сталь и воля</div>
+          <div class="stat-sheet">
+            <div class="stat-sheet-header"><span>Лист персонажа · Воин</span><span>ур. 1</span></div>
+            <div class="stat-grid">
+              <div class="stat-cell"><span class="stat-cell-label">Здоровье</span><span class="stat-cell-value">10 + Тел.</span><span class="stat-cell-sub">стартовое</span></div>
+              <div class="stat-cell"><span class="stat-cell-label">HP за уровень</span><span class="stat-cell-value">6</span><span class="stat-cell-sub">фиксировано</span></div>
+              <div class="stat-cell"><span class="stat-cell-label">Скорость</span><span class="stat-cell-value">6 тайлов</span><span class="stat-cell-sub">30 футов</span></div>
+              <div class="stat-cell"><span class="stat-cell-label">Основная хар-ка</span><span class="stat-cell-value">Сила</span><span class="stat-cell-sub">или Ловкость</span></div>
+              <div class="stat-cell" style="grid-column:span 2"><span class="stat-cell-label">Владение бронёй</span><span class="stat-cell-value">Вся броня</span><span class="stat-cell-sub">лёгкая, средняя, тяжёлая, щит</span></div>
             </div>
           </div>
-          <p class="lead" style="font-style:italic;color:var(--text-muted);text-align:center;">Подробное описание класса будет добавлено позже.</p>
+          <style>
+            .cls-tabs{display:flex;gap:6px;flex-wrap:wrap;margin:2rem 0 1.5rem}
+            .cls-tab{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;padding:8px 16px;border:1px solid var(--border-gold);background:var(--bg-2);color:var(--text-muted);cursor:pointer;transition:all .2s}
+            .cls-tab:hover{border-color:var(--gold-dark);color:var(--gold-light);background:var(--bg-3)}
+            .cls-tab.on{border-color:var(--gold-dark);background:var(--bg-3);color:var(--gold-light)}
+            .cls-panel{display:none}.cls-panel.on{display:block}
+            .ab-lvl{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--text-faint);margin:1.5rem 0 .75rem;display:flex;align-items:center;gap:10px}
+            .ab-lvl::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border-gold),transparent)}
+            .ab-card{border:1px solid var(--border);background:var(--bg-2);padding:1rem 1.25rem;margin-bottom:.75rem}
+            .ab-head{display:flex;align-items:center;gap:10px;margin-bottom:.5rem;flex-wrap:wrap}
+            .ab-name{font-family:'Cinzel',serif;font-size:.95rem;font-weight:500;color:var(--gold-light);letter-spacing:.04em}
+            .ab-badge{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:2px 8px;border:1px solid;flex-shrink:0}
+            .ab-badge.pas{color:#639922;border-color:#3B6D11;background:rgba(59,109,17,.1)}
+            .ab-badge.act{color:#378ADD;border-color:#185FA5;background:rgba(24,95,165,.1)}
+            .ab-badge.rea{color:#EF9F27;border-color:#854F0B;background:rgba(133,79,11,.1)}
+            .ab-badge.mil{color:var(--gold);border-color:var(--gold-deep);background:rgba(220,184,88,.06)}
+            .ab-desc{font-size:15px;color:var(--text-soft);line-height:1.65;margin-bottom:.6rem}
+            .ab-tags{display:flex;gap:6px;flex-wrap:wrap}
+            .ab-tag{font-size:12px;padding:2px 8px;border:1px solid var(--border);color:var(--text-faint);font-family:'Cinzel',serif;letter-spacing:.08em}
+            .arch-head{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.05rem;color:var(--text-muted);margin-bottom:1.5rem;padding-left:4px}
+          </style>
+          <div class="cls-tabs">
+            <button class="cls-tab on" onclick="wt('wb','warrior')">Уровни 1–3</button>
+            <button class="cls-tab" onclick="wt('wbers','warrior')">Берсерк</button>
+            <button class="cls-tab" onclick="wt('wgard','warrior')">Страж</button>
+            <button class="cls-tab" onclick="wt('wwar','warrior')">Полководец</button>
+          </div>
+          <div id="warrior-wb" class="cls-panel on">
+            <p class="arch-head">Базовые способности — общие для всех воинов до выбора пути</p>
+            <div class="ab-lvl">Уровень 1 · Новобранец</div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Воинская стойка</span><span class="ab-badge pas">Пассивная</span></div><p class="ab-desc">Воин начинает бой в готовности. +2 к броску инициативы. Если враг атакует воина в упор, тот не получает штраф за реакцию в ближнем бою.</p><div class="ab-tags"><span class="ab-tag">Всегда активно</span><span class="ab-tag">+2 инициатива</span></div></div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Точный удар</span><span class="ab-badge act">Активная</span></div><p class="ab-desc">Воин тратит действие, чтобы прицелиться и нанести удар с +3 к броску атаки. Используется 1 раз за ход.</p><div class="ab-tags"><span class="ab-tag">1 действие</span><span class="ab-tag">Ближний / дальний</span><span class="ab-tag">+3 к атаке</span></div></div>
+            <div class="ab-lvl">Уровень 2 · Ветеран</div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Вторая атака</span><span class="ab-badge pas">Пассивная</span></div><p class="ab-desc">Воин получает дополнительную атаку за ход. Вторая атака наносится с −2 к броску (опыт снижает штраф по мере прокачки).</p><div class="ab-tags"><span class="ab-tag">2 атаки за ход</span><span class="ab-tag">−2 к второй</span></div></div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Боевое чутьё</span><span class="ab-badge rea">Реакция</span></div><p class="ab-desc">Когда воина атакуют, он может реакцией потребовать перебросить вражеский кубик атаки (1 раз за раунд). Берётся меньший результат.</p><div class="ab-tags"><span class="ab-tag">Реакция</span><span class="ab-tag">1/раунд</span></div></div>
+            <div class="ab-lvl">Уровень 3 · Выбор пути</div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Закалка тела</span><span class="ab-badge pas">Пассивная</span></div><p class="ab-desc">Максимум ХП увеличивается на 1d8+Выносливость. Воин получает устойчивость к одному типу урона на выбор: рубящий, колющий или дробящий.</p><div class="ab-tags"><span class="ab-tag">+ХП</span><span class="ab-tag">Устойчивость</span></div></div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Выбор пути</span><span class="ab-badge mil">Веха</span></div><p class="ab-desc">Воин выбирает путь: Берсерк, Страж или Полководец. С этого момента открываются уникальные способности выбранной ветки.</p><div class="ab-tags"><span class="ab-tag">Сюжетный момент</span></div></div>
+          </div>
+          <div id="warrior-wbers" class="cls-panel">
+            <p class="arch-head">Берсерк — ударный боец, живёт за счёт агрессии и высокого урона</p>
+            <div class="ab-lvl">Уровень 4 · Ярость</div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Ярость</span><span class="ab-badge act">Активная</span></div><p class="ab-desc">Воин входит в боевой транс: +2 к урону ближнего боя, −2 к КЗ. Длится 3 раунда. Активируется бонусным действием.</p><div class="ab-tags"><span class="ab-tag">Бонусное действие</span><span class="ab-tag">3 раунда</span><span class="ab-tag">2/отдых</span></div></div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Свирепый вид</span><span class="ab-badge pas">Пассивная</span></div><p class="ab-desc">Когда берсерк активирует Ярость, все враги в 3 м проходят спасбросок Воли (СЛ 12). Провалившие получают помеху на первую атаку в этот раунд.</p><div class="ab-tags"><span class="ab-tag">Спасбросок Воли</span><span class="ab-tag">Страх</span><span class="ab-tag">Триггер: Ярость</span></div></div>
+            <div class="ab-lvl">Уровень 5 · Безудержный натиск</div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Сокрушительный удар</span><span class="ab-badge act">Активная</span></div><p class="ab-desc">Во время Ярости: один удар с двойной силой. При попадании цель делает спасбросок Телосложения (СЛ 14) или падает и тратит действие на подъём.</p><div class="ab-tags"><span class="ab-tag">Во время Ярости</span><span class="ab-tag">1/раунд</span><span class="ab-tag">Нокдаун</span></div></div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Болевой порог</span><span class="ab-badge pas">Пассивная</span></div><p class="ab-desc">Во время Ярости берсерк игнорирует первые 3 единицы урона каждой атаки. Если ХП опускаются ниже 25% — Ярость не прерывается автоматически.</p><div class="ab-tags"><span class="ab-tag">Поглощение урона</span><span class="ab-tag">Во время Ярости</span></div></div>
+            <div class="ab-lvl">Уровень 6 · Кровожадность</div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Жажда крови</span><span class="ab-badge pas">Пассивная</span></div><p class="ab-desc">Каждый раз, когда берсерк убивает врага, он немедленно восстанавливает 1d6 ХП и продлевает Ярость на 1 раунд. Цепочка убийств продлевается бесконечно.</p><div class="ab-tags"><span class="ab-tag">Пассивно</span><span class="ab-tag">+1d6 ХП за убийство</span><span class="ab-tag">Продление Ярости</span></div></div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Воплощение хаоса</span><span class="ab-badge act">Активная</span></div><p class="ab-desc">1 раз за длинный отдых: войти в Великую Ярость на 5 раундов. Все ограничения Ярости сняты, урон ×1.5, берсерк неуязвим к эффектам страха и контроля.</p><div class="ab-tags"><span class="ab-tag">1/длинный отдых</span><span class="ab-tag">5 раундов</span><span class="ab-tag">Иммунитет к контролю</span></div></div>
+          </div>
+          <div id="warrior-wgard" class="cls-panel">
+            <p class="arch-head">Страж — танк, закрывает союзников щитом и контролирует поле боя</p>
+            <div class="ab-lvl">Уровень 4 · Щитовой блок</div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Щитовой блок</span><span class="ab-badge rea">Реакция</span></div><p class="ab-desc">Реакция на атаку по себе или союзнику в 1.5 м: +3 к КЗ цели до конца атаки. Если атака всё равно попадает, урон снижается на 1d6. Требует щит.</p><div class="ab-tags"><span class="ab-tag">Реакция</span><span class="ab-tag">Требует щит</span><span class="ab-tag">−1d6 урона</span></div></div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Вызов на себя</span><span class="ab-badge act">Активная</span></div><p class="ab-desc">Бонусным действием: выбрать цель в 9 м. Цель обязана атаковать только стража до следующего хода, если провалит спасбросок Воли (СЛ 13).</p><div class="ab-tags"><span class="ab-tag">Бонусное действие</span><span class="ab-tag">Провокация</span><span class="ab-tag">9 м</span></div></div>
+            <div class="ab-lvl">Уровень 5 · Непреодолимый</div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Стена из стали</span><span class="ab-badge act">Активная</span></div><p class="ab-desc">Страж занимает оборонительную позицию: движение −50%, но все союзники в 3 м получают +2 КЗ и преимущество на спасброски против эффектов сдвига. 2 раунда.</p><div class="ab-tags"><span class="ab-tag">Действие</span><span class="ab-tag">Аура 3 м</span><span class="ab-tag">2 раунда</span></div></div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Несокрушимость</span><span class="ab-badge pas">Пассивная</span></div><p class="ab-desc">Если страж получает урон, снижающий ХП до 0, он может пройти спасбросок Телосложения (СЛ 15). При успехе остаётся с 1 ХП. 1 раз за бой.</p><div class="ab-tags"><span class="ab-tag">1/бой</span><span class="ab-tag">Выживание с 1 ХП</span></div></div>
+            <div class="ab-lvl">Уровень 6 · Бастион</div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Живой щит</span><span class="ab-badge rea">Реакция</span></div><p class="ab-desc">Реакция: перехватить любую атаку, направленную на союзника в 3 м, приняв весь урон на себя. КЗ стража при этом считается равным 20 против этой атаки.</p><div class="ab-tags"><span class="ab-tag">Реакция</span><span class="ab-tag">3 м</span><span class="ab-tag">КЗ 20 против перехвата</span></div></div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Незыблемый бастион</span><span class="ab-badge pas">Пассивная</span></div><p class="ab-desc">Страж получает постоянный +2 КЗ. Союзники в 3 м от стража не могут быть принудительно перемещены магией или способностями врагов.</p><div class="ab-tags"><span class="ab-tag">+2 КЗ постоянно</span><span class="ab-tag">Аура стабильности</span></div></div>
+          </div>
+          <div id="warrior-wwar" class="cls-panel">
+            <p class="arch-head">Полководец — тактический лидер, усиливает весь отряд приказами и баффами</p>
+            <div class="ab-lvl">Уровень 4 · Боевой приказ</div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Боевой приказ</span><span class="ab-badge act">Активная</span></div><p class="ab-desc">Бонусным действием: выбрать союзника в 18 м. Тот может немедленно совершить одно движение или атаку вне очереди, не тратя свой ход.</p><div class="ab-tags"><span class="ab-tag">Бонусное действие</span><span class="ab-tag">18 м</span><span class="ab-tag">Внеочерёдное действие</span></div></div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Тактическая оценка</span><span class="ab-badge pas">Пассивная</span></div><p class="ab-desc">В начале каждого боя полководец может задать один тактический вопрос мастеру: слабые стороны цели, укрытия или количество врагов за углом.</p><div class="ab-tags"><span class="ab-tag">Начало боя</span><span class="ab-tag">Разведка</span></div></div>
+            <div class="ab-lvl">Уровень 5 · Инспирация</div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Боевой клич</span><span class="ab-badge act">Активная</span></div><p class="ab-desc">Действие: все союзники в 15 м получают 1d6 временных ХП и преимущество на броски атаки до начала следующего хода полководца. 2 раза за короткий отдых.</p><div class="ab-tags"><span class="ab-tag">Действие</span><span class="ab-tag">Аура 15 м</span><span class="ab-tag">2/короткий отдых</span></div></div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Читать поле боя</span><span class="ab-badge pas">Пассивная</span></div><p class="ab-desc">Полководец никогда не бывает застигнут врасплох. Союзники в 9 м от него также не застигнуты — полководец предупредил их заранее.</p><div class="ab-tags"><span class="ab-tag">Пассивно</span><span class="ab-tag">Аура 9 м</span><span class="ab-tag">Инициатива</span></div></div>
+            <div class="ab-lvl">Уровень 6 · Военный гений</div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Приказ к атаке</span><span class="ab-badge act">Активная</span></div><p class="ab-desc">1 раз за бой: все союзники в 18 м немедленно совершают одну атаку вне очереди с преимуществом. Полководец при этом тоже атакует.</p><div class="ab-tags"><span class="ab-tag">1/бой</span><span class="ab-tag">Массовая атака</span><span class="ab-tag">Внеочерёдная</span></div></div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Стратегический ум</span><span class="ab-badge pas">Пассивная</span></div><p class="ab-desc">Боевой приказ (ур. 4) более не требует бонусного действия — используется свободно раз за раунд. Союзник может выполнить атаку И движение вместо одного из них.</p><div class="ab-tags"><span class="ab-tag">Улучшение Боевого приказа</span><span class="ab-tag">Бесплатно/раунд</span></div></div>
+          </div>
+          <script>
+            function wt(id,cls){
+              document.querySelectorAll('#detail-'+cls+' .cls-tab').forEach(b=>b.classList.remove('on'));
+              document.querySelectorAll('#detail-'+cls+' .cls-panel').forEach(p=>p.classList.remove('on'));
+              document.getElementById(cls+'-'+id).classList.add('on');
+              event.currentTarget.classList.add('on');
+            }
+          </script>
         </div>
 
-        <!-- Маг -->
         <div id="detail-mage" class="class-detail-block" style="display:none;">
-          <div class="section-title">🔮 Маг</div>
-          <div class="section-subtitle">✦ власть над стихиями ✦</div>
-          <div class="stat-block">
-            <div class="stat-cell">
-              <span class="stat-cell-label">Здоровье</span>
-              <span class="stat-cell-value">6 + Тел.</span>
-              <span class="stat-cell-sub">стартовое</span>
-            </div>
-            <div class="stat-cell">
-              <span class="stat-cell-label">HP за уровень</span>
-              <span class="stat-cell-value">4</span>
-              <span class="stat-cell-sub">фиксировано</span>
-            </div>
-            <div class="stat-cell">
-              <span class="stat-cell-label">Скорость</span>
-              <span class="stat-cell-value">6 тайлов</span>
-              <span class="stat-cell-sub">30 футов</span>
-            </div>
-            <div class="stat-cell">
-              <span class="stat-cell-label">Основная хар-ка</span>
-              <span class="stat-cell-value">Харизма</span>
-              <span class="stat-cell-sub">определяет магию</span>
-            </div>
-            <div class="stat-cell">
-              <span class="stat-cell-label">Владение бронёй</span>
-              <span class="stat-cell-value">Нет</span>
-              <span class="stat-cell-sub">только мантия</span>
+          <div class="section-title"><svg style="width:32px;height:32px;color:var(--gold);vertical-align:-6px;margin-right:8px;"><use href="#s-mage"/></svg>Маг</div>
+          <div class="section-subtitle">власть над стихиями</div>
+          <div class="stat-sheet">
+            <div class="stat-sheet-header"><span>Лист персонажа · Маг</span><span>ур. 1</span></div>
+            <div class="stat-grid">
+              <div class="stat-cell"><span class="stat-cell-label">Здоровье</span><span class="stat-cell-value">6 + Тел.</span><span class="stat-cell-sub">стартовое</span></div>
+              <div class="stat-cell"><span class="stat-cell-label">HP за уровень</span><span class="stat-cell-value">4</span><span class="stat-cell-sub">фиксировано</span></div>
+              <div class="stat-cell"><span class="stat-cell-label">Скорость</span><span class="stat-cell-value">6 тайлов</span><span class="stat-cell-sub">30 футов</span></div>
+              <div class="stat-cell"><span class="stat-cell-label">Основная хар-ка</span><span class="stat-cell-value">Интеллект</span><span class="stat-cell-sub">определяет магию</span></div>
+              <div class="stat-cell" style="grid-column:span 2"><span class="stat-cell-label">Ресурс</span><span class="stat-cell-value">Мана · 6 ед.</span><span class="stat-cell-sub">восполняется на отдыхе</span></div>
             </div>
           </div>
-          <p class="lead" style="font-style:italic;color:var(--text-muted);text-align:center;">Подробное описание класса будет добавлено позже.</p>
+          <div class="cls-tabs">
+            <button class="cls-tab on" onclick="wt('mb','mage')">Уровни 1–3</button>
+            <button class="cls-tab" onclick="wt('mwar','mage')">Воин-маг</button>
+            <button class="cls-tab" onclick="wt('msorc','mage')">Чародей</button>
+            <button class="cls-tab" onclick="wt('mheal','mage')">Целитель</button>
+          </div>
+          <div id="mage-mb" class="cls-panel on">
+            <p class="arch-head">Базовые заклинания и механика маны — общие для всех школ</p>
+            <div class="ab-lvl">Уровень 1 · Ученик</div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Магический заряд</span><span class="ab-badge pas">Пассивная</span></div><p class="ab-desc">Маг управляет пулом маны — основным ресурсом всех заклинаний. Начальный запас: 6 единиц. Короткий отдых восстанавливает 1d4 маны, длинный — полностью. Заклинания стоят от 1 до 4 маны.</p><div class="ab-tags"><span class="ab-tag">6 маны на старте</span><span class="ab-tag">Отдых = восполнение</span></div></div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Магическая стрела</span><span class="ab-badge act">Активная</span></div><p class="ab-desc">Дальность 18 м, урон 1d8+Интеллект. Всегда попадает — без броска на атаку. Можно выпустить до трёх стрел за раз, каждая дополнительная стоит 1 ману.</p><div class="ab-tags"><span class="ab-tag">1 мана</span><span class="ab-tag">1d8+Инт</span><span class="ab-tag">18 м</span><span class="ab-tag">Автопопадание</span></div></div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Чтение магии</span><span class="ab-badge pas">Пассивная</span></div><p class="ab-desc">Маг видит магические ауры предметов и существ в 9 м. Автоматически определяет наличие магии. Действием — узнаёт школу и приблизительную силу. Маны не требует.</p><div class="ab-tags"><span class="ab-tag">Пассивно</span><span class="ab-tag">9 м</span><span class="ab-tag">Бесплатно</span></div></div>
+            <div class="ab-lvl">Уровень 2 · Заклинатель</div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Концентрация</span><span class="ab-badge mil">Механика</span></div><p class="ab-desc">Маг может поддерживать одно длительное заклинание. При получении урона — спасбросок Интеллекта (СЛ 12 или половина урона): провал прерывает заклинание.</p><div class="ab-tags"><span class="ab-tag">Спасбросок при уроне</span></div></div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Магический щит</span><span class="ab-badge rea">Реакция</span></div><p class="ab-desc">Реакция на атаку: мгновенный барьер даёт +4 КЗ до конца атаки. Стоит 1 ману.</p><div class="ab-tags"><span class="ab-tag">Реакция</span><span class="ab-tag">1 мана</span><span class="ab-tag">+4 КЗ</span></div></div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Метамагия: усиление</span><span class="ab-badge pas">Пассивная</span></div><p class="ab-desc">Перед любым заклинанием потратить +1 ману: на выбор +1 к кубику урона, +3 м дальности или +2 к СЛ спасброска.</p><div class="ab-tags"><span class="ab-tag">+1 мана</span><span class="ab-tag">Усиление заклинания</span></div></div>
+            <div class="ab-lvl">Уровень 3 · Выбор школы</div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Резерв маны +4</span><span class="ab-badge pas">Пассивная</span></div><p class="ab-desc">Максимальный запас маны вырастает до 10 единиц. Маг разучивает одно заклинание будущей школы бесплатно — предвкушение пути.</p><div class="ab-tags"><span class="ab-tag">10 маны</span><span class="ab-tag">+1 заклинание школы</span></div></div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Выбор школы</span><span class="ab-badge mil">Веха</span></div><p class="ab-desc">Маг выбирает путь: Воин-маг (сталь и магия), Чародей (разрушительный урон) или Целитель (поддержка и восстановление).</p><div class="ab-tags"><span class="ab-tag">Сюжетный момент</span></div></div>
+          </div>
+          <div id="mage-mwar" class="cls-panel">
+            <p class="arch-head">Воин-маг — ближний бой, усиленный магией. Сталь и заклинания в одних руках</p>
+            <div class="ab-lvl">Уровень 4 · Клинок заклинаний</div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Клинок заклинаний</span><span class="ab-badge act">Активная</span></div><p class="ab-desc">Бонусным действием: насытить оружие магией на 1 минуту. Удары наносят дополнительно 1d6 магического урона и считаются магическими. Тип урона (огонь, лёд, молния) выбирается при активации.</p><div class="ab-tags"><span class="ab-tag">1 мана</span><span class="ab-tag">Бонусное действие</span><span class="ab-tag">+1d6 магия</span><span class="ab-tag">1 минута</span></div></div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Боевое колдовство</span><span class="ab-badge pas">Пассивная</span></div><p class="ab-desc">Воин-маг может применять заклинания в ближнем бою без штрафов. Атака и заклинание в одном ходу — больше не исключают друг друга.</p><div class="ab-tags"><span class="ab-tag">Пассивно</span><span class="ab-tag">Атака + заклинание за ход</span></div></div>
+            <div class="ab-lvl">Уровень 5 · Руническая броня</div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Руническая броня</span><span class="ab-badge act">Активная</span></div><p class="ab-desc">Действием: нанести руны на броню — +2 КЗ и устойчивость к одному типу магического урона на выбор. Длится до конца боя или пока не получено 20+ урона магией за один удар.</p><div class="ab-tags"><span class="ab-tag">2 маны</span><span class="ab-tag">+2 КЗ</span><span class="ab-tag">Устойчивость к магии</span></div></div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Магический выпад</span><span class="ab-badge act">Активная</span></div><p class="ab-desc">Вместо обычной атаки: телепортироваться к цели в 12 м и нанести удар с +2d6 магического урона. Перемещение не вызывает атак по возможности.</p><div class="ab-tags"><span class="ab-tag">2 маны</span><span class="ab-tag">12 м</span><span class="ab-tag">+2d6 маг. урон</span></div></div>
+            <div class="ab-lvl">Уровень 6 · Магический вихрь</div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Магический вихрь</span><span class="ab-badge act">Активная</span></div><p class="ab-desc">1 раз за длинный отдых: удар по всем врагам в 3 м с уроном оружия + 3d6 магии, затем телепортация к любому врагу в 9 м и повторный удар. Все движения не вызывают атак по возможности.</p><div class="ab-tags"><span class="ab-tag">3 маны</span><span class="ab-tag">1/длинный отдых</span><span class="ab-tag">Удар 360° + телепортация</span></div></div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Единство стали и магии</span><span class="ab-badge pas">Пассивная</span></div><p class="ab-desc">Когда Клинок заклинаний активен, каждый успешный удар в ближнем бою восстанавливает 1 ману. Максимум маны постоянно увеличивается на 2 (итого 12).</p><div class="ab-tags"><span class="ab-tag">+1 мана за удар</span><span class="ab-tag">Макс. мана 12</span></div></div>
+          </div>
+          <div id="mage-msorc" class="cls-panel">
+            <p class="arch-head">Чародей — максимальный магический урон, живёт на грани пустой маны</p>
+            <div class="ab-lvl">Уровень 4 · Разрушительный всплеск</div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Разрушительный всплеск</span><span class="ab-badge act">Активная</span></div><p class="ab-desc">Выстрел сосредоточенной магии по одной цели в 24 м: 4d8+Инт урона. Критический бросок (20) вызывает взрыв — все в 3 м от цели получают половину урона.</p><div class="ab-tags"><span class="ab-tag">2 маны</span><span class="ab-tag">4d8+Инт</span><span class="ab-tag">24 м</span><span class="ab-tag">Крит = взрыв</span></div></div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Сверхпроводимость</span><span class="ab-badge pas">Пассивная</span></div><p class="ab-desc">Если цель уже получила магический урон в этом бою — следующее заклинание чародея по ней игнорирует устойчивость и проходит через магические барьеры.</p><div class="ab-tags"><span class="ab-tag">Пассивно</span><span class="ab-tag">Игнор устойчивости</span><span class="ab-tag">После первого удара</span></div></div>
+            <div class="ab-lvl">Уровень 5 · Перегрузка</div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Перегрузка</span><span class="ab-badge act">Активная</span></div><p class="ab-desc">Влить всю доступную ману в одно заклинание: 1d10 за каждую потраченную ману (макс. 10d10). После — 0 маны и помеха на все броски следующего хода. 1 раз за бой.</p><div class="ab-tags"><span class="ab-tag">Вся мана</span><span class="ab-tag">1d10/мана</span><span class="ab-tag">1/бой</span><span class="ab-tag">Истощение после</span></div></div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Магический голод</span><span class="ab-badge pas">Пассивная</span></div><p class="ab-desc">Чем меньше маны — тем сильнее заклинания. При 5 и менее манах: +1d6 к урону. При 2 и менее: +2d6. При 0 — следующее заклинание бесплатное, но после него чародей теряет сознание на 1 раунд.</p><div class="ab-tags"><span class="ab-tag">≤5 маны: +1d6</span><span class="ab-tag">≤2 маны: +2d6</span><span class="ab-tag">0 маны: бесплатно + обморок</span></div></div>
+            <div class="ab-lvl">Уровень 6 · Апокалипсис</div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Апокалипсис</span><span class="ab-badge act">Активная</span></div><p class="ab-desc">1 раз за длинный отдых: 8d10 магического урона по области 9 м в 30 м. Спасбросок Ловкости (СЛ 18) — половина. Союзники в зоне автоматически невредимы, если чародей предупредил их.</p><div class="ab-tags"><span class="ab-tag">4 маны</span><span class="ab-tag">1/длинный отдых</span><span class="ab-tag">8d10</span><span class="ab-tag">Область 9 м</span></div></div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Эхо заклинания</span><span class="ab-badge rea">Реакция</span></div><p class="ab-desc">Реакция на вражеское заклинание: скопировать и перенаправить его обратно с половинной силой. Спасбросок Интеллекта (СЛ 16) против копирования. 2 раза за длинный отдых.</p><div class="ab-tags"><span class="ab-tag">Реакция</span><span class="ab-tag">2/длинный отдых</span><span class="ab-tag">×0.5 урон</span></div></div>
+          </div>
+          <div id="mage-mheal" class="cls-panel">
+            <p class="arch-head">Целитель — восстановление, щиты и воскрешение. Опора всего отряда</p>
+            <div class="ab-lvl">Уровень 4 · Исцеляющий свет</div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Исцеляющий свет</span><span class="ab-badge act">Активная</span></div><p class="ab-desc">Действием: восстановить союзнику в 18 м 2d8+Инт ХП (стоит 1 ману). Бонусным действием: более слабая версия — 1d6 ХП бесплатно (1 раз за ход). За 2 маны: лечение двух целей одновременно.</p><div class="ab-tags"><span class="ab-tag">1 мана (полное)</span><span class="ab-tag">Бесплатно 1d6 (бонусное)</span><span class="ab-tag">2 маны = 2 цели</span></div></div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Снятие недуга</span><span class="ab-badge act">Активная</span></div><p class="ab-desc">Действием: снять с союзника один эффект на выбор: яд, болезнь, паралич, ослепление, оглушение или страх. За 2 маны — снять все эффекты сразу.</p><div class="ab-tags"><span class="ab-tag">1 мана (один эффект)</span><span class="ab-tag">2 маны (все эффекты)</span><span class="ab-tag">Касание</span></div></div>
+            <div class="ab-lvl">Уровень 5 · Защитный купол</div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Защитный купол</span><span class="ab-badge mil">Концентрация</span></div><p class="ab-desc">Концентрация, 3 маны: сфера 6 м вокруг целителя. Союзники внутри получают +2 КЗ и устойчивость к магическому урону. Каждый раунд — все в куполе восстанавливают 1d4 ХП.</p><div class="ab-tags"><span class="ab-tag">3 маны</span><span class="ab-tag">Концентрация</span><span class="ab-tag">Купол 6 м</span><span class="ab-tag">+2 КЗ + 1d4 ХП/раунд</span></div></div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Жизненный якорь</span><span class="ab-badge rea">Реакция</span></div><p class="ab-desc">Реакция: когда союзник в 18 м получает смертельный удар — поглотить часть урона. Союзник остаётся с 1 ХП, целитель получает 1d10 урона. 2 раза за бой.</p><div class="ab-tags"><span class="ab-tag">Реакция</span><span class="ab-tag">2/бой</span><span class="ab-tag">18 м</span><span class="ab-tag">Союзник выживает с 1 ХП</span></div></div>
+            <div class="ab-lvl">Уровень 6 · Воскрешение</div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Воскрешение</span><span class="ab-badge act">Активная</span></div><p class="ab-desc">1 раз за длинный отдых: поднять союзника, павшего не более 1 минуты назад, с 50% ХП. Требует 1 полное действие и касание. Стоит 4 маны и 1d6 собственных ХП целителя.</p><div class="ab-tags"><span class="ab-tag">4 маны</span><span class="ab-tag">1/длинный отдых</span><span class="ab-tag">50% ХП</span><span class="ab-tag">−1d6 ХП целителя</span></div></div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Живительный поток</span><span class="ab-badge pas">Пассивная</span></div><p class="ab-desc">Каждый раз, когда целитель лечит союзника полным лечением, он восстанавливает 1d4 маны. Бонусное лечение вырастает до 1d8 вместо 1d6.</p><div class="ab-tags"><span class="ab-tag">+1d4 маны при лечении</span><span class="ab-tag">Бонусное лечение 1d8</span></div></div>
+          </div>
         </div>
 
-        <!-- Плут -->
         <div id="detail-rogue" class="class-detail-block" style="display:none;">
-          <div class="section-title">🗡️ Плут</div>
-          <div class="section-subtitle">✦ тень и обман ✦</div>
-          <div class="stat-block">
-            <div class="stat-cell">
-              <span class="stat-cell-label">Здоровье</span>
-              <span class="stat-cell-value">8 + Тел.</span>
-              <span class="stat-cell-sub">стартовое</span>
-            </div>
-            <div class="stat-cell">
-              <span class="stat-cell-label">HP за уровень</span>
-              <span class="stat-cell-value">5</span>
-              <span class="stat-cell-sub">фиксировано</span>
-            </div>
-            <div class="stat-cell">
-              <span class="stat-cell-label">Скорость</span>
-              <span class="stat-cell-value">6 тайлов</span>
-              <span class="stat-cell-sub">30 футов</span>
-            </div>
-            <div class="stat-cell">
-              <span class="stat-cell-label">Основная хар-ка</span>
-              <span class="stat-cell-value">Ловкость</span>
-              <span class="stat-cell-sub">скрытность и атака</span>
-            </div>
-            <div class="stat-cell">
-              <span class="stat-cell-label">Владение бронёй</span>
-              <span class="stat-cell-value">Лёгкая</span>
-              <span class="stat-cell-sub">кожа, кольчуга</span>
+          <div class="section-title"><svg style="width:32px;height:32px;color:var(--gold);vertical-align:-6px;margin-right:8px;"><use href="#s-rogue"/></svg>Плут</div>
+          <div class="section-subtitle">тень и обман</div>
+          <div class="stat-sheet">
+            <div class="stat-sheet-header"><span>Лист персонажа · Плут</span><span>ур. 1</span></div>
+            <div class="stat-grid">
+              <div class="stat-cell"><span class="stat-cell-label">Здоровье</span><span class="stat-cell-value">8 + Тел.</span><span class="stat-cell-sub">стартовое</span></div>
+              <div class="stat-cell"><span class="stat-cell-label">HP за уровень</span><span class="stat-cell-value">5</span><span class="stat-cell-sub">фиксировано</span></div>
+              <div class="stat-cell"><span class="stat-cell-label">Скорость</span><span class="stat-cell-value">6 тайлов</span><span class="stat-cell-sub">30 футов</span></div>
+              <div class="stat-cell"><span class="stat-cell-label">Основная хар-ка</span><span class="stat-cell-value">Ловкость</span><span class="stat-cell-sub">скрытность и атака</span></div>
+              <div class="stat-cell" style="grid-column:span 2"><span class="stat-cell-label">Владение бронёй</span><span class="stat-cell-value">Лёгкая</span><span class="stat-cell-sub">кожа, кольчуга</span></div>
             </div>
           </div>
-          <p class="lead" style="font-style:italic;color:var(--text-muted);text-align:center;">Подробное описание класса будет добавлено позже.</p>
+          <div class="cls-tabs">
+            <button class="cls-tab on" onclick="wt('rb','rogue')">Уровни 1–3</button>
+            <button class="cls-tab" onclick="wt('rass','rogue')">Убийца</button>
+            <button class="cls-tab" onclick="wt('rtri','rogue')">Мошенник</button>
+            <button class="cls-tab" onclick="wt('rsco','rogue')">Разведчик</button>
+          </div>
+          <div id="rogue-rb" class="cls-panel on">
+            <p class="arch-head">Базовые способности — фундамент всех путей плута</p>
+            <div class="ab-lvl">Уровень 1 · Карманник</div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Скрытная атака</span><span class="ab-badge act">Активная</span></div><p class="ab-desc">Если плут атакует цель, которая не замечает его или отвлечена на союзника, атака наносит дополнительно +1d6 урона. Работает один раз за ход с любым лёгким оружием.</p><div class="ab-tags"><span class="ab-tag">+1d6 урона</span><span class="ab-tag">Незамеченность / отвлечение</span><span class="ab-tag">1/ход</span></div></div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Ловкие руки</span><span class="ab-badge pas">Пассивная</span></div><p class="ab-desc">Плут совершает проверки Ловкости (кражи, взлом замков, обыск) с преимуществом. Может использовать мелкие предметы бонусным действием вместо основного.</p><div class="ab-tags"><span class="ab-tag">Преимущество на Ловкость</span><span class="ab-tag">Бонусное действие</span></div></div>
+            <div class="ab-lvl">Уровень 2 · Теневой клинок</div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Раствориться в тени</span><span class="ab-badge act">Активная</span></div><p class="ab-desc">Бонусным действием плут уходит в скрытность, даже если за ним наблюдают — при условии что поблизости есть тень, укрытие или толпа. Проверка Скрытности против Восприятия врага.</p><div class="ab-tags"><span class="ab-tag">Бонусное действие</span><span class="ab-tag">Требует укрытие</span></div></div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Уклонение</span><span class="ab-badge rea">Реакция</span></div><p class="ab-desc">При попадании атаки плут реакцией уходит в сторону: урон снижается вдвое. Если атака была по площади — при успешном спасброске урон равен нулю, при провале — половина.</p><div class="ab-tags"><span class="ab-tag">Реакция</span><span class="ab-tag">Урон ÷2</span><span class="ab-tag">1/раунд</span></div></div>
+            <div class="ab-lvl">Уровень 3 · Выбор пути</div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Скрытная атака +2d6</span><span class="ab-badge pas">Улучшение</span></div><p class="ab-desc">Скрытная атака растёт до +2d6 урона. Плут также может применять её при атаке с фланга, даже если союзника нет рядом — достаточно, чтобы враг был занят другим.</p><div class="ab-tags"><span class="ab-tag">+2d6 урона</span><span class="ab-tag">Улучшение ур. 1</span></div></div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Выбор пути</span><span class="ab-badge mil">Веха</span></div><p class="ab-desc">Плут выбирает специализацию: Убийца, Мошенник или Разведчик. Каждый путь меняет стиль игры кардинально — от чистого урона до контроля поля и социальных манипуляций.</p><div class="ab-tags"><span class="ab-tag">Сюжетный момент</span></div></div>
+          </div>
+          <div id="rogue-rass" class="cls-panel">
+            <p class="arch-head">Убийца — устранение через скрытность и один мощный удар</p>
+            <div class="ab-lvl">Уровень 4 · Смертельный укол</div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Смертельный укол</span><span class="ab-badge act">Активная</span></div><p class="ab-desc">Атака по цели, не подозревающей об опасности: Скрытная атака наносит +3d6 вместо обычного бонуса. Если цель гуманоид с ХП ниже 30% — немедленная смерть при провале спасброска Телосложения (СЛ 15).</p><div class="ab-tags"><span class="ab-tag">+3d6 скрытная атака</span><span class="ab-tag">Мгновенная смерть</span><span class="ab-tag">ХП &lt;30%</span></div></div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Маскировка убийцы</span><span class="ab-badge pas">Пассивная</span></div><p class="ab-desc">Убийца может без инструментов подготовить внешность чужого человека за 10 минут. Проверки Обмана при поддержании маскировки совершаются с преимуществом.</p><div class="ab-tags"><span class="ab-tag">Маскировка 10 мин</span><span class="ab-tag">Преимущество на Обман</span></div></div>
+            <div class="ab-lvl">Уровень 5 · Теневой шаг</div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Теневой шаг</span><span class="ab-badge act">Активная</span></div><p class="ab-desc">Бонусным действием: мгновенно переместиться из одной тени в другую в радиусе 18 м. Перемещение не вызывает атак по возможности. После телепортации следующая атака считается скрытной автоматически.</p><div class="ab-tags"><span class="ab-tag">Бонусное действие</span><span class="ab-tag">18 м</span><span class="ab-tag">2/короткий отдых</span></div></div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Анатомическое знание</span><span class="ab-badge pas">Пассивная</span></div><p class="ab-desc">Убийца знает уязвимые точки: критический удар наступает при броске 19–20 (вместо только 20). При крите Скрытная атака удваивается полностью, включая все бонусные кубики.</p><div class="ab-tags"><span class="ab-tag">Крит 19–20</span><span class="ab-tag">Двойная скрытная атака при крите</span></div></div>
+            <div class="ab-lvl">Уровень 6 · Приговор</div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Приговор</span><span class="ab-badge act">Активная</span></div><p class="ab-desc">1 раз за длинный отдых: убийца назначает жертву. В течение 24 часов все атаки по цели наносят максимальный урон Скрытной атаки (без броска кубиков). 1 раз за длинный отдых.</p><div class="ab-tags"><span class="ab-tag">1/длинный отдых</span><span class="ab-tag">Макс. урон</span><span class="ab-tag">24 часа</span></div></div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Исчезновение</span><span class="ab-badge rea">Реакция</span></div><p class="ab-desc">Реакция на нанесение финального удара: убийца немедленно уходит в полную невидимость и перемещается на 9 м. Невидимость длится до конца хода или до следующей атаки.</p><div class="ab-tags"><span class="ab-tag">Реакция</span><span class="ab-tag">После убийства</span><span class="ab-tag">Невидимость</span></div></div>
+          </div>
+          <div id="rogue-rtri" class="cls-panel">
+            <p class="arch-head">Мошенник — обман, манипуляции, иллюзии и социальная инженерия</p>
+            <div class="ab-lvl">Уровень 4 · Серебряный язык</div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Серебряный язык</span><span class="ab-badge pas">Пассивная</span></div><p class="ab-desc">Все проверки Убеждения, Обмана и Запугивания совершаются с преимуществом. Мошенник чувствует ложь автоматически — пассивное Проницательность всегда равно 15, если реальный показатель ниже.</p><div class="ab-tags"><span class="ab-tag">Преимущество на социальные броски</span><span class="ab-tag">Пассивная проницательность 15</span></div></div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Отвлекающий манёвр</span><span class="ab-badge act">Активная</span></div><p class="ab-desc">Действием: создать отвлечение в 6 м. Все враги в зоне проходят проверку Восприятия (СЛ 14) или теряют реакцию до следующего хода.</p><div class="ab-tags"><span class="ab-tag">Действие</span><span class="ab-tag">6 м</span><span class="ab-tag">Снятие реакции</span><span class="ab-tag">2/короткий отдых</span></div></div>
+            <div class="ab-lvl">Уровень 5 · Двойник</div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Двойник</span><span class="ab-badge act">Активная</span></div><p class="ab-desc">Действием: создать иллюзорную копию себя. Враги не знают, кто настоящий — все атаки по мошеннику имеют 50% шанс попасть в копию (исчезает от одного попадания).</p><div class="ab-tags"><span class="ab-tag">Действие</span><span class="ab-tag">Иллюзия</span><span class="ab-tag">50% промах</span><span class="ab-tag">1/короткий отдых</span></div></div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Чужая личина</span><span class="ab-badge pas">Пассивная</span></div><p class="ab-desc">Мошенник может полностью принять чужую личность: голос, манеры, биография. При длительном внедрении проверки разоблачения совершаются с помехой у противника.</p><div class="ab-tags"><span class="ab-tag">Ролевая механика</span><span class="ab-tag">Помеха на разоблачение</span></div></div>
+            <div class="ab-lvl">Уровень 6 · Мастер иллюзий</div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Иллюзия хаоса</span><span class="ab-badge act">Активная</span></div><p class="ab-desc">1 раз за бой: создать масштабную иллюзию в 12 м. Все враги в зоне проходят спасбросок Воли (СЛ 16) или тратят ход на реакцию к угрозе. Иллюзия держится 3 раунда.</p><div class="ab-tags"><span class="ab-tag">1/бой</span><span class="ab-tag">12 м</span><span class="ab-tag">3 раунда</span><span class="ab-tag">Потеря хода</span></div></div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Неуловимая личность</span><span class="ab-badge pas">Пассивная</span></div><p class="ab-desc">Магические способности чтения мыслей и обнаружения лжи не работают против мошенника — он автоматически замечает их применение и может подсунуть нужную «правду».</p><div class="ab-tags"><span class="ab-tag">Иммунитет к телепатии</span><span class="ab-tag">Контроль над образом</span></div></div>
+          </div>
+          <div id="rogue-rsco" class="cls-panel">
+            <p class="arch-head">Разведчик — мобильность, ловушки и контроль территории</p>
+            <div class="ab-lvl">Уровень 4 · Призрачный бег</div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Призрачный бег</span><span class="ab-badge pas">Пассивная</span></div><p class="ab-desc">Скорость передвижения +3 м. Разведчик не получает штраф к Скрытности при движении в полную скорость. Передвижение по сложной местности не требует проверки.</p><div class="ab-tags"><span class="ab-tag">+3 м к скорости</span><span class="ab-tag">Скрытность на бегу</span><span class="ab-tag">Игнор сложной местности</span></div></div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Разметка территории</span><span class="ab-badge act">Активная</span></div><p class="ab-desc">За 1 минуту разведки разведчик запоминает точную карту помещения: все выходы, укрытия, позиции врагов. Союзники, получившие эту информацию, не могут быть застигнуты врасплох в этой области.</p><div class="ab-tags"><span class="ab-tag">1 минута</span><span class="ab-tag">Тактическая карта</span><span class="ab-tag">Защита отряда</span></div></div>
+            <div class="ab-lvl">Уровень 5 · Ловушки мастера</div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Сеть ловушек</span><span class="ab-badge act">Активная</span></div><p class="ab-desc">За 10 минут расставить до 3 ловушек в области 9×9 м. Тип на выбор: капкан (обездвиживание 1 раунд), сигнальная (будит разведчика), дымовая (помеха на видимость 3 раунда). СЛ обнаружения — 16.</p><div class="ab-tags"><span class="ab-tag">10 минут</span><span class="ab-tag">3 ловушки</span><span class="ab-tag">СЛ обнаружения 16</span></div></div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Охотничий инстинкт</span><span class="ab-badge pas">Пассивная</span></div><p class="ab-desc">Пассивное Восприятие +5. Никогда не проваливает проверки на поиск скрытых врагов и ловушек с СЛ ниже 20. Чувствует присутствие невидимых существ в 6 м.</p><div class="ab-tags"><span class="ab-tag">+5 Восприятие</span><span class="ab-tag">Обнаружение невидимых</span><span class="ab-tag">6 м</span></div></div>
+            <div class="ab-lvl">Уровень 6 · Дух тени</div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Дух тени</span><span class="ab-badge act">Активная</span></div><p class="ab-desc">1 раз за длинный отдых: разведчик становится полупрозрачным на 1 минуту. Проходит сквозь врагов без атак по возможности, игнорирует тонкие стены, невидим при слабом освещении.</p><div class="ab-tags"><span class="ab-tag">1/длинный отдых</span><span class="ab-tag">1 минута</span><span class="ab-tag">Полупрозрачность</span></div></div>
+            <div class="ab-card"><div class="ab-head"><span class="ab-name">Мастер засад</span><span class="ab-badge pas">Пассивная</span></div><p class="ab-desc">Если бой начинается в зоне ловушек разведчика или все враги застигнуты врасплох — весь отряд получает дополнительный раунд действий до начала инициативы противника. Разведчик всегда ходит первым.</p><div class="ab-tags"><span class="ab-tag">Бонусный раунд засады</span><span class="ab-tag">Первая инициатива</span></div></div>
+          </div>
         </div>
-
       </div>
     </div>
 
-    <!-- МЕХАНИКИ -->
+    <!-- ━━━ МЕХАНИКИ ━━━ -->
     <div class="tab-content" id="tab-mechanics">
+      <div class="chapter-mark">
+        <span class="chapter-num">CHAPTER · V</span>
+        <span class="chapter-rule"></span>
+      </div>
       <div class="section-title">Механики</div>
-      <div class="section-subtitle">✦ правила живого мира ✦</div>
+      <div class="section-subtitle">правила живого мира</div>
 
       <p class="lead">Все механики созданы для одного: сделать ваши решения значимыми и ваши истории — настоящими.</p>
 
       <div class="mechanic-list">
-
         <div class="mechanic-item">
-          <div class="mechanic-icon">🎲</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-dice"/></svg></div>
           <div class="mechanic-body">
             <h3>Система Бросков</h3>
             <p>Базовая механика — d20 + модификатор навыка против Сложности действия (DC). Боевые броски совершаются прямо в игре. Социальные и исследовательские ситуации решаются мастером с учётом отыгрыша.</p>
           </div>
         </div>
-
         <div class="mechanic-item">
-          <div class="mechanic-icon">💀</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-skull"/></svg></div>
           <div class="mechanic-body">
             <h3>Перманентная Смерть</h3>
             <p>Персонаж умер — персонаж мёртв. Навсегда. Это не наказание — это условие, которое делает каждый выбор реальным. У мёртвого персонажа есть одна привилегия: его история остаётся в летописи мира навсегда.</p>
           </div>
         </div>
-
         <div class="mechanic-item">
-          <div class="mechanic-icon">📜</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-scroll"/></svg></div>
           <div class="mechanic-body">
             <h3>Развитие и Уровни</h3>
             <p>Опыт начисляется за отыгрыш, написанные посты и завершённые арки. Уровни открывают новые способности и расширяют доступные механики.</p>
           </div>
         </div>
-
         <div class="mechanic-item">
-          <div class="mechanic-icon">🌍</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-globe"/></svg></div>
           <div class="mechanic-body">
             <h3>Живой Мир</h3>
             <p>Мир меняется от действий игроков. Сожгли деревню — оно исчезает с карты. Заключили мир между фракциями — открываются новые торговые пути. Мастера фиксируют изменения и включают их в официальную летопись.</p>
           </div>
         </div>
-
         <div class="mechanic-item">
-          <div class="mechanic-icon">⚔️</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-swords"/></svg></div>
           <div class="mechanic-body">
             <h3>Боевая Система</h3>
             <p>Пошаговый бой с тактическими позициями. Каждый раунд — действие, бонусное действие, реакция. Описание атаки влияет на результат: детальный пост может активировать особый приём или дать преимущество на броске.</p>
           </div>
         </div>
-
         <div class="mechanic-item">
-          <div class="mechanic-icon">🤝</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-handshake"/></svg></div>
           <div class="mechanic-body">
             <h3>Связи и Репутация</h3>
             <p>НПС помнят, как вы с ними обращались. У каждого значимого персонажа есть шкала отношений. Хорошие отношения открывают уникальные квесты; плохие могут привести к тому, что вас сдадут страже или наймут убийцу.</p>
           </div>
         </div>
-
       </div>
-
     </div>
 
-    <!-- ЧЕРТЫ -->
+    <!-- ━━━ ЧЕРТЫ ━━━ -->
     <div class="tab-content" id="tab-feats">
+      <div class="chapter-mark">
+        <span class="chapter-num">CHAPTER · V·4</span>
+        <span class="chapter-rule"></span>
+      </div>
       <div class="section-title">Черты</div>
-      <div class="section-subtitle">✦ особые способности персонажа ✦</div>
+      <div class="section-subtitle">особые способности персонажа</div>
 
       <p class="lead">Черта — это особая способность, которую персонаж получает на определённых уровнях вместо увеличения характеристики. Каждая черта даёт уникальное преимущество.</p>
 
       <div class="mechanic-list">
-
         <div class="mechanic-item">
-          <div class="mechanic-icon">👁️</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-eye"/></svg></div>
           <div class="mechanic-body">
             <h3>Бдительный</h3>
-            <p>Персонаж всегда начеку — его невозможно застать врасплох. Получает бонус +5 к инициативе. Существа не получают преимущества на броски атаки против него, даже если атакуют из укрытия или невидимости.</p>
+            <p>Персонаж всегда начеку — его невозможно застать врасплох. Получает бонус <strong>+5 к инициативе</strong>. Существа не получают преимущества на броски атаки против него, даже если атакуют из укрытия или невидимости.</p>
           </div>
         </div>
-
         <div class="mechanic-item">
-          <div class="mechanic-icon">💨</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-wind"/></svg></div>
           <div class="mechanic-body">
             <h3>Подвижный</h3>
-            <p>Скорость передвижения персонажа увеличивается на 2 тайла (10 футов). При совершении атаки в ход персонаж может пройти сквозь зону досягаемости противника без атаки возможности. Труднопроходимая местность не снижает скорость при рывке.</p>
+            <p>Скорость передвижения персонажа увеличивается на <strong>2 тайла</strong> (10 футов). При совершении атаки в ход персонаж может пройти сквозь зону досягаемости противника без атаки возможности. Труднопроходимая местность не снижает скорость при рывке.</p>
           </div>
         </div>
-
         <div class="mechanic-item">
-          <div class="mechanic-icon">❤️</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-heart"/></svg></div>
           <div class="mechanic-body">
             <h3>Живучий</h3>
-            <p>Персонаж получает +1 к Телосложению и дополнительные HP равные его уровню + модификатор Телосложения. Кроме того, при спасбросках смерти минимальный результат всегда считается равным 10 — персонаж никогда не проваливает их автоматически.</p>
+            <p>Персонаж получает <strong>+1 к Телосложению</strong> и дополнительные HP равные его уровню + модификатор Телосложения. Кроме того, при спасбросках смерти минимальный результат всегда считается равным 10 — персонаж никогда не проваливает их автоматически.</p>
           </div>
         </div>
-
         <div class="mechanic-item">
-          <div class="mechanic-icon">🍀</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-clover"/></svg></div>
           <div class="mechanic-body">
             <h3>Удачливый</h3>
             <p>Один раз в 24 часа персонаж может перебросить любой кубик — атаку, урон, спасбросок или проверку характеристики. После переброска игрок выбирает какой из двух результатов оставить.</p>
           </div>
         </div>
-
       </div>
     </div>
 
-    <!-- БАЗИС ПОШАГОВОЙ БОЕВКИ -->
+    <!-- ━━━ БАЗИС БОЁВКИ ━━━ -->
     <div class="tab-content" id="tab-combat">
-      <div class="section-title">Базис Пошаговой Боевки</div>
-      <div class="section-subtitle">✦ законы боя ✦</div>
+      <div class="chapter-mark">
+        <span class="chapter-num">CHAPTER · V·2</span>
+        <span class="chapter-rule"></span>
+      </div>
+      <div class="section-title">Базис Боёвки</div>
+      <div class="section-subtitle">законы боя</div>
 
       <p class="lead">Каждый раунд длится примерно 6 секунд игрового времени. За это время персонаж может совершить следующие действия.</p>
 
-      <div class="divider"><div class="divider-line"></div><div class="divider-gem"></div><div class="divider-line"></div></div>
+      <div class="divider"><span class="divider-line"></span><span class="divider-gem"></span><span class="divider-line"></span></div>
 
-      <div class="section-title" style="font-size:1.1rem;margin-bottom:0.25rem;">Структура Хода</div>
-      <div class="section-subtitle">✦ что можно сделать за один раунд ✦</div>
+      <div class="sub-section-title">Структура Хода</div>
+      <div class="sub-section-subtitle">что можно сделать за один раунд</div>
 
       <div class="mechanic-list">
-
         <div class="mechanic-item">
-          <div class="mechanic-icon">⚔️</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-swords"/></svg></div>
           <div class="mechanic-body">
             <h3>Действие</h3>
             <p>Основное действие раунда — одно на ход. Сюда входит атака, применение умения, помощь союзнику, использование предмета, засада, захват или любое другое значимое действие. Если персонаж атакует — бросается d20 + модификатор против AC противника.</p>
           </div>
         </div>
-
         <div class="mechanic-item">
-          <div class="mechanic-icon">✨</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-spark"/></svg></div>
           <div class="mechanic-body">
             <h3>Бонусное Действие</h3>
             <p>Быстрое вспомогательное действие — одно на ход. Доступно не всем классам и не в каждой ситуации. Примеры: второй удар у воина, короткое заклинание у мага, использование зелья, скрытное перемещение у плута.</p>
           </div>
         </div>
-
         <div class="mechanic-item">
-          <div class="mechanic-icon">🏃</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-running"/></svg></div>
           <div class="mechanic-body">
             <h3>Передвижение</h3>
             <p>Персонаж может переместиться на расстояние своей скорости в любой момент хода — до, после или между другими действиями. Передвижение можно разбить: подойти, атаковать, отступить. Скорость можно потратить частично.</p>
           </div>
         </div>
-
         <div class="mechanic-item">
-          <div class="mechanic-icon">🛡️</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-shield"/></svg></div>
           <div class="mechanic-body">
             <h3>Реакция</h3>
             <p>Мгновенный ответ на событие — один раз между своими ходами. Используется не в свой ход, а в ответ на действие противника или союзника. Примеры: контратака, уклонение, перехват удара, заклинание-контрзаклинание.</p>
           </div>
         </div>
-
       </div>
 
-      <div class="divider"><div class="divider-line"></div><div class="divider-gem"></div><div class="divider-line"></div></div>
+      <div class="divider"><span class="divider-line"></span><span class="divider-gem"></span><span class="divider-line"></span></div>
 
-      <div class="section-title" style="font-size:1.1rem;margin-bottom:0.25rem;">Боевые Правила</div>
-      <div class="section-subtitle">✦ инициатива и порядок ходов ✦</div>
+      <div class="sub-section-title">Боевые Правила</div>
+      <div class="sub-section-subtitle">инициатива и порядок ходов</div>
 
       <div class="mechanic-list">
-
         <div class="mechanic-item">
-          <div class="mechanic-icon">🎯</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-bullseye"/></svg></div>
           <div class="mechanic-body">
             <h3>Инициатива</h3>
-            <p>В начале боя каждый участник бросает d20 + модификатор Ловкости. Результат определяет место в очереди ходов. Мастер ведёт список и объявляет порядок в начале каждого раунда. При равных результатах — приоритет у игрока с более высоким модификатором Ловкости.</p>
+            <p>В начале боя каждый участник бросает <strong>d20 + модификатор Ловкости</strong>. Результат определяет место в очереди ходов. Мастер ведёт список и объявляет порядок в начале каждого раунда. При равных результатах — приоритет у игрока с более высоким модификатором Ловкости.</p>
           </div>
         </div>
-
         <div class="mechanic-item">
-          <div class="mechanic-icon">📋</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-list"/></svg></div>
           <div class="mechanic-body">
             <h3>Порядок Ходов</h3>
             <p>Участники ходят по убыванию инициативы — от наибольшего к наименьшему. Когда все сделали ход, начинается новый раунд и порядок повторяется. Пропустить ход можно добровольно, но он сгорает — перенести на следующий раунд нельзя.</p>
           </div>
         </div>
-
         <div class="mechanic-item">
-          <div class="mechanic-icon">💥</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-impact"/></svg></div>
           <div class="mechanic-body">
             <h3>Атака и Урон</h3>
             <p>Атака: бросок d20 + модификатор атаки. Если результат равен или превышает AC цели — удар попал. Урон бросается отдельно кубиком оружия (d6, d8, d10 и т.д.) + модификатор. Критическое попадание (20 на d20) — урон удваивается.</p>
           </div>
         </div>
-
         <div class="mechanic-item">
-          <div class="mechanic-icon">🩸</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-drop"/></svg></div>
           <div class="mechanic-body">
             <h3>Смерть и Состояния</h3>
             <p>Когда HP персонажа достигают нуля — он без сознания. Ему бросается спасбросок смерти (d20): 10 и выше — успех, ниже — провал. Три провала — смерть. Три успеха — стабилизация. Союзник может стабилизировать персонажа действием без броска. Помните: смерть на этом сервере перманентна.</p>
           </div>
         </div>
-
       </div>
     </div>
 
-    <!-- КУБИКИ -->
+    <!-- ━━━ КУБИКИ ━━━ -->
     <div class="tab-content" id="tab-dice">
+      <div class="chapter-mark">
+        <span class="chapter-num">CHAPTER · V·3</span>
+        <span class="chapter-rule"></span>
+      </div>
       <div class="section-title">Кубики</div>
-      <div class="section-subtitle">✦ основы системы персонажа ✦</div>
+      <div class="section-subtitle">основы системы персонажа</div>
 
       <p class="lead">Каждый персонаж описывается набором характеристик — они определяют что он умеет, насколько живуч и как быстро реагирует на угрозы.</p>
 
-      <div class="divider"><div class="divider-line"></div><div class="divider-gem"></div><div class="divider-line"></div></div>
+      <div class="divider"><span class="divider-line"></span><span class="divider-gem"></span><span class="divider-line"></span></div>
 
-      <div class="section-title" style="font-size:1.1rem;margin-bottom:0.25rem;">Общие Характеристики</div>
-      <div class="section-subtitle">✦ базовые параметры каждого персонажа ✦</div>
+      <div class="sub-section-title">Общие Характеристики</div>
+      <div class="sub-section-subtitle">базовые параметры каждого персонажа</div>
 
       <div class="mechanic-list">
-
         <div class="mechanic-item">
-          <div class="mechanic-icon">❤️</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-heart"/></svg></div>
           <div class="mechanic-body">
-            <h3>Здоровье (HP)</h3>
+            <h3>Здоровье <span class="h3-en">(HP)</span></h3>
             <p>Количество урона, которое персонаж может выдержать прежде чем упасть без сознания. Определяется классом персонажа на старте и растёт с каждым уровнем. Когда HP достигают нуля — персонаж без сознания и бросает спасброски смерти.</p>
           </div>
         </div>
-
         <div class="mechanic-item">
-          <div class="mechanic-icon">🛡️</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-shield"/></svg></div>
           <div class="mechanic-body">
-            <h3>Класс Брони (AC)</h3>
+            <h3>Класс Брони <span class="h3-en">(AC)</span></h3>
             <p>Число, которое нужно превысить броском атаки чтобы попасть по персонажу. Зависит от надетой брони, ловкости и специальных умений. Чем выше AC — тем труднее нанести урон персонажу.</p>
           </div>
         </div>
-
         <div class="mechanic-item">
-          <div class="mechanic-icon">🏃</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-running"/></svg></div>
           <div class="mechanic-body">
             <h3>Тайлы Передвижения</h3>
             <p>Расстояние, которое персонаж может пройти за один ход. Стандартное значение — 6 тайлов (30 футов). Тяжёлая броня и некоторые состояния снижают скорость. Рывок позволяет удвоить передвижение ценой бонусного действия.</p>
           </div>
         </div>
-
         <div class="mechanic-item">
-          <div class="mechanic-icon">⚡</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-flash"/></svg></div>
           <div class="mechanic-body">
             <h3>Инициатива</h3>
             <p>В начале боя каждый участник бросает d20 и добавляет модификатор Ловкости. Результат определяет порядок ходов в раунде — чем выше, тем раньше действует персонаж. При ничьей приоритет у персонажа с более высоким модификатором Ловкости.</p>
           </div>
         </div>
-
       </div>
 
-      <div class="divider"><div class="divider-line"></div><div class="divider-gem"></div><div class="divider-line"></div></div>
+      <div class="divider"><span class="divider-line"></span><span class="divider-gem"></span><span class="divider-line"></span></div>
 
-      <div class="section-title" style="font-size:1.1rem;margin-bottom:0.25rem;">Шесть Характеристик</div>
-      <div class="section-subtitle">✦ основа любого персонажа ✦</div>
+      <div class="sub-section-title">Шесть Характеристик</div>
+      <div class="sub-section-subtitle">основа любого персонажа</div>
 
-      <p style="margin-bottom:1.5rem;">Каждая характеристика имеет свой <strong style="color:var(--gold-light)">модификатор</strong> — число, которое добавляется к броскам кубика при проверках и атаках.</p>
+      <p style="margin-bottom:1.5rem;">Каждая характеристика имеет свой <strong>модификатор</strong> — число, которое добавляется к броскам кубика при проверках и атаках.</p>
 
       <div class="mechanic-list">
-
         <div class="mechanic-item">
-          <div class="mechanic-icon">⚔️</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-muscle"/></svg></div>
           <div class="mechanic-body">
-            <h3>Сила (STR)</h3>
+            <h3>Сила <span class="h3-en">(STR)</span></h3>
             <p>Физическая мощь персонажа. Влияет на урон в ближнем бою, броски атаки оружием ближнего боя, проверки силы — поднять тяжёлый предмет, выломать дверь, удержать противника.</p>
           </div>
         </div>
-
         <div class="mechanic-item">
-          <div class="mechanic-icon">🐍</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-snake"/></svg></div>
           <div class="mechanic-body">
-            <h3>Ловкость (DEX)</h3>
+            <h3>Ловкость <span class="h3-en">(DEX)</span></h3>
             <p>Скорость, координация и рефлексы. Влияет на атаки дальнего боя, уклонение, скрытность, инициативу и AC персонажей без тяжёлой брони. Ключевая характеристика плутов и лучников.</p>
           </div>
         </div>
-
         <div class="mechanic-item">
-          <div class="mechanic-icon">💪</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-heart"/></svg></div>
           <div class="mechanic-body">
-            <h3>Телосложение (CON)</h3>
+            <h3>Телосложение <span class="h3-en">(CON)</span></h3>
             <p>Выносливость и жизнестойкость. Влияет на максимальное HP — каждый уровень к здоровью добавляется модификатор Телосложения. Также используется для концентрации на заклинаниях и сопротивления ядам.</p>
           </div>
         </div>
-
         <div class="mechanic-item">
-          <div class="mechanic-icon">📚</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-book"/></svg></div>
           <div class="mechanic-body">
-            <h3>Интеллект (INT)</h3>
+            <h3>Интеллект <span class="h3-en">(INT)</span></h3>
             <p>Острота ума, память и способность к анализу. Влияет на знания о мире, расследование, магию волшебников. Определяет сколько языков знает персонаж и насколько хорошо понимает тайные знания.</p>
           </div>
         </div>
-
         <div class="mechanic-item">
-          <div class="mechanic-icon">👁️</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-eye"/></svg></div>
           <div class="mechanic-body">
-            <h3>Мудрость (WIS)</h3>
+            <h3>Мудрость <span class="h3-en">(WIS)</span></h3>
             <p>Интуиция, восприятие и связь с миром. Влияет на внимательность, проницательность, лечение и магию жрецов. Высокая мудрость позволяет замечать ложь, засады и скрытые детали.</p>
           </div>
         </div>
-
         <div class="mechanic-item">
-          <div class="mechanic-icon">✨</div>
+          <div class="mechanic-icon-wrap"><svg aria-hidden="true"><use href="#i-stars"/></svg></div>
           <div class="mechanic-body">
-            <h3>Харизма (CHA)</h3>
+            <h3>Харизма <span class="h3-en">(CHA)</span></h3>
             <p>Личное обаяние, убедительность и сила воли. Влияет на убеждение, обман, запугивание и магию чародеев. Высокая харизма открывает двери там, где меч бесполезен.</p>
           </div>
         </div>
-
       </div>
     </div>
 
   </div>
   <!-- /tabs-body -->
 
-  <div class="divider" style="margin-top:3rem;"><div class="divider-line"></div><div class="divider-gem"></div><div class="divider-line"></div></div>
-
   <footer>
-    <p class="footer-text">⚔ Эпоха Забытых Богов · Арасс живёт, пока о нём рассказывают ⚔</p>
+    <svg class="footer-crest" aria-hidden="true"><use href="#i-mark"/></svg>
+    <p class="footer-text">Эвериум · мир живёт, пока о нём рассказывают</p>
+    <p class="footer-sub">© летопись составлена Мастерами Совета · MMXXVI</p>
   </footer>
 
 </div>
 
-<button class="back-to-top" id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Наверх">↑</button>
+<button class="back-to-top" id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Наверх">
+  <svg width="18" height="18" aria-hidden="true"><use href="#i-arrow-up"/></svg>
+</button>
 
 <script>
+  // ═══════════════════════════════════════
+  // SEARCH INDEX
+  // ═══════════════════════════════════════
   const searchIndex = [
     { section: 'О сервере', tab: 'server', title: 'О сервере', text: 'хардкорный ролевой проект Conan Exiles Enhanced каждое решение имеет цену история оставляет след живой мир политика игроками войны фракции нарратив Мастера декорации драма формат броски квента смерть перманентная риск победа' },
     { section: 'Правила', tab: 'rules', title: 'IC — In Character', text: 'в роли персонаж слова действия мысли IC информация видел слышал пережил' },
@@ -1529,6 +2508,10 @@
     { section: 'Боевая система', tab: 'combat', title: 'Порядок Ходов', text: 'убывание инициатива наибольшему раунд повторяется пропустить сгорает' },
     { section: 'Боевая система', tab: 'combat', title: 'Атака и Урон', text: 'd20 модификатор атаки AC цель удар урон кубик оружие критическое попадание удваивается' },
     { section: 'Боевая система', tab: 'combat', title: 'Смерть и Состояния', text: 'HP ноль без сознания спасбросок смерти d20 успех провал стабилизация союзник перманентна' },
+    { section: 'Черты', tab: 'feats', title: 'Бдительный', text: 'начеку врасплох бонус инициатива атака укрытие невидимость' },
+    { section: 'Черты', tab: 'feats', title: 'Подвижный', text: 'скорость передвижения тайлы зона досягаемости атака возможности труднопроходимая' },
+    { section: 'Черты', tab: 'feats', title: 'Живучий', text: 'телосложение HP уровень модификатор спасбросок смерти минимальный' },
+    { section: 'Черты', tab: 'feats', title: 'Удачливый', text: 'перебросить кубик атаку урон спасбросок проверку 24 часа' },
   ];
 
   function doSearch(query) {
@@ -1542,9 +2525,10 @@
       box.innerHTML = '<div class="search-empty">Ничего не найдено</div>';
       box.style.display = 'block'; return;
     }
+    const re = new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'), 'gi');
     box.innerHTML = hits.map(h => {
       const snippet = h.text.length > 80 ? h.text.substring(0, 80) + '…' : h.text;
-      const titleHl = h.title.replace(new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi'), m => '<em class="search-highlight">'+m+'</em>');
+      const titleHl = h.title.replace(re, m => '<em class="search-highlight">'+m+'</em>');
       return `<div class="search-result-item" onclick="goToResult('${h.tab}')">
         <div class="search-result-section">${h.section}</div>
         <div class="search-result-title">${titleHl}</div>
@@ -1565,6 +2549,7 @@
     document.getElementById('search-results').style.display = 'none';
   }
 
+  // ─── Race / Subrace / Class navigation ───
   function openSubrace(id) {
     document.getElementById('elves-list').style.display = 'none';
     document.querySelectorAll('.subrace-detail-block').forEach(el => el.style.display = 'none');
@@ -1572,22 +2557,18 @@
     const target = document.getElementById('detail-' + id);
     if (target) { target.style.display = 'block'; target.style.animation = 'fadeIn 0.35s ease'; }
   }
-
   function closeSubrace() {
     document.getElementById('subrace-detail').style.display = 'none';
     document.querySelectorAll('.subrace-detail-block').forEach(el => el.style.display = 'none');
     document.getElementById('elves-list').style.display = 'block';
   }
-
   function openRace(id) {
     document.getElementById('races-list').style.display = 'none';
     document.getElementById('race-detail').style.display = 'block';
     document.querySelectorAll('.race-detail-block').forEach(el => el.style.display = 'none');
     const target = document.getElementById('detail-' + id);
-    if (target) { target.style.display = 'block'; }
-    target.style.animation = 'fadeIn 0.35s ease';
+    if (target) { target.style.display = 'block'; target.style.animation = 'fadeIn 0.35s ease'; }
   }
-
   function openClass(id) {
     document.getElementById('classes-list').style.display = 'none';
     document.getElementById('class-detail').style.display = 'block';
@@ -1595,38 +2576,38 @@
     const target = document.getElementById('detail-' + id);
     if (target) { target.style.display = 'block'; target.style.animation = 'fadeIn 0.35s ease'; }
   }
-
   function closeClass() {
     const detail = document.getElementById('class-detail');
     const list = document.getElementById('classes-list');
     if (detail) detail.style.display = 'none';
     if (list) list.style.display = 'block';
   }
-
   function closeRace() {
     closeSubrace();
-    document.getElementById('elves-list').style.display = 'block';
+    const elvesList = document.getElementById('elves-list');
+    if (elvesList) elvesList.style.display = 'block';
     const detail = document.getElementById('race-detail');
     const list = document.getElementById('races-list');
     if (detail) detail.style.display = 'none';
     if (list) list.style.display = 'block';
   }
 
-function switchTab(id) {
+  function switchTab(id) {
     closeRace();
     closeClass();
     document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(el => { el.classList.remove('active'); el.setAttribute('aria-selected','false'); });
-    document.getElementById('tab-' + id).classList.add('active');
+    const tabEl = document.getElementById('tab-' + id);
+    if (tabEl) tabEl.classList.add('active');
     const btn = [...document.querySelectorAll('.tab-btn')].find(b => b.getAttribute('onclick')?.includes("'" + id + "'"));
     if (btn) { btn.classList.add('active'); btn.setAttribute('aria-selected','true'); }
     try { history.replaceState(null, '', '#' + id); } catch(e) {}
   }
 
-  // Back to top
+  // Back-to-top
   window.addEventListener('scroll', () => {
     const btn = document.getElementById('back-to-top');
-    if (window.scrollY > 300) btn.classList.add('visible');
+    if (window.scrollY > 400) btn.classList.add('visible');
     else btn.classList.remove('visible');
   });
 
@@ -1637,12 +2618,12 @@ function switchTab(id) {
     if (hash && valid.includes(hash)) switchTab(hash);
   });
 
-  // Particles
+  // Embers
   const container = document.getElementById('particles');
-  for (let i = 0; i < 30; i++) {
+  for (let i = 0; i < 24; i++) {
     const p = document.createElement('div');
     p.className = 'particle';
-    p.style.cssText = `left:${Math.random()*100}%;--dur:${6+Math.random()*12}s;--delay:${-Math.random()*15}s;--dx:${(Math.random()-0.5)*80}px;opacity:0;width:${Math.random()>0.7?3:2}px;height:${Math.random()>0.7?3:2}px;`;
+    p.style.cssText = `left:${Math.random()*100}%;--dur:${10+Math.random()*14}s;--delay:${-Math.random()*20}s;--dx:${(Math.random()-0.5)*100}px;`;
     container.appendChild(p);
   }
 </script>
